@@ -2,27 +2,26 @@ class AbstractState():
     """状態"""
 
     def __init__(self):
-        def on_none(context):
-            """何もしません"""
-            pass
+        pass
 
-        self._on_entry = on_none
-        self._on_exit = on_none
+    def on_entry(self, context):
+        """この状態に遷移したときに呼び出されます
 
-    @property
-    def on_entry(self):
-        """この状態に遷移したときに呼び出されるコールバック関数"""
-        return self._on_entry
+        Parameters
+        ----------
+        context : Context
+            このステートマシンは、このContextが何なのか知りません。
+            外部から任意に与えることができる変数です
+        """
+        pass
 
-    @on_entry.setter
-    def on_entry(self, func):
-        self._on_entry = func
+    def on_exit(self, context):
+        """この状態から抜け出たときに呼び出されます。ただし初期化時、アボート時は呼び出されません
 
-    @property
-    def on_exit(self):
-        """この状態から抜け出たときに呼び出されるコールバック関数。ただし初期化時、アボート時は呼び出されません"""
-        return self._on_exit
-
-    @on_exit.setter
-    def on_exit(self, func):
-        self._on_exit = func
+        Parameters
+        ----------
+        context : Context
+            このステートマシンは、このContextが何なのか知りません。
+            外部から任意に与えることができる変数です
+        """
+        pass

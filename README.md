@@ -5,9 +5,8 @@
 ## Install
 
 ```shell
-python.exe -m pip install --index-url https://test.pypi.org/simple/ --no-deps state_machine_py
-                                                                              ----------------
-                                                                              YOUR-API-NAME-HERE
+# Windows
+python.exe -m pip install state_machine_py
 ```
 
 ## Example
@@ -27,4 +26,10 @@ python.exe -m build
 python.exe -m twine upload --repository testpypi dist/* --verbose
 # Product
 python.exe -m twine upload dist/*
+
+# Install
+# Test
+python.exe -m pip install --index-url https://test.pypi.org/simple/ --no-deps state_machine_py
+                                                                              ----------------
+                                                                              YOUR-API-NAME-HERE
 ```
