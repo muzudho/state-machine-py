@@ -10,6 +10,10 @@ python.exe -m pip install --index-url https://test.pypi.org/simple/ --no-deps st
                                                                               YOUR-API-NAME-HERE
 ```
 
+## Example
+
+📖 [state-machine-py-example](https://github.com/muzudho/state-machine-py-example)  
+
 ## Publish
 
 📖 [Pythonスクリプトってどうやってパブリッシュするんだぜ（＾～＾）？](https://crieit.net/drafts/61a3496b73b42)  
