@@ -43,6 +43,31 @@ class StateMachine():
         """現在の状態"""
         return self._state
 
+    def arrive(self, next_state_name):
+        """指定の状態に遷移します
+        on_entryコールバック関数を呼び出します。
+
+        Parameters
+        ----------
+        str : next_state_name
+            次の状態の名前
+        """
+
+        if next_state_name in self._state_creator_dict:
+            # 次のステートへ引継ぎ
+            self._state = self._state_creator_dict[next_state_name]()
+
+            self._state.on_entry(self._context)
+
+            # このステートをただちに通り過ぎたいなら
+            line = self._state.pass_on(self._context)
+            if line:
+                self.leave(line)
+
+        else:
+            # Error
+            raise ValueError(f"Next state [{next_state_name}] is not found")
+
     def leave(self, line):
         """次の状態の名前と、遷移に使ったキーを返します。
         on_exitコールバック関数を呼び出します。
@@ -72,23 +97,3 @@ class StateMachine():
 
         self._state.on_exit(self._context)
         return next_state_name, key
-
-    def arrive(self, next_state_name):
-        """指定の状態に遷移します
-        on_entryコールバック関数を呼び出します。
-
-        Parameters
-        ----------
-        str : next_state_name
-            次の状態の名前
-        """
-
-        if next_state_name in self._state_creator_dict:
-            # 次のステートへ引継ぎ
-            self._state = self._state_creator_dict[next_state_name]()
-
-            self._state.on_entry(self._context)
-
-        else:
-            # Error
-            raise ValueError(f"Next state [{next_state_name}] is not found")
