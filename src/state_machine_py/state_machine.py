@@ -27,6 +27,7 @@ class StateMachine():
         self._context = context
         self._state_creator_dict = state_creator_dict
         self._transition_dict = transition_dict
+        self._verbose = False
 
     @property
     def context(self):
@@ -43,6 +44,35 @@ class StateMachine():
         """現在の状態"""
         return self._state
 
+    @property
+    def verbose(self):
+        """標準出力にデバッグ情報を出力するなら真"""
+        return self._verbose
+
+    @verbose.setter
+    def verbose(self, val):
+        self._verbose = val
+
+    def arrive_sequence(self, next_state_name):
+        """arrive(next_state_name) の拡張版。
+        このステートを通り過ぎる指定があったなら、次の leave(...) まで行います。
+        通り過ぎる指定がなくなるまで続けます
+
+        Parameters
+        ----------
+        str : next_state_name
+            次の状態の名前
+        """
+        interrupt_line = self.arrive(next_state_name)
+
+        # [pass_on割り込み] があったら、次の leave まで行います
+        while interrupt_line:
+            next_state_name, transition_key = self.leave(
+                interrupt_line)
+
+            interrupt_line = self.arrive(
+                next_state_name)
+
     def arrive(self, next_state_name):
         """指定の状態に遷移します
         on_entryコールバック関数を呼び出します。
@@ -51,7 +81,15 @@ class StateMachine():
         ----------
         str : next_state_name
             次の状態の名前
+
+        Returns
+        -------
+        object
+            ただちに leave に渡したい引数。無ければ None
         """
+
+        if self.verbose:
+            print(f"[state_machine] Arrive to {next_state_name}")
 
         if next_state_name in self._state_creator_dict:
             # 次のステートへ引継ぎ
@@ -60,9 +98,13 @@ class StateMachine():
             self._state.on_entry(self._context)
 
             # このステートをただちに通り過ぎたいなら
-            line = self._state.pass_on(self._context)
-            if line:
-                self.leave(line)
+            interrupt_line = self._state.pass_on(self._context)
+            if interrupt_line:
+                if self.verbose:
+                    print(
+                        f"[state_machine] Arrive pass_on interrupt_line={interrupt_line}")
+
+            return interrupt_line
 
         else:
             # Error
@@ -84,6 +126,9 @@ class StateMachine():
             次の状態の名前、遷移に使ったキー
         """
 
+        if self.verbose:
+            print(f"[state_machine] Leave line={line}")
+
         edge_name = self._state.leave(self._context, line)
 
         # さっき去ったステートの名前と、今辿っているエッジの名前
@@ -91,6 +136,10 @@ class StateMachine():
 
         if key in self._transition_dict:
             next_state_name = self._transition_dict[key]
+
+            if self.verbose:
+                print(f"[state_machine] Leave {key}{next_state_name}")
+
         else:
             # Error
             raise ValueError(f"Leave-key [{key}] is not found")
