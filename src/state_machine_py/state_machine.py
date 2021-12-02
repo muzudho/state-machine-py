@@ -53,6 +53,28 @@ class StateMachine():
     def verbose(self, val):
         self._verbose = val
 
+    def on_line(line):
+        pass
+
+    def leave_and_loop(self, lines_getter):
+        """まず state_machine.leave(...) を行い、
+        そのあと arrive(...), leave(...) のペアを無限に繰り返します。
+        leave(...) に渡す line 引数は、
+        lines_getter() を実行することでリストで取得できるようにしてください。
+        lines_getter() が None を返すとループを抜けます"""
+        while True:
+            lines = lines_getter()
+            if not lines:
+                break
+
+            for line in lines:
+
+                self.on_line(line)
+
+                next_state_name, transition_key = self.leave(
+                    line)
+                self.arrive_sequence(next_state_name)
+
     def arrive_sequence(self, next_state_name):
         """arrive(next_state_name) の拡張版。
         このステートを通り過ぎる指定があったなら、次の leave(...) まで行います。
@@ -65,7 +87,7 @@ class StateMachine():
         """
         interrupt_line = self.arrive(next_state_name)
 
-        # [pass_on割り込み] があったら、次の leave まで行います
+        # interrupt_line の指定があったら、次の leave をすぐ行います
         while interrupt_line:
             next_state_name, transition_key = self.leave(
                 interrupt_line)
@@ -95,14 +117,10 @@ class StateMachine():
             # 次のステートへ引継ぎ
             self._state = self._state_creator_dict[next_state_name]()
 
-            self._state.on_entry(self._context)
-
-            # このステートをただちに通り過ぎたいなら
-            interrupt_line = self._state.pass_on(self._context)
-            if interrupt_line:
-                if self.verbose:
-                    print(
-                        f"[state_machine] Arrive pass_on interrupt_line={interrupt_line}")
+            interrupt_line = self._state.on_entry(self._context)
+            if interrupt_line and self.verbose:
+                print(
+                    f"[state_machine] Arrive interrupt_line={interrupt_line}")
 
             return interrupt_line
 

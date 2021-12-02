@@ -12,17 +12,6 @@ class AbstractState():
         context : Context
             このステートマシンは、このContextが何なのか知りません。
             外部から任意に与えることができる変数です
-        """
-        pass
-
-    def pass_on(self, context):
-        """この状態に遷移したあと、ただちに次の状態へ遷移したいときに記述してください
-
-        Parameters
-        ----------
-        context : Context
-            このステートマシンは、このContextが何なのか知りません。
-            外部から任意に与えることができる変数です
 
         Returns
         -------
