@@ -97,7 +97,7 @@ class StateMachine():
 
     def arrive(self, next_state_name):
         """指定の状態に遷移します
-        on_entryコールバック関数を呼び出します。
+        entryコールバック関数を呼び出します。
 
         Parameters
         ----------
@@ -117,7 +117,7 @@ class StateMachine():
             # 次のステートへ引継ぎ
             self._state = self._state_creator_dict[next_state_name]()
 
-            interrupt_line = self._state.on_entry(self._context)
+            interrupt_line = self._state.entry(self._context)
             if interrupt_line and self.verbose:
                 print(
                     f"[state_machine] Arrive interrupt_line={interrupt_line}")
@@ -130,7 +130,7 @@ class StateMachine():
 
     def leave(self, line):
         """次の状態の名前と、遷移に使ったキーを返します。
-        on_exitコールバック関数を呼び出します。
+        exitコールバック関数を呼び出します。
         stateの遷移はまだ行いません
 
         Parameters
@@ -162,5 +162,5 @@ class StateMachine():
             # Error
             raise ValueError(f"Leave-key [{key}] is not found")
 
-        self._state.on_exit(self._context)
+        self._state.exit(self._context)
         return next_state_name, key
