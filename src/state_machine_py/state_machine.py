@@ -53,8 +53,18 @@ class StateMachine():
     def verbose(self, val):
         self._verbose = val
 
-    def on_line(line):
+    def on_line(self, line):
         pass
+
+    def start(self, next_state_name, lines_getter):
+        """まず state_machine.arrive(...) を行い、
+        そのあと leave(...), arrive(...) のペアを無限に繰り返します。
+        leave(...) に渡す line 引数は arrive(...) から返しますが、
+        代わりに None を返すと lines_getter() が実行されます。
+        lines_getter() は、 line のリストを返す関数です。
+        lines_getter() が None を返すとループを抜けます"""
+        self.arrive_sequence(next_state_name)
+        self.leave_and_loop(lines_getter)
 
     def leave_and_loop(self, lines_getter):
         """まず state_machine.leave(...) を行い、
