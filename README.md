@@ -11,4 +11,9 @@ python.exe -m pip install state_machine_py
 
 ## Example
 
-📖 [state-machine-py-example](https://github.com/muzudho/state-machine-py-example)  
+Homepage
+
+* 📂tests
+  * rock_paper_scissors
+  * edge_walk
+
