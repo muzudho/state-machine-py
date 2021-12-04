@@ -3,6 +3,8 @@
 # Set up
 
 ```shell
+cd tests/edge_walk
+
 # Test
 python.exe -m pip install --index-url https://test.pypi.org/simple/ --no-deps state_machine_py
 

@@ -204,10 +204,11 @@ class StateMachine():
             if type(obj) is str:
                 # State
                 next_state_name = obj
+                self._edge_path = []  # 辺パスをクリアーします
             else:
                 # Edge
                 next_state_name = self.state.name  # まだ現在のステートです
-                self._edge_path.append(next_edge_name)  # パスを伸ばします
+                self._edge_path.append(next_edge_name)  # 辺パスを伸ばします
         else:
             raise ValueError(
                 f"Next edge is not found. name=[{next_edge_name}] current state=[{self.state.name}] path=[{self._edge_path}]")
