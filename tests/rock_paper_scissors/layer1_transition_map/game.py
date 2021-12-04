@@ -34,7 +34,7 @@ class GameState(AbstractState):
         """----Loopback---->時"""
         pass
 
-    def leave(self, context, line, edge_path):
+    def exit(self, context, line, edge_path):
         """次の辺の名前を返します
         Parameters
         ----------
@@ -76,28 +76,28 @@ if __name__ == "__main__":
     state = GameState()
 
     line = 'R'
-    edge = state.leave(context, line)
+    edge = state.exit(context, line)
     if edge == '----Lose---->':
         print('.', end='')
     else:
         print('f', end='')
 
     line = 'S'
-    edge = state.leave(context, line)
+    edge = state.exit(context, line)
     if edge == '----Win---->':
         print('.', end='')
     else:
         print('f', end='')
 
     line = 'P'
-    edge = state.leave(context, line)
+    edge = state.exit(context, line)
     if edge == '----Draw---->':
         print('.', end='')
     else:
         print('f', end='')
 
     line = 'W'
-    edge = state.leave(context, line)
+    edge = state.exit(context, line)
     if edge == '----Loopback---->':
         print('.', end='')
     else:

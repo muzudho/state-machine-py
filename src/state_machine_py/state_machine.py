@@ -164,7 +164,7 @@ class StateMachine():
         if self.verbose:
             print(f"[state_machine] Leave line={line}")
 
-        next_edge_name = self._state.leave(self._context, line, self.edge_path)
+        next_edge_name = self._state.exit(self._context, line, self.edge_path)
 
         # 例えば [Apple]ステート に居るとき ----Banana----> エッジに去るということは、
         #
@@ -213,5 +213,4 @@ class StateMachine():
             raise ValueError(
                 f"Next edge is not found. name=[{next_edge_name}] current state=[{self.state.name}] path=[{self._edge_path}]")
 
-        self._state.exit(self._context)
         return next_state_name

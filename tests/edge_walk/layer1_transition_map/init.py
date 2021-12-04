@@ -13,7 +13,7 @@ class InitState(AbstractState):
     def name(self):
         return "[Init]"
 
-    def leave(self, context, line, edge_path):
+    def exit(self, context, line, edge_path):
         """次の辺の名前を返します
         Parameters
         ----------

@@ -10,24 +10,21 @@ class DecoratedGameState(GameState):
     def __init__(self):
         super().__init__()
 
-    def entry(self, context):
-        """この entry メソッドは省略することもできます。
+    def on_entry(self, context):
+        """この on_entry メソッドは省略することもできます。
         この状態に入ったときにする処理を書いてください"""
-        # entry の前に処理を書いていただけます
-        super().entry(context)
-        # entry の後に処理を書いていただけます
+        # on_entry の前に処理を書いていただけます
+        super().on_entry(context)
+        # on_entry の後に処理を書いていただけます
         print("Rock-paper-scissors(R,P,S): ", end='')
 
-        # 次の state_machine.leave(...) に渡す line 引数を返すこともできます
-        return None
-
-    def exit(self, context):
-        """この exit メソッドは省略することもできます。
+    def on_exit(self, context):
+        """この on_exit メソッドは省略することもできます。
         この状態から出たときにする処理を書いてください。
         ステートマシンが中断されたときは省略されます"""
-        # exit の前に処理を書いていただけます
-        super().exit(context)
-        # exit の後に処理を書いていただけます
+        # on_exit の前に処理を書いていただけます
+        super().on_exit(context)
+        # on_exit の後に処理を書いていただけます
 
     def on_win(self, context):
         """この on_win メソッドは省略することもできます。

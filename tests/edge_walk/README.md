@@ -18,3 +18,11 @@ python.exe -m pip install state_machine_py
 cd tests/edge_walk
 python.exe -m main
 ```
+
+Input:  
+
+```
+----E_2---->
+----E_2_2---->
+----E_2_2_2---->
+```

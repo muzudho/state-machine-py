@@ -28,7 +28,7 @@ class InitState(AbstractState):
         """ログイン失敗時"""
         pass
 
-    def leave(self, context, line, edge_path):
+    def exit(self, context, line, edge_path):
         """次の辺の名前を返します
         Parameters
         ----------
@@ -62,14 +62,14 @@ if __name__ == "__main__":
     state = InitState()
 
     line = 'kifuwarabe'
-    edge = state.leave(context, line)
+    edge = state.exit(context, line, [])
     if edge == '----LoggedIn---->':
         print('.', end='')
     else:
         print('f', end='')
 
     line = 'ya !'
-    edge = state.leave(context, line)
+    edge = state.exit(context, line, [])
     if edge == '----Loopback---->':
         print('.', end='')
     else:
