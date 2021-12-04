@@ -28,6 +28,8 @@ class StateMachine():
         self._state_creator_dict = state_creator_dict
         self._transition_dict = transition_dict
         self._verbose = False
+        self._state = None
+        self._edge_path = []
 
     @property
     def context(self):
@@ -43,6 +45,11 @@ class StateMachine():
     def state(self):
         """現在の状態"""
         return self._state
+
+    @property
+    def edge_path(self):
+        """現在の辺"""
+        return self._edge_path
 
     @property
     def verbose(self):
@@ -81,8 +88,7 @@ class StateMachine():
 
                 self.on_line(line)
 
-                next_state_name, transition_key = self.leave(
-                    line)
+                next_state_name = self.leave(line)
                 self.arrive_sequence(next_state_name)
 
     def arrive_sequence(self, next_state_name):
@@ -99,7 +105,7 @@ class StateMachine():
 
         # interrupt_line の指定があったら、次の leave をすぐ行います
         while interrupt_line:
-            next_state_name, transition_key = self.leave(
+            next_state_name = self.leave(
                 interrupt_line)
 
             interrupt_line = self.arrive(
@@ -121,7 +127,8 @@ class StateMachine():
         """
 
         if self.verbose:
-            print(f"[state_machine] Arrive to {next_state_name}")
+            edge_path = '.'.join(self._edge_path)
+            print(f"[state_machine] Arrive to {next_state_name} {edge_path}")
 
         if next_state_name in self._state_creator_dict:
             # 次のステートへ引継ぎ
@@ -150,27 +157,60 @@ class StateMachine():
 
         Returns
         -------
-        str, str
-            次の状態の名前、遷移に使ったキー
+        str
+            次の状態の名前
         """
 
         if self.verbose:
             print(f"[state_machine] Leave line={line}")
 
-        edge_name = self._state.leave(self._context, line)
+        next_edge_name = self._state.leave(self._context, line, self.edge_path)
 
-        # さっき去ったステートの名前と、今辿っているエッジの名前
-        key = f"{self._state.name}{edge_name}"
+        # 例えば [Apple]ステート に居るとき ----Banana----> エッジに去るということは、
+        #
+        # "[Apple]": {
+        #     "----Banana---->" : "[Zebra]"
+        # }
+        #
+        # "[Apple]": {
+        #     "----Banana---->" : {
+        #         "----Cherry---->" : "[Zebra]"
+        #     }
+        # }
+        #
+        # といった方法で値を取ってきます。
+        # 値は "[Zebra]"文字列かも知れませんし、 "----Cherry---->"ディクショナリーかもしれません。
 
-        if key in self._transition_dict:
-            next_state_name = self._transition_dict[key]
-
-            if self.verbose:
-                print(f"[state_machine] Leave {key}{next_state_name}")
-
+        # まずはカレントステートを指定してディクショナリーを取ってきましょう
+        if self.state.name in self._transition_dict:
+            curr_dict = self._transition_dict[self.state.name]
         else:
-            # Error
-            raise ValueError(f"Leave-key [{key}] is not found")
+            raise ValueError(
+                f"Current state is not found. name=[{self.state.name}]")
+
+        # カレントエッジを下りていきましょう
+        for i, edge in enumerate(self._edge_path):
+            if edge in curr_dict:
+                curr_dict = curr_dict[edge]
+            else:
+                raise ValueError(
+                    f"Edge[{i}] is not found. name=[{edge}] path=[{self._edge_path}]")
+
+        # 最後に、次のエッジへ下りていきましょう
+        if next_edge_name in curr_dict:
+            # ディクショナリーか、文字列のどちらかです
+            obj = curr_dict[next_edge_name]
+
+            if type(obj) is str:
+                # State
+                next_state_name = obj
+            else:
+                # Edge
+                next_state_name = self.state.name  # まだ現在のステートです
+                self._edge_path.append(next_edge_name)  # パスを伸ばします
+        else:
+            raise ValueError(
+                f"Next edge is not found. name=[{next_edge_name}] current state=[{self.state.name}] path=[{self._edge_path}]")
 
         self._state.exit(self._context)
-        return next_state_name, key
+        return next_state_name

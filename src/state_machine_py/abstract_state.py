@@ -54,3 +54,22 @@ class AbstractState():
             外部から任意に与えることができる変数です
         """
         pass
+
+    def leave(self, context, line, edge_path=[]):
+        """次の辺の名前を返します
+        Parameters
+        ----------
+        context : Context
+            このステートマシンは、このContextが何なのか知りません。
+            外部から任意に与えることができる変数です。 Defaults to None.
+        line : str
+            コマンドライン文字列
+        edge_path : list
+            辺パス
+
+        Returns
+        -------
+        str
+            次隣の辺の名前
+        """
+        return None
