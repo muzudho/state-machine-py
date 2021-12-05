@@ -1,5 +1,5 @@
 from state_machine_py.abstract_state import AbstractState
-from tests.task_sharing.keywords import E_INCREASE, E_STOP, INIT
+from tests.task_sharing.keywords import E_INCREASE, E_STOP, INIT, MACHINE_B
 
 
 class InitState(AbstractState):
@@ -31,20 +31,25 @@ class InitState(AbstractState):
             辺の名前
         """
 
-        if req.context.number == 0:
-            print("[A] Stop")
-            return E_STOP
+        if req.context.number == None:
+            print("[A] ボールを持っていないので、キャッチの姿勢を取ります")
+            req.context.number = req.intermachine.get()
+            req.intermachine.task_done()
 
         if req.context.number == None:
-            print("[A] None")
-            pass
+            print("[A] まだボールは飛んでこなかった")
+
+        elif req.context.number == 1:
+            print("[A] Stop")
+            return E_STOP
 
         elif req.context.number % 2 == 1:
             print("[A] Calc")
             req.context.number = 3 * req.context.number + 1
 
         else:
-            print("[A] B にボールを渡したい")
-            pass
+            print(f"[A] [{MACHINE_B}]に ボール[{req.context.number}] を渡したい")
+            req.intermachine.put(MACHINE_B, req.context.number)
+            req.context.number = None
 
         return E_INCREASE

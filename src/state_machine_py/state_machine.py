@@ -14,7 +14,7 @@ class StateMachine():
     sm.arrive("[Init]") # Init状態は作っておいてください
     """
 
-    def __init__(self, context=None, state_creator_dict={}, transition_dict={}, intermachine=None):
+    def __init__(self, context=None, state_creator_dict={}, transition_dict={}, intermachine=None, name=None):
         """初期化
 
         Parameters
@@ -36,6 +36,7 @@ class StateMachine():
         self._state = None
         self._is_terminate = False  # 永遠に停止
         self._intermachine = intermachine
+        self._name = name
 
     @property
     def context(self):
@@ -84,6 +85,11 @@ class StateMachine():
     @is_terminate.setter
     def is_terminate(self, val):
         self._is_terminate = val
+
+    @property
+    def name(self):
+        """他のステートマシンと区別するためのキーとして使われます"""
+        return self._name
 
     def start(self, next_state_name):
         """まず state_machine.arrive(...) を行い、
@@ -210,11 +216,6 @@ class StateMachine():
             intermachine=self._intermachine)
         next_edge_name = self._state.exit(req)
 
-        if next_edge_name is None:
-            self._is_terminate = True
-            self.on_terminate(req)
-            return
-
         # 例えば [Apple]ステート に居るとき ----Banana----> エッジに去るということは、
         #
         # "[Apple]": {
@@ -227,12 +228,21 @@ class StateMachine():
         #     }
         # }
         #
+        # "[Apple]": {
+        #     "----Banana---->" : None
+        # }
+        #
         # といった方法で値を取ってきます。
-        # 値は "[Zebra]"文字列かも知れませんし、 "----Cherry---->"ディクショナリーかもしれません。
+        # 値は "[Zebra]"文字列かも知れませんし、 "----Cherry---->"ディクショナリーかもしれませんし、
+        # None かもしれません。
 
         # まずはカレントステートを指定してディクショナリーを取ってきましょう
         if self.state.name in self._transition_dict:
             curr_dict = self._transition_dict[self.state.name]
+            if curr_dict is None:
+                self._is_terminate = True
+                self.on_terminate(req)
+                return
         else:
             raise ValueError(
                 f"Current state is not found. name=[{self.state.name}]")
@@ -241,6 +251,10 @@ class StateMachine():
         for i, edge in enumerate(self._edge_path):
             if edge in curr_dict:
                 curr_dict = curr_dict[edge]
+                if curr_dict is None:
+                    self._is_terminate = True
+                    self.on_terminate(req)
+                    return
             else:
                 raise ValueError(
                     f"Edge[{i}] is not found. name=[{edge}] path=[{self._edge_path}]")

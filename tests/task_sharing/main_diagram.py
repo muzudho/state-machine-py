@@ -2,7 +2,7 @@ import queue
 import time
 from threading import Thread
 from state_machine_py.multiple_state_machine import MultipleStateMachine
-from tests.task_sharing.keywords import INIT
+from tests.task_sharing.keywords import INIT, MACHINE_A, MACHINE_B
 from tests.task_sharing.machine_a.context import Context as ContextA
 from tests.task_sharing.machine_a.state_creator_dict import state_creator_dict as state_creator_dict_a
 from tests.task_sharing.machine_a.transition_dict import transition_dict as transition_dict_a
@@ -19,14 +19,14 @@ class MainDiagram():
         self._multiple_state_machine = MultipleStateMachine()
 
         machine_a = self._multiple_state_machine.create_machine(
-            "machine_a",
+            MACHINE_A,
             context=ContextA(),
             state_creator_dict=state_creator_dict_a,
             transition_dict=transition_dict_a)
         machine_a.verbose = True  # デバッグ情報を出力します
 
         machine_b = self._multiple_state_machine.create_machine(
-            "machine_b",
+            MACHINE_B,
             context=ContextB(),
             state_creator_dict=state_creator_dict_b,
             transition_dict=transition_dict_b)
@@ -48,25 +48,30 @@ class MainDiagram():
 
         number = int(line)
         # Aさんに数を渡します
-        self._multiple_state_machine.machines["machine_a"].context.number = number
+        self._multiple_state_machine.machines[MACHINE_A].context.number = number
 
         self.init()
 
         """待機だけしています"""
-        while not(self._multiple_state_machine.machines["machine_a"].is_terminate and self._multiple_state_machine.machines["machine_b"].is_terminate):
+        while not(self._multiple_state_machine.machines[MACHINE_A].is_terminate and self._multiple_state_machine.machines[MACHINE_B].is_terminate):
             time.sleep(1)
 
     def init(self):
         """ダイアグラムを初期状態に戻します"""
 
         # 以降、標準入力をトリガーにして状態を遷移します
-        thr = Thread(target=self.listen_for_messages)
-        thr.daemon = True
-        thr.start()
+        thr_a = Thread(target=self.work_of_machine_a)
+        thr_a.daemon = True
+        thr_a.start()
 
-    def listen_for_messages(self):
-        """メインループ"""
+        thr_b = Thread(target=self.work_of_machine_b)
+        thr_b.daemon = True
+        thr_b.start()
 
+    def work_of_machine_a(self):
         # （強制的に）ステートマシンを初期状態から始めます
-        self._multiple_state_machine.machines["machine_a"].start(INIT)
-        self._multiple_state_machine.machines["machine_b"].start(INIT)
+        self._multiple_state_machine.machines[MACHINE_A].start(INIT)
+
+    def work_of_machine_b(self):
+        # （強制的に）ステートマシンを初期状態から始めます
+        self._multiple_state_machine.machines[MACHINE_B].start(INIT)

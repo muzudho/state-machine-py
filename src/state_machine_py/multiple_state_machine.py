@@ -25,7 +25,8 @@ class MultipleStateMachine():
             context=context,
             state_creator_dict=state_creator_dict,
             transition_dict=transition_dict,
-            intermachine=Intermachine(self, machine_key))
+            intermachine=Intermachine(self, machine_key),
+            name=machine_key)
 
         self._machines[machine_key] = machine
         self._input_queues[machine_key] = queue.Queue()

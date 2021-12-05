@@ -1,3 +1,8 @@
+# Statemachines
+
+MACHINE_A = "[[MachineA]]"
+MACHINE_B = "[[MachineB]]"
+
 # States
 
 INIT = "[Init]"
