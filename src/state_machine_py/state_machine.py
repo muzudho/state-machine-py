@@ -148,6 +148,12 @@ class StateMachine():
 
             interrupt_line = self.arrive(next_state_name)
 
+    def _alternate_state_machine_name(self):
+        if self.name is None:
+            return "[[state_machine]]"
+        else:
+            return self.name
+
     def arrive(self, next_state_name):
         """指定の状態に遷移します
         entryコールバック関数を呼び出します。
@@ -162,12 +168,14 @@ class StateMachine():
         object
             ただちに leave に渡したい引数。無ければ None
         """
+
         if self._is_terminate:
             return
 
         if self.verbose:
             edge_path = '.'.join(self._edge_path)
-            print(f"[state_machine] Arrive to {next_state_name} {edge_path}")
+            print(
+                f"{self._alternate_state_machine_name()} Arrive to {next_state_name} {edge_path}")
 
         if next_state_name in self._state_creator_dict:
             # 次のステートへ引継ぎ
@@ -180,7 +188,7 @@ class StateMachine():
             interrupt_line = self._state.entry(req)
             if interrupt_line and self.verbose:
                 print(
-                    f"[state_machine] Arrive interrupt_line={interrupt_line}")
+                    f"{self._alternate_state_machine_name()} Arrive interrupt_line={interrupt_line}")
 
             return interrupt_line
 
@@ -207,7 +215,8 @@ class StateMachine():
             return
 
         if self.verbose:
-            print(f"[state_machine] Leave line={line}")
+            print(
+                f"{self._alternate_state_machine_name()} Leave line={line}")
 
         req = Request(
             context=self._context,

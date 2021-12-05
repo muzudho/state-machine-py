@@ -22,8 +22,14 @@ Bさん: 渡されたボールに偶数が書かれていたら 2で割った数
 python.exe -m tests.task_sharing.main
 ```
 
-Input:
+Input 1:
 
 ```plain
-24
+6
+```
+
+Input 2:
+
+```plain
+27
 ```

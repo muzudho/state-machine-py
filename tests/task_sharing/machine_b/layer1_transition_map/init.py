@@ -14,7 +14,6 @@ class InitState(AbstractState):
 
     def entry(self, req):
         # 入力を飛ばします
-        print("[B] entry")
         return "pass_on"
 
     def exit(self, req):
@@ -40,15 +39,17 @@ class InitState(AbstractState):
             print("[B] まだボールは飛んでこなかった")
 
         elif req.context.number == 1:
-            print("[B] Stop")
+            print("[B] ボールが 1 になったので停止します。ボールは投げます")
+            req.intermachine.put(MACHINE_A, req.context.number)
+            req.context.number = None
             return E_STOP
 
         elif req.context.number % 2 == 0:
-            print("[B] Calc")
             req.context.number /= 2
+            print(f"[B] ボールを {req.context.number} に上書きした")
 
         else:
-            print(f"[B] [{MACHINE_A}]に ボール[{req.context.number}] を渡したい")
+            print(f"[B] {MACHINE_A}に ボール{req.context.number} を投げた")
             req.intermachine.put(MACHINE_A, req.context.number)
             req.context.number = None
 
