@@ -1,7 +1,6 @@
 import queue
 import time
 from threading import Thread
-from state_machine_py.state_machine import StateMachine
 from state_machine_py.multiple_state_machine import MultipleStateMachine
 from tests.task_sharing.keywords import INIT
 from tests.task_sharing.machine_a.context import Context as ContextA
@@ -19,28 +18,19 @@ class MainDiagram():
 
         self._multiple_state_machine = MultipleStateMachine()
 
-        def __create_machine_a():
-            state_machine = StateMachine(
-                context=ContextA(),
-                state_creator_dict=state_creator_dict_a,
-                transition_dict=transition_dict_a)
+        machine_a = self._multiple_state_machine.create_machine(
+            "machine_a",
+            context=ContextA(),
+            state_creator_dict=state_creator_dict_a,
+            transition_dict=transition_dict_a)
+        machine_a.verbose = True  # デバッグ情報を出力します
 
-            state_machine.verbose = True  # デバッグ情報を出力します
-            return state_machine
-
-        def __create_machine_b():
-            state_machine = StateMachine(
-                context=ContextB(),
-                state_creator_dict=state_creator_dict_b,
-                transition_dict=transition_dict_b)
-
-            state_machine.verbose = True  # デバッグ情報を出力します
-            return state_machine
-
-        self._multiple_state_machine.append_machine("machine_a", __create_machine_a(
-        ))
-        self._multiple_state_machine.append_machine("machine_b", __create_machine_b(
-        ))
+        machine_b = self._multiple_state_machine.create_machine(
+            "machine_b",
+            context=ContextB(),
+            state_creator_dict=state_creator_dict_b,
+            transition_dict=transition_dict_b)
+        machine_b.verbose = True  # デバッグ情報を出力します
 
     def set_up(self):
         """__mainの定型処理"""

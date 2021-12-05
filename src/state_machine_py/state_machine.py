@@ -14,7 +14,7 @@ class StateMachine():
     sm.arrive("[Init]") # Init状態は作っておいてください
     """
 
-    def __init__(self, context=None, state_creator_dict={}, transition_dict={}):
+    def __init__(self, context=None, state_creator_dict={}, transition_dict={}, intermachine=None):
         """初期化
 
         Parameters
@@ -35,6 +35,7 @@ class StateMachine():
         self._lines_getter = None  # 標準入力とか１個しかないけど
         self._state = None
         self._is_terminate = False  # 永遠に停止
+        self._intermachine = intermachine
 
     @property
     def context(self):
@@ -166,7 +167,10 @@ class StateMachine():
             # 次のステートへ引継ぎ
             self._state = self._state_creator_dict[next_state_name]()
 
-            req = Request(self._context, self._edge_path, None)
+            req = Request(context=self._context,
+                          edge_path=self._edge_path,
+                          line=None,
+                          intermachine=self._intermachine)
             interrupt_line = self._state.entry(req)
             if interrupt_line and self.verbose:
                 print(
@@ -199,7 +203,11 @@ class StateMachine():
         if self.verbose:
             print(f"[state_machine] Leave line={line}")
 
-        req = Request(self._context, self.edge_path, line)
+        req = Request(
+            context=self._context,
+            edge_path=self.edge_path,
+            line=line,
+            intermachine=self._intermachine)
         next_edge_name = self._state.exit(req)
 
         if next_edge_name is None:
@@ -259,7 +267,7 @@ class StateMachine():
     def on_line(self, line):
         pass
 
-    def on_terminate(self, request):
+    def on_terminate(self, req):
         """永遠に停止
 
         Parameters

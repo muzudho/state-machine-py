@@ -1,10 +1,11 @@
 class Request():
     """ステートマシンからステートへ与えられる引数のまとまり"""
 
-    def __init__(self, context, edge_path, line):
+    def __init__(self, context, edge_path=[], line=None, intermachine=None):
         self._context = context
         self._edge_path = edge_path
         self._line = line
+        self._intermachine = intermachine
 
     @property
     def context(self):
@@ -30,3 +31,8 @@ class Request():
         --------
         コマンドライン文字列"""
         return self._line
+
+    @property
+    def intermachine(self):
+        """ステートマシン間の通信手段"""
+        return self._intermachine

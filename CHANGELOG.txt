@@ -1,3 +1,11 @@
+# 9.0.0
+
+ステートマシン間の通信方法の準備
+
+# 8.0.4
+
+Multiple state machine に create_machine() 追加
+
 # 8.0.3
 
 Intermachine を準備

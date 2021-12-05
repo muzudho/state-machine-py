@@ -62,7 +62,8 @@ if __name__ == "__main__":
     state = InitState()
 
     line = 'kifuwarabe'
-    req = Request(context, line, [])
+    req = Request(context=context,
+                  line=line)
     edge = state.exit(req)
     if edge == E_LOGIN:
         print('.', end='')
@@ -70,7 +71,8 @@ if __name__ == "__main__":
         print('f', end='')
 
     line = 'ya !'
-    req = Request(context, line, [])
+    req = Request(context=context,
+                  line=line)
     edge = state.exit(req)
     if edge == E_LOOPBACK:
         print('.', end='')
