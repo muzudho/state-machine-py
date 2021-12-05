@@ -1,8 +1,8 @@
 import re
 from state_machine_py.abstract_state import AbstractState
 from state_machine_py.request import Request
-from context import Context
-from keywords import E_LOGIN, E_LOOPBACK, INIT
+from tests.rock_paper_scissors.context import Context
+from tests.rock_paper_scissors.keywords import E_LOGIN, E_LOOPBACK, INIT
 
 
 class InitState(AbstractState):

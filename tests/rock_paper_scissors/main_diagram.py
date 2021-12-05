@@ -1,10 +1,10 @@
 import queue
 from threading import Thread
 from state_machine_py.state_machine import StateMachine
-from context import Context
-from state_creator_dict import state_creator_dict
-from keywords import INIT
-from transition_dict import transition_dict
+from tests.rock_paper_scissors.context import Context
+from tests.rock_paper_scissors.state_creator_dict import state_creator_dict
+from tests.rock_paper_scissors.keywords import INIT
+from tests.rock_paper_scissors.transition_dict import transition_dict
 
 
 class MainDiagram():

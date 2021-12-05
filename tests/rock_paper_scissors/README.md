@@ -5,8 +5,6 @@
 # Set up
 
 ```shell
-cd tests/rock_paper_scissors
-
 # Product
 python.exe -m pip install state_machine_py
 ```
@@ -14,9 +12,7 @@ python.exe -m pip install state_machine_py
 # Run
 
 ```shell
-# cd tests/rock_paper_scissors
-
-python.exe -m main
+python.exe -m tests.rock_paper_scissors.main
 ```
 
 # Concept (Layer 1. Transition map)

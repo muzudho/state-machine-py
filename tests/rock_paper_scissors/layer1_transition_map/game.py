@@ -1,9 +1,8 @@
-import sys
 import re
 from state_machine_py.abstract_state import AbstractState
 from state_machine_py.request import Request
-from context import Context
-from keywords import E_DRAW, E_LOOPBACK, E_LOSE, E_WIN, GAME
+from tests.rock_paper_scissors.context import Context
+from tests.rock_paper_scissors.keywords import E_DRAW, E_LOOPBACK, E_LOSE, E_WIN, GAME
 
 
 class GameState(AbstractState):

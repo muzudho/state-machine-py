@@ -1,5 +1,4 @@
-import sys
-from layer1_transition_map.game import GameState
+from tests.rock_paper_scissors.layer1_transition_map.game import GameState
 
 
 def create():

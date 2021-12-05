@@ -1,6 +1,6 @@
 import sys
 import signal
-from main_diagram import MainDiagram
+from tests.rock_paper_scissors.main_diagram import MainDiagram
 
 
 def __main():

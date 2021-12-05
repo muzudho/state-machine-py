@@ -1,4 +1,4 @@
-from layer1_transition_map.init import InitState
+from tests.rock_paper_scissors.layer1_transition_map.init import InitState
 
 
 def create():
