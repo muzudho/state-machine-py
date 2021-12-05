@@ -1,9 +1,15 @@
 import queue
+import time
 from threading import Thread
 from state_machine_py.state_machine import StateMachine
-from tests.task_sharing.context import Context
-from tests.task_sharing.state_creator_dict import state_creator_dict
-from tests.task_sharing.transition_dict import transition_dict
+from state_machine_py.multiple_state_machine import MultipleStateMachine
+from tests.task_sharing.keywords import INIT
+from tests.task_sharing.machine_a.context import Context as ContextA
+from tests.task_sharing.machine_a.state_creator_dict import state_creator_dict as state_creator_dict_a
+from tests.task_sharing.machine_a.transition_dict import transition_dict as transition_dict_a
+from tests.task_sharing.machine_b.context import Context as ContextB
+from tests.task_sharing.machine_b.state_creator_dict import state_creator_dict as state_creator_dict_b
+from tests.task_sharing.machine_b.transition_dict import transition_dict as transition_dict_b
 
 
 class MainDiagram():
@@ -11,57 +17,54 @@ class MainDiagram():
         """初期化"""
         self._line_queue = queue.Queue()
 
-        self._state_machine = StateMachine(
-            context=Context(),
-            state_creator_dict=state_creator_dict,
-            transition_dict=transition_dict)
+        self._multiple_state_machine = MultipleStateMachine()
 
-        def __lines_getter():
-            # キューから先頭要素を取り出します
-            line = self._line_queue.get()
+        def __create_machine_a():
+            state_machine = StateMachine(
+                context=ContextA(),
+                state_creator_dict=state_creator_dict_a,
+                transition_dict=transition_dict_a)
 
-            ret = [f"{line}"]
-            self._line_queue.task_done()  # 取り出したアイテムの使用完了をキューに知らせます
+            state_machine.verbose = True  # デバッグ情報を出力します
+            return state_machine
 
-            # a way to exit the program
-            if ret[0].lower() == 'q':
-                return None  # Quit
+        def __create_machine_b():
+            state_machine = StateMachine(
+                context=ContextB(),
+                state_creator_dict=state_creator_dict_b,
+                transition_dict=transition_dict_b)
 
-            return ret
+            state_machine.verbose = True  # デバッグ情報を出力します
+            return state_machine
 
-        self.state_machine.lines_getter = __lines_getter
-
-        # デバッグ情報を出力します
-        self._state_machine.verbose = True
-
-        # 終了フラグ
-        self._quit = False
-
-    @property
-    def state_machine(self):
-        """状態遷移マシン"""
-        return self._state_machine
+        self._multiple_state_machine.machines["machine_a"] = __create_machine_a(
+        )
+        self._multiple_state_machine.machines["machine_b"] = __create_machine_b(
+        )
 
     def set_up(self):
         """__mainの定型処理"""
-        self.init()
+        pass
 
     def clean_up(self):
         """__mainの定型処理"""
         pass
 
     def run(self):
+
+        # 改行を付けなかったなら、フラッシュを明示します
+        print("最初に数字を入力してください:", end=False, flush=True)
+        line = input()  # ブロックします
+
+        number = int(line)
+        # Aさんに数を渡します
+        self._multiple_state_machine.machines["machine_a"].context.number = number
+
+        self.init()
+
         """待機だけしています"""
         while not self._quit:
-            # 末尾に改行は付いていません
-            line = input()  # ブロックします
-
-            self._line_queue.put(line)
-
-            # a way to exit the program
-            if line.lower() == 'q':
-                self._quit = True
-                break
+            time.sleep(1)
 
     def init(self):
         """ダイアグラムを初期状態に戻します"""
@@ -75,4 +78,5 @@ class MainDiagram():
         """メインループ"""
 
         # （強制的に）ステートマシンを初期状態から始めます
-        self.state_machine.start("[Init]")
+        self._multiple_state_machine.machines["machine_a"].start(INIT)
+        self._multiple_state_machine.machines["machine_b"].start(INIT)

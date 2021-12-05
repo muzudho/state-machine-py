@@ -1,3 +1,7 @@
+# 8.0.2
+
+永遠に停止の Terminate 機能を準備
+
 # 8.0.0
 
 lines_getter を StateMachine のプロパティー化

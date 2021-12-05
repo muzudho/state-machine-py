@@ -1,4 +1,9 @@
 # States
 
 INIT = "[Init]"
-STOP = "[Stop]"
+
+# Edges
+
+E_STOP = "-Stop->"
+E_INCREASE = "-Increase->"
+E_DECREASE = "-Decrease->"

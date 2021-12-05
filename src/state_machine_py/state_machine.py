@@ -31,9 +31,10 @@ class StateMachine():
         self._state_creator_dict = state_creator_dict
         self._transition_dict = transition_dict
         self._verbose = False
-        self._state = None
         self._edge_path = []
-        self._lines_getter = None
+        self._lines_getter = None  # 標準入力とか１個しかないけど
+        self._state = None
+        self._is_terminate = False  # 永遠に停止
 
     @property
     def context(self):
@@ -74,8 +75,14 @@ class StateMachine():
     def verbose(self, val):
         self._verbose = val
 
-    def on_line(self, line):
-        pass
+    @property
+    def is_terminate(self):
+        """永遠に停止"""
+        return self._is_terminate
+
+    @is_terminate.setter
+    def is_terminate(self, val):
+        self._is_terminate = val
 
     def start(self, next_state_name):
         """まず state_machine.arrive(...) を行い、
@@ -83,7 +90,11 @@ class StateMachine():
         leave(...) に渡す line 引数は arrive(...) から返しますが、
         代わりに None を返すと self.lines_getter() が実行されます。
         self.lines_getter() は、 line のリストを返す関数です。
-        self.lines_getter() が None を返すとループを抜けます"""
+        self.lines_getter() が None を返すとループを抜けます
+        """
+        if self._is_terminate:
+            return
+
         self.arrive_sequence(next_state_name)
         self.leave_and_loop()
 
@@ -92,7 +103,11 @@ class StateMachine():
         そのあと arrive(...), leave(...) のペアを無限に繰り返します。
         leave(...) に渡す line 引数は、
         lines_getter() を実行することでリストで取得できるようにしてください。
-        lines_getter() が None を返すとループを抜けます"""
+        lines_getter() が None を返すとループを抜けます
+        """
+        if self._is_terminate:
+            return
+
         while True:
             lines = self.lines_getter()
             if lines is None:
@@ -115,6 +130,9 @@ class StateMachine():
         str : next_state_name
             次の状態の名前
         """
+        if self._is_terminate:
+            return
+
         interrupt_line = self.arrive(next_state_name)
 
         # interrupt_line の指定があったら、次の leave をすぐ行います
@@ -137,6 +155,8 @@ class StateMachine():
         object
             ただちに leave に渡したい引数。無ければ None
         """
+        if self._is_terminate:
+            return
 
         if self.verbose:
             edge_path = '.'.join(self._edge_path)
@@ -173,12 +193,19 @@ class StateMachine():
         str
             次の状態の名前
         """
+        if self._is_terminate:
+            return
 
         if self.verbose:
             print(f"[state_machine] Leave line={line}")
 
         req = Request(self._context, self.edge_path, line)
         next_edge_name = self._state.exit(req)
+
+        if next_edge_name is None:
+            self._is_terminate = True
+            self.on_terminate(req)
+            return
 
         # 例えば [Apple]ステート に居るとき ----Banana----> エッジに去るということは、
         #
@@ -228,3 +255,16 @@ class StateMachine():
                 f"Next edge is not found. name=[{next_edge_name}] current state=[{self.state.name}] path=[{self._edge_path}]")
 
         return next_state_name
+
+    def on_line(self, line):
+        pass
+
+    def on_terminate(self, request):
+        """永遠に停止
+
+        Parameters
+        ----------
+        req : Request
+            ステートマシンからステートへ与えられる引数のまとまり
+        """
+        pass

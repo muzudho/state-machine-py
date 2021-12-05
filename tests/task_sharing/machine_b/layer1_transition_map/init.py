@@ -1,5 +1,5 @@
 from state_machine_py.abstract_state import AbstractState
-from tests.task_sharing.keywords import INIT
+from tests.task_sharing.keywords import E_DECREASE, E_STOP, INIT
 
 
 class InitState(AbstractState):
@@ -11,6 +11,10 @@ class InitState(AbstractState):
     @property
     def name(self):
         return INIT
+
+    def enter(self, req):
+        # 入力を飛ばします
+        return "pass_on"
 
     def exit(self, req):
         """次の辺の名前を返します
@@ -26,9 +30,13 @@ class InitState(AbstractState):
             辺の名前
         """
 
-        # 現在位置の表示
-        edge_path_str = '.'.join(req.edge_path)
-        print(f"[Walk] Current state={self.name} edge_path={edge_path_str}")
+        if req.context.number == 0:
+            return E_STOP
 
-        next_edge_name = req.line
-        return next_edge_name
+        if req.context.number == None:
+            pass
+
+        elif req.context.number % 2 == 0:
+            req.context.number /= 2
+
+        return E_DECREASE
