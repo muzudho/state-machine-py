@@ -95,7 +95,7 @@ class StateMachine():
         lines_getter() が None を返すとループを抜けます"""
         while True:
             lines = self.lines_getter()
-            if not lines:
+            if lines is None:
                 break
 
             for line in lines:
@@ -119,11 +119,9 @@ class StateMachine():
 
         # interrupt_line の指定があったら、次の leave をすぐ行います
         while interrupt_line:
-            next_state_name = self.leave(
-                interrupt_line)
+            next_state_name = self.leave(interrupt_line)
 
-            interrupt_line = self.arrive(
-                next_state_name)
+            interrupt_line = self.arrive(next_state_name)
 
     def arrive(self, next_state_name):
         """指定の状態に遷移します
