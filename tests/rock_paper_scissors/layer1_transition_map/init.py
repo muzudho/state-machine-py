@@ -1,5 +1,6 @@
 import re
 from state_machine_py.abstract_state import AbstractState
+from state_machine_py.request import Request
 from context import Context
 
 
@@ -20,23 +21,21 @@ class InitState(AbstractState):
     def name(self):
         return "[Init]"
 
-    def on_logged_in(self, context):
+    def on_logged_in(self, req):
         """ログイン成功時"""
         pass
 
-    def on_failed(self, context):
+    def on_failed(self, req):
         """ログイン失敗時"""
         pass
 
-    def exit(self, context, line, edge_path):
+    def exit(self, req):
         """次の辺の名前を返します
+
         Parameters
         ----------
-        context : Context
-            このステートマシンは、このContextが何なのか知りません。
-            外部から任意に与えることができる変数です。 Defaults to None.
-        line : str
-            コマンドライン文字列
+        req : Request
+            ステートマシンからステートへ与えられる引数のまとまり
 
         Returns
         -------
@@ -44,14 +43,14 @@ class InitState(AbstractState):
             辺の名前
         """
 
-        matched = self._user_name_pattern.match(line)
+        matched = self._user_name_pattern.match(req.line)
         if matched:
-            context.user_name = matched.group(1)
+            req.context.user_name = matched.group(1)
 
-            self.on_logged_in(context)
+            self.on_logged_in(req)
             return '----LoggedIn---->'
 
-        self.on_failed(context)
+        self.on_failed(req)
         return '----Loopback---->'
 
 
@@ -62,14 +61,16 @@ if __name__ == "__main__":
     state = InitState()
 
     line = 'kifuwarabe'
-    edge = state.exit(context, line, [])
+    req = Request(context, line, [])
+    edge = state.exit(req)
     if edge == '----LoggedIn---->':
         print('.', end='')
     else:
         print('f', end='')
 
     line = 'ya !'
-    edge = state.exit(context, line, [])
+    req = Request(context, line, [])
+    edge = state.exit(req)
     if edge == '----Loopback---->':
         print('.', end='')
     else:

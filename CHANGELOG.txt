@@ -1,3 +1,7 @@
+# 7.0.0
+
+entry(), on_entry(), exit(), on_exit() の引数を Requestオブジェクト に変更
+
 # 6.0.0
 
 state.leave(...) を廃止。 state.exit(...) に統合

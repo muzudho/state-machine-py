@@ -4,14 +4,13 @@ class AbstractState():
     def __init__(self):
         pass
 
-    def entry(self, context):
+    def entry(self, req):
         """この状態に遷移したときに呼び出されます
 
         Parameters
         ----------
-        context : Context
-            このステートマシンは、このContextが何なのか知りません。
-            外部から任意に与えることができる変数です
+        req : Request
+            ステートマシンからステートへ与えられる引数のまとまり
 
         Returns
         -------
@@ -19,55 +18,42 @@ class AbstractState():
             ただちに state_machine.leave(...) に渡す引数です。
             None を指定すると、たたちに次の状態に遷移することはしません
         """
-        self.on_entry(context)
+        self.on_entry(req)
         return None
 
-    def on_entry(self, context):
+    def on_entry(self, req):
         """この状態に遷移したときに呼び出されます
 
         Parameters
         ----------
-        context : Context
-            このステートマシンは、このContextが何なのか知りません。
-            外部から任意に与えることができる変数です
+        req : Request
+            ステートマシンからステートへ与えられる引数のまとまり
         """
         pass
 
-    def exit(self, context, line, edge_path):
+    def exit(self, req):
         """この状態から抜け出たときに呼び出されます。ただし初期化時、アボート時は呼び出されません
 
         Parameters
         ----------
-        context : Context
-            このステートマシンは、このContextが何なのか知りません。
-            外部から任意に与えることができる変数です。 Defaults to None.
-        line : str
-            コマンドライン文字列
-        edge_path : list
-            辺パス
-
-        Parameters
-        ----------
-        context : Context
-            このステートマシンは、このContextが何なのか知りません。
-            外部から任意に与えることができる変数です
+        req : Request
+            ステートマシンからステートへ与えられる引数のまとまり
 
         Returns
         -------
         str
             次（下位）の辺の名前
         """
-        self.on_exit(context)
+        self.on_exit(req)
 
         return None
 
-    def on_exit(self, context):
+    def on_exit(self, req):
         """この状態から抜け出たときに呼び出されます。ただし初期化時、アボート時は呼び出されません
 
         Parameters
         ----------
-        context : Context
-            このステートマシンは、このContextが何なのか知りません。
-            外部から任意に与えることができる変数です
+        req : Request
+            ステートマシンからステートへ与えられる引数のまとまり
         """
         pass

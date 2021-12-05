@@ -1,5 +1,6 @@
 import re
 from state_machine_py.abstract_state import AbstractState
+from state_machine_py.request import Request
 from context import Context
 
 
@@ -18,31 +19,29 @@ class GameState(AbstractState):
     def name(self):
         return "[Game]"
 
-    def on_win(self, context):
+    def on_win(self, req):
         """----Win---->時"""
         pass
 
-    def on_lose(self, context):
+    def on_lose(self, req):
         """----Lose---->時"""
         pass
 
-    def on_draw(self, context):
+    def on_draw(self, req):
         """----Draw---->時"""
         pass
 
-    def on_loopback(self, context):
+    def on_loopback(self, req):
         """----Loopback---->時"""
         pass
 
-    def exit(self, context, line, edge_path):
+    def exit(self, req):
         """次の辺の名前を返します
+
         Parameters
         ----------
-        context : Context
-            このステートマシンは、このContextが何なのか知りません。
-            外部から任意に与えることができる変数です。 Defaults to None.
-        line : str
-            コマンドライン文字列
+        req : Request
+            ステートマシンからステートへ与えられる引数のまとまり
 
         Returns
         -------
@@ -50,22 +49,22 @@ class GameState(AbstractState):
             辺の名前
         """
 
-        matched = self._janken_pattern.match(line)
+        matched = self._janken_pattern.match(req.line)
         if matched:
             janken = matched.group(1)
 
             # 相手は P（パー） を出しているとします
             if janken == 'R':
-                self.on_lose(context)
+                self.on_lose(req)
                 return '----Lose---->'
             elif janken == 'S':
-                self.on_win(context)
+                self.on_win(req)
                 return '----Win---->'
             else:
-                self.on_draw(context)
+                self.on_draw(req)
                 return '----Draw---->'
 
-        self.on_loopback(context)
+        self.on_loopback(req)
         return '----Loopback---->'
 
 
@@ -76,28 +75,32 @@ if __name__ == "__main__":
     state = GameState()
 
     line = 'R'
-    edge = state.exit(context, line)
+    req = Request(context, line, [])
+    edge = state.exit(req)
     if edge == '----Lose---->':
         print('.', end='')
     else:
         print('f', end='')
 
     line = 'S'
-    edge = state.exit(context, line)
+    req = Request(context, line, [])
+    edge = state.exit(req)
     if edge == '----Win---->':
         print('.', end='')
     else:
         print('f', end='')
 
     line = 'P'
-    edge = state.exit(context, line)
+    req = Request(context, line, [])
+    edge = state.exit(req)
     if edge == '----Draw---->':
         print('.', end='')
     else:
         print('f', end='')
 
     line = 'W'
-    edge = state.exit(context, line)
+    req = Request(context, line, [])
+    edge = state.exit(req)
     if edge == '----Loopback---->':
         print('.', end='')
     else:

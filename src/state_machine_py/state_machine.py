@@ -1,3 +1,6 @@
+from state_machine_py.request import Request
+
+
 class StateMachine():
     """状態遷移マシーン（State diagram machine）
 
@@ -134,7 +137,8 @@ class StateMachine():
             # 次のステートへ引継ぎ
             self._state = self._state_creator_dict[next_state_name]()
 
-            interrupt_line = self._state.entry(self._context)
+            req = Request(self._context, self._edge_path, None)
+            interrupt_line = self._state.entry(req)
             if interrupt_line and self.verbose:
                 print(
                     f"[state_machine] Arrive interrupt_line={interrupt_line}")
@@ -164,7 +168,8 @@ class StateMachine():
         if self.verbose:
             print(f"[state_machine] Leave line={line}")
 
-        next_edge_name = self._state.exit(self._context, line, self.edge_path)
+        req = Request(self._context, self.edge_path, line)
+        next_edge_name = self._state.exit(req)
 
         # 例えば [Apple]ステート に居るとき ----Banana----> エッジに去るということは、
         #
