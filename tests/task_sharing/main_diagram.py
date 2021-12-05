@@ -53,7 +53,7 @@ class MainDiagram():
     def run(self):
 
         # 改行を付けなかったなら、フラッシュを明示します
-        print("最初に数字を入力してください:", end=False, flush=True)
+        print("最初に数字を入力してください:", end='', flush=True)
         line = input()  # ブロックします
 
         number = int(line)
