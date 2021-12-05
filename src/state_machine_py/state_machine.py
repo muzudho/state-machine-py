@@ -269,7 +269,11 @@ class StateMachine():
                     f"Edge[{i}] is not found. name=[{edge}] path=[{self._edge_path}]")
 
         # 最後に、次のエッジへ下りていきましょう
-        if next_edge_name in curr_dict:
+        if next_edge_name == '':
+            # （Noneではなく）空文字を指定したら、踏みとどまります
+            pass
+
+        elif next_edge_name in curr_dict:
             # ディクショナリーか、文字列のどちらかです
             obj = curr_dict[next_edge_name]
 
