@@ -20,17 +20,11 @@ class GameState(AbstractState):
     def name(self):
         return GAME
 
-    def on_win(self, req):
-        pass
-
-    def on_lose(self, req):
-        pass
-
-    def on_draw(self, req):
-        pass
-
-    def on_loopback(self, req):
-        pass
+    def entry(self, req):
+        print("[RPS]L1 Begin entry")
+        ret = super().entry(req)
+        print(f"[RPS]L1 End entry ret={ret}")
+        return ret
 
     def exit(self, req):
         """次の辺の名前を返します
@@ -45,6 +39,8 @@ class GameState(AbstractState):
         str
             辺の名前
         """
+        print("[RPS]L1 Begin exit")
+        super().exit(req)
 
         matched = self._janken_pattern.match(req.line)
         if matched:
@@ -63,6 +59,18 @@ class GameState(AbstractState):
 
         self.on_loopback(req)
         return E_LOOPBACK
+
+    def on_win(self, req):
+        pass
+
+    def on_lose(self, req):
+        pass
+
+    def on_draw(self, req):
+        pass
+
+    def on_loopback(self, req):
+        pass
 
 
 # Test

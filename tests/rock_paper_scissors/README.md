@@ -45,7 +45,6 @@ state_machine = StateMachine(
 def __lines_getter():
     # 末尾に改行は付いていません
     line = input()
-    # print(line)
 
     # a way to exit the program
     if line.lower() == 'q':
