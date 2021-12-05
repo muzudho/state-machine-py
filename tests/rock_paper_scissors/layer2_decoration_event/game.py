@@ -1,3 +1,4 @@
+import sys
 from layer1_transition_map.game import GameState
 
 
@@ -19,12 +20,12 @@ class DecoratedGameState(GameState):
         req : Request
             ステートマシンからステートへ与えられる引数のまとまり
         """
-        print("[RPS]L2 Begin before super.on_entry()")
         # on_entry の前に処理を書いていただけます
         super().on_entry(req)
         # on_entry の後に処理を書いていただけます
-        print("[RPS]L2 Begin after super.on_entry()")
-        print("Rock-paper-scissors(R,P,S): ", end='')
+
+        # 改行を出力しないとフラッシュされませんので、明示的にフラッシュします
+        print("Rock-paper-scissors(R,P,S): ", end='', flush=True)
 
     def on_exit(self, req):
         """この on_exit メソッドは省略することもできます。
@@ -36,7 +37,7 @@ class DecoratedGameState(GameState):
         req : Request
             ステートマシンからステートへ与えられる引数のまとまり
         """
-        print("[RPS]L2 Begin on_exit")
+        # print("[RPS]L2 Begin on_exit")
         # on_exit の前に処理を書いていただけます
         super().on_exit(req)
         # on_exit の後に処理を書いていただけます

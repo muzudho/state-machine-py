@@ -1,3 +1,4 @@
+import sys
 import re
 from state_machine_py.abstract_state import AbstractState
 from state_machine_py.request import Request
@@ -21,9 +22,7 @@ class GameState(AbstractState):
         return GAME
 
     def entry(self, req):
-        print("[RPS]L1 Begin entry")
         ret = super().entry(req)
-        print(f"[RPS]L1 End entry ret={ret}")
         return ret
 
     def exit(self, req):
@@ -39,7 +38,6 @@ class GameState(AbstractState):
         str
             辺の名前
         """
-        print("[RPS]L1 Begin exit")
         super().exit(req)
 
         matched = self._janken_pattern.match(req.line)

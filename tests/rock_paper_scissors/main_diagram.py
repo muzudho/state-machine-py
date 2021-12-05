@@ -18,11 +18,8 @@ class MainDiagram():
             transition_dict=transition_dict)
 
         def __lines_getter():
-            # print("[RPS]Dia Begin __lines_getter")
             # キューから先頭要素を取り出します
-            # line = self._line_queue.get(block=True)
             line = self._line_queue.get()
-            # print(f"[RPS]Dia line={line}")
 
             ret = [f"{line}"]
             self._line_queue.task_done()  # 取り出したアイテムの使用完了をキューに知らせます
@@ -32,7 +29,6 @@ class MainDiagram():
                 self._quit = True
                 ret = None
 
-            # print("[RPS]Dia End __lines_getter")
             return ret
 
         self.state_machine.lines_getter = __lines_getter
