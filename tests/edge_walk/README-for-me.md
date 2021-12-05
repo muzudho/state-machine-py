@@ -20,10 +20,12 @@ python.exe -m pip install state_machine_py
 python.exe -m main
 ```
 
-Input:
+Input:  
 
 ```
 ----E_2---->
 ----E_2_2---->
 ----E_2_2_2---->
+----E_2_2_2_2---->
+----E_1---->
 ```
