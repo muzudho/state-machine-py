@@ -16,6 +16,19 @@ class ExampleDiagram():
             state_creator_dict=state_creator_dict,
             transition_dict=transition_dict)
 
+        def __lines_getter():
+            # 末尾に改行は付いていません
+            line = input()
+
+            # a way to exit the program
+            if line.lower() == 'q':
+                self._quit = True
+                return None
+
+            return [line]
+
+        self.state_machine.lines_getter = __lines_getter
+
         # デバッグ情報を出力します
         self._state_machine.verbose = True
 
@@ -51,19 +64,8 @@ class ExampleDiagram():
     def listen_for_messages(self):
         """メインループ"""
 
-        def __lines_getter():
-            # 末尾に改行は付いていません
-            line = input()
-
-            # a way to exit the program
-            if line.lower() == 'q':
-                self._quit = True
-                return None
-
-            return [line]
-
         # （強制的に）ステートマシンを初期状態から始めます
-        self.state_machine.start("[Init]", __lines_getter)
+        self.state_machine.start("[Init]")
 
 
 def __main():

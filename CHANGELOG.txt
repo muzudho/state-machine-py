@@ -1,3 +1,13 @@
+# 8.0.0
+
+lines_getter を StateMachine のプロパティー化
+
+old: state_machine.start(self, next_state_name, lines_getter)
+new: state_machine.start(self, next_state_name)
+
+old: state_machine.leave_and_loop(self, lines_getter)
+new: state_machine.leave_and_loop(self)
+
 # 7.0.0
 
 entry(), on_entry(), exit(), on_exit() の引数を Requestオブジェクト に変更

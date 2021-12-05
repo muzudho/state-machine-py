@@ -41,13 +41,27 @@ state_machine = StateMachine(
     context=Context(),
     state_creator_dict=state_creator_dict,
     transition_dict=transition_dict)
+
+def __lines_getter():
+    # 末尾に改行は付いていません
+    line = input()
+    # print(line)
+
+    # a way to exit the program
+    if line.lower() == 'q':
+        # self._quit = True
+        return None
+
+    return [line]
+
+state_machine.lines_getter = __lines_getter
 ```
 
 👆  
 ステートマシンの生成の説明は長くなるので `main.py` ソースコードを読んでください
 
 ```python
-state_machine.start("[Init]", __lines_getter)
+state_machine.start("[Init]")
 ```
 
 👆  

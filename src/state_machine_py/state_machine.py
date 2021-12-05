@@ -33,6 +33,7 @@ class StateMachine():
         self._verbose = False
         self._state = None
         self._edge_path = []
+        self._lines_getter = None
 
     @property
     def context(self):
@@ -55,6 +56,16 @@ class StateMachine():
         return self._edge_path
 
     @property
+    def lines_getter(self):
+        """このステートマシンは、このContextが何なのか知りません。
+        外部から任意に与えることができる変数です"""
+        return self._lines_getter
+
+    @lines_getter.setter
+    def lines_getter(self, val):
+        self._lines_getter = val
+
+    @property
     def verbose(self):
         """標準出力にデバッグ情報を出力するなら真"""
         return self._verbose
@@ -66,24 +77,24 @@ class StateMachine():
     def on_line(self, line):
         pass
 
-    def start(self, next_state_name, lines_getter):
+    def start(self, next_state_name):
         """まず state_machine.arrive(...) を行い、
         そのあと leave(...), arrive(...) のペアを無限に繰り返します。
         leave(...) に渡す line 引数は arrive(...) から返しますが、
-        代わりに None を返すと lines_getter() が実行されます。
-        lines_getter() は、 line のリストを返す関数です。
-        lines_getter() が None を返すとループを抜けます"""
+        代わりに None を返すと self.lines_getter() が実行されます。
+        self.lines_getter() は、 line のリストを返す関数です。
+        self.lines_getter() が None を返すとループを抜けます"""
         self.arrive_sequence(next_state_name)
-        self.leave_and_loop(lines_getter)
+        self.leave_and_loop()
 
-    def leave_and_loop(self, lines_getter):
+    def leave_and_loop(self):
         """まず state_machine.leave(...) を行い、
         そのあと arrive(...), leave(...) のペアを無限に繰り返します。
         leave(...) に渡す line 引数は、
         lines_getter() を実行することでリストで取得できるようにしてください。
         lines_getter() が None を返すとループを抜けます"""
         while True:
-            lines = lines_getter()
+            lines = self.lines_getter()
             if not lines:
                 break
 
