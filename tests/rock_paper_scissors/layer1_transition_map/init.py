@@ -2,6 +2,7 @@ import re
 from state_machine_py.abstract_state import AbstractState
 from state_machine_py.request import Request
 from context import Context
+from keywords import E_LOGIN, E_LOOPBACK, INIT
 
 
 class InitState(AbstractState):
@@ -19,7 +20,7 @@ class InitState(AbstractState):
 
     @property
     def name(self):
-        return "[Init]"
+        return INIT
 
     def on_logged_in(self, req):
         """ログイン成功時"""
@@ -48,10 +49,10 @@ class InitState(AbstractState):
             req.context.user_name = matched.group(1)
 
             self.on_logged_in(req)
-            return '----LoggedIn---->'
+            return E_LOGIN
 
         self.on_failed(req)
-        return '----Loopback---->'
+        return E_LOOPBACK
 
 
 # Test
@@ -63,7 +64,7 @@ if __name__ == "__main__":
     line = 'kifuwarabe'
     req = Request(context, line, [])
     edge = state.exit(req)
-    if edge == '----LoggedIn---->':
+    if edge == E_LOGIN:
         print('.', end='')
     else:
         print('f', end='')
@@ -71,7 +72,7 @@ if __name__ == "__main__":
     line = 'ya !'
     req = Request(context, line, [])
     edge = state.exit(req)
-    if edge == '----Loopback---->':
+    if edge == E_LOOPBACK:
         print('.', end='')
     else:
         print('f', end='')

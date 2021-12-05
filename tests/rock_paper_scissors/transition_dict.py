@@ -1,18 +1,10 @@
-# State
-INIT = "[Init]"
-GAME = "[Game]"
+from keywords import E_DRAW, E_LOGIN, E_LOOPBACK, E_LOSE, E_WIN, GAME, INIT
 
-# Edge
-E_LOOPBACK = "----Loopback---->"
-E_LOGGED_IN = "----LoggedIn---->"
-E_WIN = "----Win---->"
-E_DRAW = "----Draw---->"
-E_LOSE = "----Lose---->"
 
 transition_dict = {
     INIT: {
         E_LOOPBACK: INIT,
-        E_LOGGED_IN: GAME,
+        E_LOGIN: GAME,
     },
     GAME: {
         E_LOOPBACK: GAME,

@@ -2,6 +2,7 @@ import re
 from state_machine_py.abstract_state import AbstractState
 from state_machine_py.request import Request
 from context import Context
+from keywords import E_DRAW, E_LOOPBACK, E_LOSE, E_WIN, GAME
 
 
 class GameState(AbstractState):
@@ -17,22 +18,18 @@ class GameState(AbstractState):
 
     @property
     def name(self):
-        return "[Game]"
+        return GAME
 
     def on_win(self, req):
-        """----Win---->時"""
         pass
 
     def on_lose(self, req):
-        """----Lose---->時"""
         pass
 
     def on_draw(self, req):
-        """----Draw---->時"""
         pass
 
     def on_loopback(self, req):
-        """----Loopback---->時"""
         pass
 
     def exit(self, req):
@@ -56,16 +53,16 @@ class GameState(AbstractState):
             # 相手は P（パー） を出しているとします
             if janken == 'R':
                 self.on_lose(req)
-                return '----Lose---->'
+                return E_LOSE
             elif janken == 'S':
                 self.on_win(req)
-                return '----Win---->'
+                return E_WIN
             else:
                 self.on_draw(req)
-                return '----Draw---->'
+                return E_DRAW
 
         self.on_loopback(req)
-        return '----Loopback---->'
+        return E_LOOPBACK
 
 
 # Test
@@ -77,7 +74,7 @@ if __name__ == "__main__":
     line = 'R'
     req = Request(context, line, [])
     edge = state.exit(req)
-    if edge == '----Lose---->':
+    if edge == E_LOSE:
         print('.', end='')
     else:
         print('f', end='')
@@ -85,7 +82,7 @@ if __name__ == "__main__":
     line = 'S'
     req = Request(context, line, [])
     edge = state.exit(req)
-    if edge == '----Win---->':
+    if edge == E_WIN:
         print('.', end='')
     else:
         print('f', end='')
@@ -93,7 +90,7 @@ if __name__ == "__main__":
     line = 'P'
     req = Request(context, line, [])
     edge = state.exit(req)
-    if edge == '----Draw---->':
+    if edge == E_DRAW:
         print('.', end='')
     else:
         print('f', end='')
@@ -101,7 +98,7 @@ if __name__ == "__main__":
     line = 'W'
     req = Request(context, line, [])
     edge = state.exit(req)
-    if edge == '----Loopback---->':
+    if edge == E_LOOPBACK:
         print('.', end='')
     else:
         print('f', end='')

@@ -5,6 +5,7 @@ import time
 from state_machine_py.state_machine import StateMachine
 from context import Context
 from state_creator_dict import state_creator_dict
+from keywords import INIT
 from transition_dict import transition_dict
 
 
@@ -64,7 +65,7 @@ class ExampleDiagram():
             return [line]
 
         # （強制的に）ステートマシンを初期状態から始めます
-        self.state_machine.start("[Init]", __lines_getter)
+        self.state_machine.start(INIT, __lines_getter)
 
 
 def __main():
