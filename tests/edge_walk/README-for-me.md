@@ -20,6 +20,8 @@ python.exe -m pip install state_machine_py
 python.exe -m main
 ```
 
+このサンプルでは行ごとのコマンド入力なので、複数行を同時に貼り付けても処理してくれます。  
+
 Input:  
 
 ```
