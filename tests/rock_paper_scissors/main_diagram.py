@@ -26,8 +26,7 @@ class MainDiagram():
 
             # a way to exit the program
             if ret[0].lower() == 'q':
-                self._quit = True
-                ret = None
+                return None  # Quit
 
             return ret
 
@@ -59,6 +58,11 @@ class MainDiagram():
             line = input()  # ブロックします
 
             self._line_queue.put(line)
+
+            # a way to exit the program
+            if line.lower() == 'q':
+                self._quit = True
+                break
 
     def init(self):
         """ダイアグラムを初期状態に戻します"""
