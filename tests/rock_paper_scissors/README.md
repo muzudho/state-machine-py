@@ -21,7 +21,7 @@ python.exe -m main
 
 # Concept (Layer 1. Transition map)
 
-![20211205blog1.png](./docs/img/20211205blog1.png)  
+![20211205blog1a1.png](./docs/img/20211205blog1a1.png)  
 👆  
 
 説明１  
@@ -53,7 +53,7 @@ state_machine.start("[Init]", __lines_getter)
 👆  
 ステートマシンの起動の説明は長くなるので `main.py` ソースコードを読んでください
 
-* State の名前はソースコード上では（必須ではありませんが）説明のために `[ ]` で囲むものとします
+* State の名前はソースコード上では（必須ではありませんが）説明のために `[ ]` で囲んでいます
 
 ```python
 from state_machine_py.abstract_state import AbstractState
@@ -65,13 +65,15 @@ class InitState(AbstractState):
     def exit(self, context, line, edge_path):
 
         if line=="LOGIN":
-            return '----LoggedIn---->'
+            return '-LoggedIn->'
 
-        return '----Loopback---->'
+        return '-Loopback->'
 ```
 
 👆  
 遷移する方法は State の exit 時に、次の（下位の）エッジの名前を指定してください  
+
+* Edge の名前はソースコード上では（必須ではありませんが）説明のために `- ->` で囲んでいます
 
 ![20211205blog2.png](./docs/img/20211205blog2.png)  
 👆
