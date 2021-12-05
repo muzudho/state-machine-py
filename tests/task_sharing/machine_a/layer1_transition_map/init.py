@@ -12,8 +12,9 @@ class InitState(AbstractState):
     def name(self):
         return INIT
 
-    def enter(self, req):
+    def entry(self, req):
         # 入力を飛ばします
+        print("[A] entry")
         return "pass_on"
 
     def exit(self, req):
@@ -31,12 +32,19 @@ class InitState(AbstractState):
         """
 
         if req.context.number == 0:
+            print("[A] Stop")
             return E_STOP
 
         if req.context.number == None:
+            print("[A] None")
             pass
 
         elif req.context.number % 2 == 1:
+            print("[A] Calc")
             req.context.number = 3 * req.context.number + 1
+
+        else:
+            print("[A] B にボールを渡したい")
+            pass
 
         return E_INCREASE

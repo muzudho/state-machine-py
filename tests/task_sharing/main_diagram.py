@@ -63,7 +63,7 @@ class MainDiagram():
         self.init()
 
         """待機だけしています"""
-        while not self._quit:
+        while not(self._multiple_state_machine.machines["machine_a"].is_terminate and self._multiple_state_machine.machines["machine_b"].is_terminate):
             time.sleep(1)
 
     def init(self):
