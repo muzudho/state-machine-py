@@ -5,7 +5,6 @@
 # Set up
 
 ```shell
-# Product
 python.exe -m pip install state_machine_py
 ```
 

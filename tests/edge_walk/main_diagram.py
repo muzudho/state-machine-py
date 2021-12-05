@@ -1,10 +1,10 @@
 import queue
 from threading import Thread
-import time
 from state_machine_py.state_machine import StateMachine
-from context import Context
-from state_creator_dict import state_creator_dict
-from transition_dict import transition_dict
+
+from tests.edge_walk.context import Context
+from tests.edge_walk.state_creator_dict import state_creator_dict
+from tests.edge_walk.transition_dict import transition_dict
 
 
 class MainDiagram():

@@ -1,4 +1,4 @@
-from keywords import INIT, GOAL
+from tests.edge_walk.keywords import INIT, GOAL
 
 
 E_THAT = "-that->"

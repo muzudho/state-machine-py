@@ -1,4 +1,4 @@
-from layer1_transition_map.goal import GoalState
+from tests.edge_walk.layer1_transition_map.goal import GoalState
 
 
 def create():

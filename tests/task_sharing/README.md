@@ -16,6 +16,12 @@ Bさん: 渡されたボールに偶数が書かれていたら 2で割った数
 ボールをキャッチしてくれる人がいなければ このプログラムは終了します
 ```
 
+# Set up
+
+```shell
+python.exe -m pip install state_machine_py
+```
+
 # Run
 
 ```shell

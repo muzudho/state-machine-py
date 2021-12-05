@@ -10,19 +10,16 @@
 # Set up
 
 ```shell
-cd tests/edge_walk
-
-# Product
 python.exe -m pip install state_machine_py
 ```
 
 # Run
 
 ```shell
-# cd tests/edge_walk
-
-python.exe -m main
+python.exe -m tests.edge_walk.main
 ```
+
+👇複数行を一気に貼り付けても動きます（ FIXME 入力が速すぎてエラーになる？）。  
 
 Input:  
 

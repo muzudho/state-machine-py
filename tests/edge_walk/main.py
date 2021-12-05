@@ -1,7 +1,7 @@
 import sys
 import signal
 
-from main_diagram import MainDiagram
+from tests.edge_walk.main_diagram import MainDiagram
 
 
 def __main():

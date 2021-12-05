@@ -1,5 +1,5 @@
 from state_machine_py.abstract_state import AbstractState
-from keywords import GOAL
+from tests.edge_walk.keywords import GOAL
 
 
 class GoalState(AbstractState):
