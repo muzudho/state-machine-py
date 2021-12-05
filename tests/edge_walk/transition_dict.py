@@ -1,32 +1,31 @@
-# State
-INIT = "[Init]"
-GOAL = "[Goal]"
+from keywords import INIT, GOAL
 
-# Edge
-E_1 = "----E_1---->"
-E_2 = "----E_2---->"
-E_2_1 = "----E_2_1---->"
-E_2_2 = "----E_2_2---->"
-E_2_2_1 = "----E_2_2_1---->"
-E_2_2_2 = "----E_2_2_2---->"
-E_2_2_2_1 = "----E_2_2_2_1---->"
-E_2_2_2_2 = "----E_2_2_2_2---->"
+
+E_THAT = "-that->"
+E_THIS = "-this->"
+E_WAS = "-was->"
+E_IS = "-is->"
+E_AN = "-an->"
+E_A = "-a->"
+E_PIN = "-pin->"
+E_PEN = "-pen->"
+E_OK = "-ok->"
 
 transition_dict = {
     INIT: {
-        E_1: INIT,
-        E_2: {
-            E_2_1: INIT,
-            E_2_2: {
-                E_2_2_1: INIT,
-                E_2_2_2: {
-                    E_2_2_2_1: INIT,
-                    E_2_2_2_2: GOAL,
+        E_THAT: INIT,
+        E_THIS: {
+            E_WAS: INIT,
+            E_IS: {
+                E_AN: INIT,
+                E_A: {
+                    E_PIN: INIT,
+                    E_PEN: GOAL,
                 },
             },
         }
     },
     GOAL: {
-        E_1: INIT,
+        E_OK: INIT,
     }
 }

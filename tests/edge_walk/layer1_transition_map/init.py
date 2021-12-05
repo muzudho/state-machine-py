@@ -1,4 +1,5 @@
 from state_machine_py.abstract_state import AbstractState
+from keywords import INIT
 
 
 class InitState(AbstractState):
@@ -9,7 +10,7 @@ class InitState(AbstractState):
 
     @property
     def name(self):
-        return "[Init]"
+        return INIT
 
     def exit(self, req):
         """次の辺の名前を返します
