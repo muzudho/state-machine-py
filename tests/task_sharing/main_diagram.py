@@ -37,10 +37,10 @@ class MainDiagram():
             state_machine.verbose = True  # デバッグ情報を出力します
             return state_machine
 
-        self._multiple_state_machine.machines["machine_a"] = __create_machine_a(
-        )
-        self._multiple_state_machine.machines["machine_b"] = __create_machine_b(
-        )
+        self._multiple_state_machine.append_machine("machine_a", __create_machine_a(
+        ))
+        self._multiple_state_machine.append_machine("machine_b", __create_machine_b(
+        ))
 
     def set_up(self):
         """__mainの定型処理"""
