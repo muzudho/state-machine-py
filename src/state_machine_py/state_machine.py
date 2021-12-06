@@ -193,12 +193,13 @@ class StateMachine():
                 # このままでは いつまでも ここを通るので 少し待ってみます
                 time.sleep(0.05)  # TODO スリープタイムを設定できたい
 
-            # 入力をいったんキューに格納します
-            for line in line_list:
-                if self.verbose:
-                    print(
-                        f"{self._alternate_state_machine_name()} Put [{line}] to queue")
-                self._input_queue.put(line)
+            else:
+                # 入力をいったんキューに格納します
+                for line in line_list:
+                    if self.verbose:
+                        print(
+                            f"{self._alternate_state_machine_name()} Put [{line}] to queue")
+                    self._input_queue.put(line)
 
             # ここまでが１つの処理です
 

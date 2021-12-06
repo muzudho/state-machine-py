@@ -3,6 +3,7 @@ from threading import Thread
 from state_machine_py.state_machine import StateMachine
 
 from tests.edge_walk.context import Context
+from tests.edge_walk.keywords import INIT
 from tests.edge_walk.state_creator_dict import state_creator_dict
 from tests.edge_walk.transition_dict import transition_dict
 
@@ -30,18 +31,13 @@ class MainDiagram():
 
             return ret
 
-        self.state_machine.lines_getter = __lines_getter
+        self._state_machine.lines_getter = __lines_getter
 
         # デバッグ情報を出力します
         self._state_machine.verbose = True
 
-        # 終了フラグ
-        self._quit = False
-
-    @property
-    def state_machine(self):
-        """状態遷移マシン"""
-        return self._state_machine
+        # スレッド
+        self._thread1 = None
 
     def set_up(self):
         """__mainの定型処理"""
@@ -52,28 +48,36 @@ class MainDiagram():
         pass
 
     def run(self):
-        """待機だけしています"""
-        while not self._quit:
+        """入力受付の待機ループをしています"""
+        while True:
             # 末尾に改行は付いていません
             line = input()  # ブロックします
 
+            # ステートマシーンに渡します
             self._line_queue.put(line)
 
             # a way to exit the program
             if line.lower() == 'q':
-                self._quit = True
                 break
+
+        print("[Walk] Run end")
+        # 実行中のスレッド１があれば終了するまで待機するのがクリーンです
+        # if not(self._thread1 is None) and self._thread1.is_alive():
+        #    self._thread1.join()
+        #    # self._thread1 = None
 
     def init(self):
         """ダイアグラムを初期状態に戻します"""
 
-        # 以降、標準入力をトリガーにして状態を遷移します
-        thr = Thread(target=self.listen_for_messages)
-        thr.daemon = True
-        thr.start()
+        # スレッド１が起動中に ここを通らないでください
+
+        # スレッド１を開始します
+        self._thread1 = Thread(target=self.listen_for_messages, daemon=True)
+        # self._thread1.daemon = True
+        self._thread1.start()
 
     def listen_for_messages(self):
         """メインループ"""
 
         # （強制的に）ステートマシンを初期状態から始めます
-        self.state_machine.start("[Init]")
+        self._state_machine.start(INIT)
