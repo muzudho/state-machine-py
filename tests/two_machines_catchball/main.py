@@ -1,7 +1,7 @@
 import sys
 import signal
 
-from tests.task_sharing.main_diagram import MainDiagram
+from tests.two_machines_catchball.main_diagram import MainDiagram
 
 
 def __main():
@@ -33,7 +33,7 @@ def __main():
 
 
 # Test
-# python.exe -m tests.task_sharing.main
+# python.exe -m tests.two_machines_catchball.main
 if __name__ == "__main__":
     """サンプルを実行します"""
     sys.exit(__main())

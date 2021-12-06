@@ -2,13 +2,13 @@ import queue
 import time
 from threading import Thread
 from state_machine_py.multiple_state_machine import MultipleStateMachine
-from tests.task_sharing.keywords import INIT, MACHINE_A, MACHINE_B
-from tests.task_sharing.machine_a.context import Context as ContextA
-from tests.task_sharing.machine_a.state_creator_dict import state_creator_dict as state_creator_dict_a
-from tests.task_sharing.machine_a.transition_dict import transition_dict as transition_dict_a
-from tests.task_sharing.machine_b.context import Context as ContextB
-from tests.task_sharing.machine_b.state_creator_dict import state_creator_dict as state_creator_dict_b
-from tests.task_sharing.machine_b.transition_dict import transition_dict as transition_dict_b
+from tests.two_machines_catchball.keywords import INIT, MACHINE_A, MACHINE_B
+from tests.two_machines_catchball.machine_a.context import Context as ContextA
+from tests.two_machines_catchball.machine_a.state_creator_dict import state_creator_dict as state_creator_dict_a
+from tests.two_machines_catchball.machine_a.transition_dict import transition_dict as transition_dict_a
+from tests.two_machines_catchball.machine_b.context import Context as ContextB
+from tests.two_machines_catchball.machine_b.state_creator_dict import state_creator_dict as state_creator_dict_b
+from tests.two_machines_catchball.machine_b.transition_dict import transition_dict as transition_dict_b
 
 
 class MainDiagram():

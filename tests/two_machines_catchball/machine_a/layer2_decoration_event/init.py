@@ -1,4 +1,4 @@
-from tests.task_sharing.machine_a.layer1_transition_map.init import InitState
+from tests.two_machines_catchball.machine_a.layer1_transition_map.init import InitState
 
 
 def create():

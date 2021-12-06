@@ -1,4 +1,4 @@
-from tests.task_sharing.keywords import INIT, E_DECREASE, E_STOP
+from tests.two_machines_catchball.keywords import INIT, E_DECREASE, E_STOP
 
 transition_dict = {
     INIT: {

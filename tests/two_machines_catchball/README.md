@@ -1,4 +1,4 @@
-# task_sharing
+# two_machines_catchbal
 
 異なるプログラム Aさんと Bさんが うまく連携することを示します。  
 
@@ -25,7 +25,7 @@ python.exe -m pip install state_machine_py
 # Run
 
 ```shell
-python.exe -m tests.task_sharing.main
+python.exe -m tests.two_machines_catchball.main
 ```
 
 Input 1:
