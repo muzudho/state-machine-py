@@ -14,8 +14,6 @@ from tests.two_machines_catchball.machine_b.transition_dict import transition_di
 class MainDiagram():
     def __init__(self):
         """初期化"""
-        self._line_queue = queue.Queue()
-
         self._multiple_state_machine = MultipleStateMachine()
 
         machine_a = self._multiple_state_machine.create_machine(
