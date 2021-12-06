@@ -10,8 +10,6 @@ from tests.rock_paper_scissors.transition_dict import transition_dict
 class MainDiagram():
     def __init__(self):
         """初期化"""
-        self._line_queue = queue.Queue()
-
         self._state_machine = StateMachine(
             context=Context(),
             state_creator_dict=state_creator_dict,
@@ -19,21 +17,6 @@ class MainDiagram():
 
         # デバッグ情報を出力します
         # self._state_machine.verbose = True
-
-        def __lines_getter():
-            # キューから先頭要素を取り出します
-            line = self._line_queue.get()
-
-            ret = [f"{line}"]
-            self._line_queue.task_done()  # 取り出したアイテムの使用完了をキューに知らせます
-
-            # a way to exit the program
-            if ret[0].lower() == 'q':
-                return None  # Quit
-
-            return ret
-
-        self.state_machine.lines_getter = __lines_getter
 
         # 終了フラグ
         self._quit = False
@@ -57,12 +40,13 @@ class MainDiagram():
             # 末尾に改行は付いていません
             line = input()  # ブロックします
 
-            self._line_queue.put(line)
-
             # a way to exit the program
             if line.lower() == 'q':
                 self._quit = True
+                self.state_machine.terminate()
                 break
+
+            self.state_machine.input_queue.put(line)
 
     def init(self):
         """ダイアグラムを初期状態に戻します"""
