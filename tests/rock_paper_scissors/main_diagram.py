@@ -17,6 +17,9 @@ class MainDiagram():
             state_creator_dict=state_creator_dict,
             transition_dict=transition_dict)
 
+        # デバッグ情報を出力します
+        # self._state_machine.verbose = True
+
         def __lines_getter():
             # キューから先頭要素を取り出します
             line = self._line_queue.get()
@@ -31,9 +34,6 @@ class MainDiagram():
             return ret
 
         self.state_machine.lines_getter = __lines_getter
-
-        # デバッグ情報を出力します
-        self._state_machine.verbose = True
 
         # 終了フラグ
         self._quit = False

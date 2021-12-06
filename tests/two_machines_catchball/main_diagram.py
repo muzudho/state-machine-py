@@ -21,14 +21,14 @@ class MainDiagram():
             context=ContextA(),
             state_creator_dict=state_creator_dict_a,
             transition_dict=transition_dict_a)
-        machine_a.verbose = True  # デバッグ情報を出力します
+        # machine_a.verbose = True  # デバッグ情報を出力します
 
         machine_b = self._multiple_state_machine.create_machine(
             MACHINE_B,
             context=ContextB(),
             state_creator_dict=state_creator_dict_b,
             transition_dict=transition_dict_b)
-        machine_b.verbose = True  # デバッグ情報を出力します
+        # machine_b.verbose = True  # デバッグ情報を出力します
 
     def set_up(self):
         """__mainの定型処理"""
