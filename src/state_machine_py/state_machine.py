@@ -86,6 +86,11 @@ class StateMachine():
         return self._is_terminate
 
     @property
+    def input_queue(self):
+        """入力キュー"""
+        return self._input_queue
+
+    @property
     def name(self):
         """他のステートマシンと区別するためのキーとして使われます"""
         return self._name

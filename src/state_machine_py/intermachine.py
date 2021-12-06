@@ -9,16 +9,16 @@ class Intermachine():
         self._machine_key = machine_key
 
     def put(self, destination_machine_key, item, block=True, timeout=None):
-        self._owner.input_queues[destination_machine_key].put(item=item,
-                                                              block=block,
-                                                              timeout=timeout)
+        self._owner.machines[destination_machine_key].input_queue.put(item=item,
+                                                                      block=block,
+                                                                      timeout=timeout)
 
     def get(self, block=True, timeout=None):
-        return self._owner.input_queues[self._machine_key].get(block=block,
+        return self._owner.machines[self._machine_key].input_queue.get(block=block,
                                                                timeout=timeout)
 
     def join(self):
-        return self._owner.input_queues[self._machine_key].join()
+        return self._owner.machines[self._machine_key].input_queue.join()
 
     def task_done(self):
-        return self._owner.input_queues[self._machine_key].task_done()
+        return self._owner.machines[self._machine_key].input_queue.task_done()

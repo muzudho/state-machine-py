@@ -9,15 +9,10 @@ class MultipleStateMachine():
 
     def __init__(self):
         self._machines = {}
-        self._input_queues = {}
 
     @property
     def machines(self):
         return self._machines
-
-    @property
-    def input_queues(self):
-        return self._input_queues
 
     def create_machine(self, machine_key, context, state_creator_dict, transition_dict):
         """マルチプルステートマシンに紐づいているステートマシンを生成します"""
@@ -29,5 +24,4 @@ class MultipleStateMachine():
             name=machine_key)
 
         self._machines[machine_key] = machine
-        self._input_queues[machine_key] = queue.Queue()
         return machine

@@ -1,3 +1,7 @@
+# 10.0.13
+
+Multiple state machine の input_queues を廃止、 State machine の input_queue を直接利用
+
 # 10.0.0 - 10.0.12
 
 StateMachine
