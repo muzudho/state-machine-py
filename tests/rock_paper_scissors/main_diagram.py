@@ -1,4 +1,3 @@
-import queue
 from threading import Thread
 from state_machine_py.state_machine import StateMachine
 from tests.rock_paper_scissors.context import Context

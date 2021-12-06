@@ -1,4 +1,3 @@
-import queue
 from threading import Thread
 from state_machine_py.state_machine import StateMachine
 
@@ -11,8 +10,6 @@ from tests.edge_walk.transition_dict import transition_dict
 class MainDiagram():
     def __init__(self):
         """初期化"""
-        self._line_queue = queue.Queue()
-
         self._state_machine = StateMachine(
             context=Context(),
             state_creator_dict=state_creator_dict,
@@ -20,21 +17,6 @@ class MainDiagram():
 
         # デバッグ情報を出力します
         # self._state_machine.verbose = True
-
-        def __lines_getter():
-            # キューから先頭要素を取り出します
-            line = self._line_queue.get()
-
-            ret = [f"{line}"]
-            self._line_queue.task_done()  # 取り出したアイテムの使用完了をキューに知らせます
-
-            # a way to exit the program
-            if ret[0].lower() == 'q':
-                return None  # Quit
-
-            return ret
-
-        self._state_machine.lines_getter = __lines_getter
 
         # スレッド
         self._thread1 = None
@@ -53,26 +35,19 @@ class MainDiagram():
             # 末尾に改行は付いていません
             line = input()  # ブロックします
 
-            # ステートマシーンに渡します
-            self._line_queue.put(line)
-
             # a way to exit the program
             if line.lower() == 'q':
+                # ステートマシンを終了させます
+                self._state_machine.terminate()
                 break
 
-        print("[Walk] Terminate state machine")
-
-        # ステートマシンを終了させます
-        self._state_machine.terminate()
+            # ステートマシーンに渡します
+            self._state_machine.input_queue.put(line)
 
         # 実行中のスレッド１があれば終了するまで待機するのがクリーンです
         if not(self._thread1 is None) and self._thread1.is_alive():
-            print("[Walk] Before join thread1")
-            self._thread1.join()  # ここでデッドロックする？
-            print("[Walk] After join thread1")
+            self._thread1.join()
             self._thread1 = None
-
-        print("[Walk] Run end")
 
     def init(self):
         """ダイアグラムを初期状態に戻します"""
