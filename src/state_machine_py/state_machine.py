@@ -144,11 +144,11 @@ class StateMachine():
                         print(
                             f"{self._alternate_state_machine_name()} After leave next_state_name={next_state_name}")
 
-                # ステートマシンの終了はこのタイミングです
+                # ステートマシンの終了のタイミングの１つ目です。 Arrive が入力を続けている間はこのタイミングで終了させます
                 if self._is_terminate:
                     if self.verbose:
                         print(
-                            f"{self._alternate_state_machine_name()} Terminate the state machine")
+                            f"{self._alternate_state_machine_name()} Terminate the state machine (1)")
                     return  # start関数を終わります
 
                 if self.verbose:
@@ -179,27 +179,40 @@ class StateMachine():
                 print(
                     f"{self._alternate_state_machine_name()} Queue is empty")
 
-            # キューの内容が空っぽになったら、外部からの入力を取得します
-            if self.verbose:
-                print(
-                    f"{self._alternate_state_machine_name()} Do LinesGetter")
-            line_list = self.lines_getter()
-
-            if line_list is None:
-                # 入力が何もありませんでした。
+            # ステートマシンの終了のタイミングの２つ目です。キューが空っぽのときは このタイミングで終了させます
+            if self._is_terminate:
                 if self.verbose:
                     print(
-                        f"{self._alternate_state_machine_name()} LinesGetter input is none")
-                # このままでは いつまでも ここを通るので 少し待ってみます
-                time.sleep(0.05)  # TODO スリープタイムを設定できたい
+                        f"{self._alternate_state_machine_name()} Terminate the state machine (2)")
+                return  # start関数を終わります
 
-            else:
-                # 入力をいったんキューに格納します
-                for line in line_list:
+            # 外部から入力を受け取れるなら
+            if not(self._lines_getter is None):
+                # キューの内容が空っぽになったら、外部からの入力を取得します
+                if self.verbose:
+                    print(
+                        f"{self._alternate_state_machine_name()} Do LinesGetter")
+
+                line_list = self.lines_getter()
+
+                if line_list is None:
+                    # 入力が何もありませんでした。
                     if self.verbose:
                         print(
-                            f"{self._alternate_state_machine_name()} Put [{line}] to queue")
-                    self._input_queue.put(line)
+                            f"{self._alternate_state_machine_name()} LinesGetter input is none")
+                    # このままでは いつまでも ここを通るので 少し待ってみます
+                    time.sleep(0.02)  # TODO スリープタイムを設定できたい
+
+                else:
+                    # 入力をいったんキューに格納します
+                    for line in line_list:
+                        if self.verbose:
+                            print(
+                                f"{self._alternate_state_machine_name()} Put [{line}] to queue")
+                        self._input_queue.put(line)
+            else:
+                # このままでは いつまでも ここを通るので 少し待ってみます
+                time.sleep(0.02)  # TODO スリープタイムを設定できたい
 
             # ここまでが１つの処理です
 
