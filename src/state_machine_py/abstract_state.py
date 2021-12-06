@@ -14,8 +14,8 @@ class AbstractState():
 
         Returns
         -------
-        object
-            ただちに state_machine.leave(...) に渡す引数です。
+        str
+            ただちに state_machine._leave(...) に渡す引数です。
             None を指定すると、たたちに次の状態に遷移することはしません
         """
         self.on_entry(req)

@@ -123,7 +123,7 @@ State machine              State
     O  Start
     |
     |
- arrive(next_state_name)
+ _arrive(next_state_name)
     |
     |
     +--------------------- entry()       // 初期化処理や、CleanUp が主な役割に
@@ -141,7 +141,7 @@ State machine              State
     |  そうでなければ ここで 標準入力（またはサーバー）から文字列の受信があるまで待機
     |
     |
-  leave(line)
+  _leave(line)
     |
     |
     +--------------------- exit()       // 実行したい処理はここに書くことに

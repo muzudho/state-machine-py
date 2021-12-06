@@ -1,3 +1,13 @@
+# 10.0.0
+
+StateMachine
+    Change leave_and_loop(...) to private
+    Change arrive_sequence(...) to private
+    Change arrive(...) to private
+    Change leave(...) to private
+
+内部処理変更のため
+
 # 9.0.7
 
 次のエッジの名前に ""（Noneではなく空文字列）を指定したなら、踏みとどまるという挙動の追加

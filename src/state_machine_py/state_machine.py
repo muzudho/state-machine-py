@@ -1,3 +1,5 @@
+import time
+import queue
 from state_machine_py.request import Request
 
 
@@ -11,7 +13,7 @@ class StateMachine():
     context = Context()
     sm = StateMachine(context, state_creator_dict=state_creator_dict, transition_dict=transition_dict)
 
-    sm.arrive("[Init]") # Init状態は作っておいてください
+    sm._arrive("[Init]") # Init状態は作っておいてください
     """
 
     def __init__(self, context=None, state_creator_dict={}, transition_dict={}, intermachine=None, name=None):
@@ -37,6 +39,7 @@ class StateMachine():
         self._is_terminate = False  # 永遠に停止
         self._intermachine = intermachine
         self._name = name
+        self._input_queue = queue.Queue()
 
     @property
     def context(self):
@@ -92,61 +95,112 @@ class StateMachine():
         return self._name
 
     def start(self, next_state_name):
-        """まず state_machine.arrive(...) を行い、
-        そのあと leave(...), arrive(...) のペアを無限に繰り返します。
-        leave(...) に渡す line 引数は arrive(...) から返しますが、
-        代わりに None を返すと self.lines_getter() が実行されます。
-        self.lines_getter() は、 line のリストを返す関数です。
-        self.lines_getter() が None を返すとループを抜けます
-        """
-        if self._is_terminate:
-            return
+        """ステートマシンを開始します"""
 
-        self.arrive_sequence(next_state_name)
-        self.leave_and_loop()
+        # Arrive と Leave のペアを最小単位とするループです。
+        # Leave が終わったところで IsTerminate を判定します
+        # Arrive と Leave の間に LinesGetter という処理が入ります
 
-    def leave_and_loop(self):
-        """まず state_machine.leave(...) を行い、
-        そのあと arrive(...), leave(...) のペアを無限に繰り返します。
-        leave(...) に渡す line 引数は、
-        lines_getter() を実行することでリストで取得できるようにしてください。
-        lines_getter() が None を返すとループを抜けます
-        """
-        if self._is_terminate:
-            return
+        # ステートマシンは Arrive から始まるので、スタート直後の１回だけ Leave をスキップします
+        is_skip_leave = True
 
+        # 無限ループ
         while True:
-            lines = self.lines_getter()
-            if lines is None:
-                break
 
-            for line in lines:
+            if self.verbose:
+                print(
+                    f"{self._alternate_state_machine_name()} Loop(A) Begin next_state_name={next_state_name}")
 
-                self.on_line(line)
+            # 次のループの初回だけ、無条件に通ります
+            is_enter_loop = True
 
-                next_state_name = self.leave(line)
-                self.arrive_sequence(next_state_name)
+            # キューに内容がある間、繰り返します
+            while is_enter_loop or not self._input_queue.empty:
+                is_enter_loop = False
 
-    def arrive_sequence(self, next_state_name):
-        """arrive(next_state_name) の拡張版。
-        このステートを通り過ぎる指定があったなら、次の leave(...) まで行います。
-        通り過ぎる指定がなくなるまで続けます
+                if self.verbose:
+                    print(
+                        f"{self._alternate_state_machine_name()} Loop(B) Begin")
 
-        Parameters
-        ----------
-        str : next_state_name
-            次の状態の名前
-        """
-        if self._is_terminate:
-            return
+                if is_skip_leave:
+                    # 初回の Leave をスキップしました
+                    if self.verbose:
+                        print(
+                            f"{self._alternate_state_machine_name()} Passed first leave")
+                    is_skip_leave = False
+                else:
+                    line = self._input_queue.get()
+                    self._input_queue.task_done()
 
-        interrupt_line = self.arrive(next_state_name)
+                    if self.verbose:
+                        print(
+                            f"{self._alternate_state_machine_name()} GetQueueline={line}")
 
-        # interrupt_line の指定があったら、次の leave をすぐ行います
-        while interrupt_line:
-            next_state_name = self.leave(interrupt_line)
+                    # Leave
+                    # -----
+                    next_state_name = self._leave(line)
 
-            interrupt_line = self.arrive(next_state_name)
+                    if self.verbose:
+                        print(
+                            f"{self._alternate_state_machine_name()} After leave next_state_name={next_state_name}")
+
+                # ステートマシンの終了はこのタイミングです
+                if self._is_terminate:
+                    if self.verbose:
+                        print(
+                            f"{self._alternate_state_machine_name()} Terminate the state machine")
+                    return  # start関数を終わります
+
+                if self.verbose:
+                    print(
+                        f"{self._alternate_state_machine_name()} Before arrive next_state_name={next_state_name}")
+
+                # ループの初回はここから始まります
+                #
+                # Arrive
+                # ------
+                interrupt_line = self._arrive(next_state_name)
+
+                if self.verbose:
+                    print(
+                        f"{self._alternate_state_machine_name()} Afetr arrive interrupt_line={interrupt_line}")
+
+                # Arrive がNoneを返したら、キューに入力が残っていてもひとまず 外部からの入力を取得するフェーズへ抜けます
+                if interrupt_line is None:
+                    break
+                # Arrive の返り値をキューに格納することでループを続行します
+                else:
+                    if self.verbose:
+                        print(
+                            f"{self._alternate_state_machine_name()} Put interrupt_line to queue")
+                    self._input_queue.put(interrupt_line)
+
+            if self.verbose:
+                print(
+                    f"{self._alternate_state_machine_name()} Queue is empty")
+
+            # キューの内容が空っぽになったら、外部からの入力を取得します
+            if self.verbose:
+                print(
+                    f"{self._alternate_state_machine_name()} Do LinesGetter")
+            line_list = self.lines_getter()
+
+            if line_list is None:
+                # 入力が何もありませんでした。
+                if self.verbose:
+                    print(
+                        f"{self._alternate_state_machine_name()} LinesGetter input is none")
+                # このままでは いつまでも ここを通るので 少し待ってみます
+                time.sleep(0.05)  # TODO スリープタイムを設定できたい
+
+            # 入力をいったんキューに格納します
+            for line in line_list:
+                if self.verbose:
+                    print(
+                        f"{self._alternate_state_machine_name()} Put [{line}] to queue")
+                self._input_queue.put(line)
+
+            # ここまでが１つの処理です
 
     def _alternate_state_machine_name(self):
         if self.name is None:
@@ -154,7 +208,7 @@ class StateMachine():
         else:
             return self.name
 
-    def arrive(self, next_state_name):
+    def _arrive(self, next_state_name):
         """指定の状態に遷移します
         entryコールバック関数を呼び出します。
 
@@ -166,7 +220,7 @@ class StateMachine():
         Returns
         -------
         object
-            ただちに leave に渡したい引数。無ければ None
+            ただちに _leave に渡したい引数。無ければ None
         """
 
         if self._is_terminate:
@@ -196,7 +250,7 @@ class StateMachine():
             # Error
             raise ValueError(f"Next state [{next_state_name}] is not found")
 
-    def leave(self, line):
+    def _leave(self, line):
         """次の状態の名前と、遷移に使ったキーを返します。
         exitコールバック関数を呼び出します。
         stateの遷移はまだ行いません
@@ -271,7 +325,7 @@ class StateMachine():
         # 最後に、次のエッジへ下りていきましょう
         if next_edge_name == '':
             # （Noneではなく）空文字を指定したら、踏みとどまります
-            pass
+            next_state_name = self.state.name  # まだ現在のステートです
 
         elif next_edge_name in curr_dict:
             # ディクショナリーか、文字列のどちらかです
