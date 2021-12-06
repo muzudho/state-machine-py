@@ -196,12 +196,13 @@ class StateMachine():
                 line_list = self.lines_getter()
 
                 if line_list is None:
-                    # 入力が何もありませんでした。
+                    # 外部から None を入力されたときは、ステートマシンの終了とします
                     if self.verbose:
                         print(
-                            f"{self._alternate_state_machine_name()} LinesGetter input is none")
-                    # このままでは いつまでも ここを通るので 少し待ってみます
-                    time.sleep(0.02)  # TODO スリープタイムを設定できたい
+                            f"{self._alternate_state_machine_name()} LinesGetter terminate state mashine")
+
+                    self._is_terminate = True
+                    return  # start関数を終わります
 
                 else:
                     # 入力をいったんキューに格納します
@@ -211,6 +212,9 @@ class StateMachine():
                                 f"{self._alternate_state_machine_name()} Put [{line}] to queue")
                         self._input_queue.put(line)
             else:
+                if self.verbose:
+                    print(
+                        f"{self._alternate_state_machine_name()} LinesGetter is none")
                 # このままでは いつまでも ここを通るので 少し待ってみます
                 time.sleep(0.02)  # TODO スリープタイムを設定できたい
 

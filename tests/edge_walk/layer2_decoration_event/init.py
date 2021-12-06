@@ -12,4 +12,4 @@ class DecoratedInitState(InitState):
 
     def on_entry(self, req):
         print("READMEを参考にして、エッジを入力してください")
-        return super().on_entry(req)
+        # return super().on_entry(req)

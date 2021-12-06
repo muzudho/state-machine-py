@@ -18,6 +18,9 @@ class MainDiagram():
             state_creator_dict=state_creator_dict,
             transition_dict=transition_dict)
 
+        # デバッグ情報を出力します
+        # self._state_machine.verbose = True
+
         def __lines_getter():
             # キューから先頭要素を取り出します
             line = self._line_queue.get()
@@ -32,9 +35,6 @@ class MainDiagram():
             return ret
 
         self._state_machine.lines_getter = __lines_getter
-
-        # デバッグ情報を出力します
-        self._state_machine.verbose = True
 
         # スレッド
         self._thread1 = None
@@ -60,15 +60,19 @@ class MainDiagram():
             if line.lower() == 'q':
                 break
 
-        print("[Walk] Run end")
+        print("[Walk] Terminate state machine")
 
         # ステートマシンを終了させます
         self._state_machine.terminate()
 
         # 実行中のスレッド１があれば終了するまで待機するのがクリーンです
         if not(self._thread1 is None) and self._thread1.is_alive():
-            self._thread1.join()
+            print("[Walk] Before join thread1")
+            self._thread1.join()  # ここでデッドロックする？
+            print("[Walk] After join thread1")
             self._thread1 = None
+
+        print("[Walk] Run end")
 
     def init(self):
         """ダイアグラムを初期状態に戻します"""
@@ -84,4 +88,4 @@ class MainDiagram():
         """メインループ"""
 
         # （強制的に）ステートマシンを初期状態から始めます
-        self._state_machine.start(INIT)
+        self._state_machine.start(INIT)  # ここでブロック
