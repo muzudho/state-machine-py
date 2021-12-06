@@ -36,32 +36,34 @@ state_machine = StateMachine(
     context=Context(),
     state_creator_dict=state_creator_dict,
     transition_dict=transition_dict)
-
-def __lines_getter():
-    # 末尾に改行は付いていません
-    line = input()
-
-    # a way to exit the program
-    if line.lower() == 'q':
-        # self._quit = True
-        return None
-
-    return [line]
-
-state_machine.lines_getter = __lines_getter
 ```
 
-👆  
-ステートマシンの生成の説明は長くなるので `main.py` ソースコードを読んでください
+👆 ステートマシンの生成の説明は長くなるので `main.py` ソースコードを読んでください  
 
 ```python
 state_machine.start("[Init]")
 ```
 
-👆  
-ステートマシンの起動の説明は長くなるので `main.py` ソースコードを読んでください
+👆 ステートマシンの起動の説明は長くなるので `main.py` ソースコードを読んでください  
 
 * State の名前はソースコード上では（必須ではありませんが）説明のために `[ ]` で囲んでいます
+
+```python
+        while True:
+            # 末尾に改行は付いていません
+            line = input()  # ブロックします
+
+            # a way to exit the program
+            if line.lower() == 'q':
+                # ステートマシンを終了させます
+                self._state_machine.terminate()
+                break
+
+            # ステートマシーンに渡します
+            self._state_machine.input_queue.put(line)
+```
+
+👆 ステートマシンに文字を渡す例
 
 ```python
 from state_machine_py.abstract_state import AbstractState
@@ -78,8 +80,7 @@ class InitState(AbstractState):
         return '-Loopback->'
 ```
 
-👆  
-遷移する方法は State の exit 時に、次の（下位の）エッジの名前を指定してください  
+👆 遷移する方法は State の exit 時に、次の（下位の）エッジの名前を指定してください  
 
 * Edge の名前はソースコード上では（必須ではありませんが）説明のために `- ->` で囲んでいます
 

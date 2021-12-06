@@ -62,16 +62,6 @@ class StateMachine():
         return self._edge_path
 
     @property
-    def lines_getter(self):
-        """このステートマシンは、このContextが何なのか知りません。
-        外部から任意に与えることができる変数です"""
-        return self._lines_getter
-
-    @lines_getter.setter
-    def lines_getter(self, val):
-        self._lines_getter = val
-
-    @property
     def verbose(self):
         """標準出力にデバッグ情報を出力するなら真"""
         return self._verbose
@@ -191,37 +181,8 @@ class StateMachine():
                         f"{self._alternate_state_machine_name()} Terminate the state machine (2)")
                 return  # start関数を終わります
 
-            # 外部から入力を受け取れるなら
-            if not(self._lines_getter is None):
-                # キューの内容が空っぽになったら、外部からの入力を取得します
-                if self.verbose:
-                    print(
-                        f"{self._alternate_state_machine_name()} Do LinesGetter")
-
-                line_list = self.lines_getter()
-
-                if line_list is None:
-                    # 外部から None を入力されたときは、ステートマシンの終了とします
-                    if self.verbose:
-                        print(
-                            f"{self._alternate_state_machine_name()} LinesGetter terminate state mashine")
-
-                    self._is_terminate = True
-                    return  # start関数を終わります
-
-                else:
-                    # 入力をいったんキューに格納します
-                    for line in line_list:
-                        if self.verbose:
-                            print(
-                                f"{self._alternate_state_machine_name()} Put [{line}] to queue")
-                        self._input_queue.put(line)
-            else:
-                if self.verbose:
-                    print(
-                        f"{self._alternate_state_machine_name()} LinesGetter is none")
-                # このままでは いつまでも ここを通るので 少し待ってみます
-                time.sleep(0.02)  # TODO スリープタイムを設定できたい
+            # このままでは いつまでも ここを通るので 少し待ってみます
+            time.sleep(0.016)  # TODO スリープタイムを設定できたい。規定値およそ 60 fps
 
             # ここまでが１つの処理です
 
