@@ -61,10 +61,14 @@ class MainDiagram():
                 break
 
         print("[Walk] Run end")
+
+        # ステートマシンを終了させます
+        self._state_machine.terminate()
+
         # 実行中のスレッド１があれば終了するまで待機するのがクリーンです
-        # if not(self._thread1 is None) and self._thread1.is_alive():
-        #    self._thread1.join()
-        #    # self._thread1 = None
+        if not(self._thread1 is None) and self._thread1.is_alive():
+            self._thread1.join()
+            self._thread1 = None
 
     def init(self):
         """ダイアグラムを初期状態に戻します"""

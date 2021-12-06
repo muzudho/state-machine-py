@@ -85,14 +85,14 @@ class StateMachine():
         """永遠に停止"""
         return self._is_terminate
 
-    @is_terminate.setter
-    def is_terminate(self, val):
-        self._is_terminate = val
-
     @property
     def name(self):
         """他のステートマシンと区別するためのキーとして使われます"""
         return self._name
+
+    def terminate(self):
+        """ステートマシンを終了させます"""
+        self._is_terminate = True
 
     def start(self, next_state_name):
         """ステートマシンを開始します"""
