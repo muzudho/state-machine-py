@@ -30,5 +30,11 @@ class InitState(AbstractState):
         edge_path_str = '.'.join(req.edge_path)
         print(f"[Walk] Current state={self.name} edge_path={edge_path_str}")
 
+        self.on_prompt(req)
+
         next_edge_name = req.intermachine.dequeue_myself()
         return next_edge_name
+
+    def on_prompt(self, req):
+        """入力を取る前"""
+        pass
