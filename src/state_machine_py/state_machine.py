@@ -156,7 +156,7 @@ class StateMachine():
                     # queue の get() でブロックするとデッドロックしてしまう
                     line = None
                     while line is None:
-                        # ステートマシンの終了のタイミングの２つ目です。ループの先頭で終了させます
+                        # ステートマシンの終了のタイミングの３つ目です。ループの先頭で終了させます
                         if self._is_terminate:
                             if self.verbose:
                                 print(
@@ -183,6 +183,15 @@ class StateMachine():
                     if self.verbose:
                         print(
                             f"{self._alternate_state_machine_name()} After leave next_state_name={next_state_name}")
+
+                    # ステートマシンの終了のタイミングの４つ目です。ループの先頭で終了させます
+                    if next_state_name is None:
+                        self.terminate()
+
+                        if self.verbose:
+                            print(
+                                f"{self._alternate_state_machine_name()} Terminate the state machine (After leave)")
+                        return  # start関数を終わります
 
                 if self.verbose:
                     print(
