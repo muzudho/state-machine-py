@@ -1,11 +1,6 @@
 from tests.rock_paper_scissors.layer1_transition_map.game import GameState
 
 
-def create():
-    """振る舞い生成"""
-    return DecoratedGameState()
-
-
 class DecoratedGameState(GameState):
     def __init__(self):
         super().__init__()
