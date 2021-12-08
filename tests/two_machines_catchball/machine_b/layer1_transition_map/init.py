@@ -28,8 +28,13 @@ class InitState(AbstractState):
 
         if req.context.number == None:
             print("[B] ボールを持っていないので、キャッチの姿勢を取ります")
-            req.context.number = int(req.intermachine.dequeue())
+            item = req.intermachine.dequeue()
             req.intermachine.task_done()
+            if item is None:  # Terminate
+                req.context.number = None
+                return None
+
+            req.context.number = int(item)
             self.on_entry(req)
 
         if req.context.number == None:
