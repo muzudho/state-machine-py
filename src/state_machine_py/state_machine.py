@@ -99,6 +99,31 @@ class StateMachine():
             intermachine=self._intermachine)
         self.on_terminate(req)
 
+    def dequeue_item(self):
+        # queue の get() でブロックするとデッドロックしてしまう
+        while True:
+            # ステートマシンの終了のタイミングの３つ目です。ループの先頭で終了させます
+            if self._is_terminate:
+                if self.verbose:
+                    print(
+                        f"{self._alternate_state_machine_name()} Terminate the state machine (Dequeue)")
+                return None  # 関数を終わります
+
+            try:
+                line = self._input_queue.get(
+                    block=False)
+                self._input_queue.task_done()
+
+                if self.verbose:
+                    print(
+                        f"{self._alternate_state_machine_name()} Dequeue line={line}")
+                return line
+
+            except queue.Empty:
+                pass
+
+            time.sleep(0)
+
     def start(self, next_state_name):
         """ステートマシンを開始します"""
 
@@ -151,40 +176,19 @@ class StateMachine():
                         print(
                             f"{self._alternate_state_machine_name()} Wait GetQueueline")
 
-                    # queue の get() でブロックするとデッドロックしてしまう
-                    line = None
-                    while line is None:
-                        # ステートマシンの終了のタイミングの３つ目です。ループの先頭で終了させます
-                        if self._is_terminate:
-                            if self.verbose:
-                                print(
-                                    f"{self._alternate_state_machine_name()} Terminate the state machine (Loop C begin)")
-                            return  # start関数を終わります
-
-                        try:
-                            # +-------+
-                            # |       |
-                            # |  Get  |
-                            # |       |
-                            # +-------+
-                            line = self._input_queue.get(
-                                block=False)
-                            self._input_queue.task_done()
-                        except queue.Empty:
-                            line = None
-
-                        time.sleep(0)
-
-                    if self.verbose:
-                        print(
-                            f"{self._alternate_state_machine_name()} GetQueueline={line}")
+                    # +-------+
+                    # |       |
+                    # |  Get  |
+                    # |       |
+                    # +-------+
+                    item = self.dequeue_item()
 
                     # +-------+
                     # |       |
                     # | Leave |
                     # |       |
                     # +-------+
-                    next_state_name = self._leave(line)
+                    next_state_name = self._leave(item)
 
                     if self.verbose:
                         print(

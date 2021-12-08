@@ -8,17 +8,20 @@ class Intermachine():
         self._owner = owner_maltiple_state_machine
         self._machine_key = machine_key
 
-    def put(self, destination_machine_key, item, block=True, timeout=None):
-        self._owner.machines[destination_machine_key].input_queue.put(item=item,
-                                                                      block=block,
-                                                                      timeout=timeout)
-
-    def put_myself(self, item, block=True, timeout=None):
+    def enqueue_myself(self, item, block=True, timeout=None):
         self._owner.machines[self._machine_key].input_queue.put(item=item,
                                                                 block=block,
                                                                 timeout=timeout)
 
-    def get(self, block=True, timeout=None):
+    def dequeue_myself(self):
+        return self._owner.machines[self._machine_key].dequeue_item()
+
+    def enqueue(self, destination_machine_key, item, block=True, timeout=None):
+        self._owner.machines[destination_machine_key].input_queue.put(item=item,
+                                                                      block=block,
+                                                                      timeout=timeout)
+
+    def dequeue(self, block=True, timeout=None):
         return self._owner.machines[self._machine_key].input_queue.get(block=block,
                                                                        timeout=timeout)
 

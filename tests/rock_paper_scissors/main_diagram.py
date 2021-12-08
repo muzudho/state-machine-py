@@ -35,11 +35,11 @@ class MainDiagram():
 
     def run(self):
         """標準入力からの入力を受け取ります"""
-        while not self._quit:
+        while True:
             # 末尾に改行は付いていません
             line = input()  # ブロックします
 
-            # a way to exit the program
+            # 'q' と打鍵することで、ステートマシンが実行中でも、ステートマシンを終了させます
             if line.lower() == 'q':
                 self._quit = True
                 self.state_machine.terminate()

@@ -14,7 +14,7 @@ class AbstractState():
 
         Examples
         --------
-        req.intermachine.put_myself("Login")
+        req.intermachine.enqueue_myself("Login")
 
         自分（ステートマシン）の入力キューに "Login" の文字を送ります
         """

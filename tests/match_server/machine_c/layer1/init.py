@@ -18,7 +18,7 @@ class InitState(AbstractState):
 
         if edge_path == "":
             print("ログインします")
-            req.intermachine.put_myself("Login my_name")
+            req.intermachine.enqueue_myself("Login my_name")
             return
 
         elif edge_path == f"{E_LOGIN}":

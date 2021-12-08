@@ -14,7 +14,7 @@ class InitState(AbstractState):
 
     def entry(self, req):
         # 入力を飛ばします
-        req.intermachine.put_myself("pass_on")  # 意味のないコマンド
+        req.intermachine.enqueue_myself("pass_on")  # 意味のないコマンド
 
     def exit(self, req):
         """次の辺の名前を返します
@@ -32,7 +32,7 @@ class InitState(AbstractState):
 
         if req.context.number == None:
             print("[A] ボールを持っていないので、キャッチの姿勢を取ります")
-            req.context.number = req.intermachine.get()
+            req.context.number = req.intermachine.dequeue()
             req.intermachine.task_done()
 
         if req.context.number == None:
@@ -40,7 +40,7 @@ class InitState(AbstractState):
 
         elif req.context.number == 1:
             print("[A] ボールが 1 になったので停止します。ボールは投げます")
-            req.intermachine.put(MACHINE_B, req.context.number)
+            req.intermachine.enqueue(MACHINE_B, req.context.number)
             req.context.number = None
             return E_STOP
 
@@ -50,7 +50,7 @@ class InitState(AbstractState):
 
         else:
             print(f"[A] {MACHINE_B}に ボール{req.context.number} を投げた")
-            req.intermachine.put(MACHINE_B, req.context.number)
+            req.intermachine.enqueue(MACHINE_B, req.context.number)
             req.context.number = None
 
         return E_INCREASE

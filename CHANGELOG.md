@@ -1,3 +1,11 @@
+# 13.0.0
+
+* intermachine.put_myself(line) を intermachine.enqueue_myself(line) にリネーム
+* intermachine.dequeue_myself() 追加
+* intermachine.put(...) を intermachine.enqueue(...) にリネーム
+* intermachine.get(...) を intermachine.dequeue(...) にリネーム
+* state_machine.dequeue_line() を state_machine.dequeue_item() にリネーム
+
 # 12.0.0
 
 state_machine.entry() の戻り値廃止。 代わりに req.intermachine.put_myself(line) としてください

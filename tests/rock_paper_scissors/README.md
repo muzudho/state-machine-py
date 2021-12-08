@@ -49,18 +49,19 @@ state_machine.start("[Init]")
 * State の名前はソースコード上では（必須ではありませんが）説明のために `[ ]` で囲んでいます
 
 ```python
+    def run(self):
+        """標準入力からの入力を受け取ります"""
         while True:
             # 末尾に改行は付いていません
             line = input()  # ブロックします
 
-            # a way to exit the program
+            # 'q' と打鍵することで、ステートマシンが実行中でも、ステートマシンを終了させます
             if line.lower() == 'q':
-                # ステートマシンを終了させます
-                self._state_machine.terminate()
+                self._quit = True
+                self.state_machine.terminate()
                 break
 
-            # ステートマシーンに渡します
-            self._state_machine.input_queue.put(line)
+            self.state_machine.input_queue.put(line)
 ```
 
 👆 ステートマシンに文字を渡す例
@@ -130,7 +131,7 @@ State machine              State
     +--------------------- entry()       // 初期化処理や、CleanUp が主な役割に
                              |           // なるかと思います
                              |
-                             |           // 例えば req.intermachine.put_myself("This is a command")
+                             |           // 例えば req.intermachine.enqueue_myself("This is a command")
                              |           // を実行すると 自分自身（ステートマシン）の入力キューに
                              |           // 文字列を入力できます
     +------------------------+
