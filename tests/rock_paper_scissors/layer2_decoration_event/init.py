@@ -7,11 +7,11 @@ class DecoratedInitState(InitState):
 
     def on_your_name_prompt(self, req):
         """入力を取る前"""
-        # 基底クラスの on_exit には何も書かれていない想定です
+        # 基底クラスの on_your_name_prompt には何も書かれていない想定です
         print("Init: 初期状態に戻しました\nYour name: ", end='')
 
-    def on_exit(self, req):
-        """この on_exit メソッドは省略することもできます。
+    def on_entry(self, req):
+        """この on_entry メソッドは省略することもできます。
         初期状態に戻したあとの処理を書いてください
 
         Parameters

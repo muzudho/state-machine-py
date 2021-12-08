@@ -1,3 +1,8 @@
+# 15.0.0
+
+* state.exit() を state.entry() にリネーム
+* state.on_exit() を廃止。 必要なら自分で定義してもらうように変更
+
 # 14.0.0
 
 state.entry(), state.on_entry() 廃止。 代わりに state.exit(), state.on_exit() に統合してください

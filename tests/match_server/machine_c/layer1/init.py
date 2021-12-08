@@ -12,7 +12,7 @@ class InitState(AbstractState):
     def name(self):
         return INIT
 
-    def exit(self, req):
+    def entry(self, req):
         """次の辺の名前を返します
 
         Parameters
@@ -27,7 +27,7 @@ class InitState(AbstractState):
         """
 
         edge_path = "/".join(req.edge_path)
-        print(f"[Exit] edge_path={edge_path}")
+        print(f"[Entry] edge_path={edge_path}")
 
         if edge_path == "":
             # TODO サーバーへログインします

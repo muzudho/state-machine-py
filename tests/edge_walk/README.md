@@ -19,7 +19,7 @@ python.exe -m pip install state_machine_py
 python.exe -m tests.edge_walk.main
 ```
 
-👇複数行を一気に貼り付けても動きます（ FIXME exit()を通らないエラーが出てる？）。  
+👇複数行を一気に貼り付けても動きます。  
 
 Input:  
 
@@ -34,4 +34,4 @@ Input:
 q
 ```
 
-Version 9.0.7 から exit(...)の返り値（エッジ）に空文字列を指定することで **踏みとどまり** を表現できるようになりました。  
+空文字列を指定することで **踏みとどまり** を表現できます。  

@@ -24,7 +24,7 @@ class InitState(AbstractState):
     def name(self):
         return INIT
 
-    def exit(self, req):
+    def entry(self, req):
         """次の辺の名前を返します
 
         Parameters
@@ -42,6 +42,9 @@ class InitState(AbstractState):
 
         matched = self._user_name_pattern.match(
             req.intermachine.dequeue_myself())
+
+        self.on_entry(req)
+
         if matched:
             req.context.user_name = matched.group(1)
 
@@ -53,6 +56,9 @@ class InitState(AbstractState):
 
     def on_your_name_prompt(self, req):
         """入力を取る前"""
+        pass
+
+    def on_entry(self, req):
         pass
 
     def on_logged_in(self, req):
@@ -73,7 +79,7 @@ if __name__ == "__main__":
 
     req = Request(context=context, intermachine=intermachine)
     req.intermachine.enqueue_myself('kifuwarabe')
-    edge = state.exit(req)
+    edge = state.entry(req)
     if edge == E_LOGIN:
         print('.', end='')
     else:
@@ -81,7 +87,7 @@ if __name__ == "__main__":
 
     req = Request(context=context, intermachine=intermachine)
     req.intermachine.enqueue_myself('ya !')
-    edge = state.exit(req)
+    edge = state.entry(req)
     if edge == E_LOOPBACK:
         print('.', end='')
     else:

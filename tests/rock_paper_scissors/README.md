@@ -73,7 +73,7 @@ from context import Context
 class InitState(AbstractState):
     # 中略
 
-    def exit(self, context, line, edge_path):
+    def entry(self, req):
 
         if line=="LOGIN":
             return '-LoggedIn->'
@@ -81,7 +81,7 @@ class InitState(AbstractState):
         return '-Loopback->'
 ```
 
-👆 遷移する方法は State の exit 時に、次の（下位の）エッジの名前を指定してください  
+👆 遷移する方法は State の entry 時に、次の（下位の）エッジの名前を指定してください  
 
 * Edge の名前はソースコード上では（必須ではありませんが）説明のために `- ->` で囲んでいます
 
@@ -103,7 +103,7 @@ class InitState(AbstractState):
 
 * Edge には、任意の名前の `on_xxxx` といったものを いくつでも付けることができます。  
   これは本書では `xxxx` を イベント（Event）、 `on_xxxx` を イベントハンドラ（EventHandler）と呼ぶとします
-* `exit()` に紐づく `on_exit` だけ最初から用意されています
+* `entry()` に紐づく `on_entry` だけ最初から用意されています
 
 説明２  
 
@@ -133,7 +133,7 @@ State machine              State
   _leave()                              // 遷移先を算出します
     |
     |
-    +--------------------- exit()       // 実行したい処理はここに書くことに
+    +--------------------- entry()      // 実行したい処理はここに書くことに
                              |          // なるかと思います
                              |
                              |          // 例えば req.intermachine.enqueue_myself("This is a command")

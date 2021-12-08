@@ -4,7 +4,7 @@ class AbstractState():
     def __init__(self):
         pass
 
-    def exit(self, req):
+    def entry(self, req):
         """この状態から抜け出たときに呼び出されます。ただし初期化時、アボート時は呼び出されません
 
         Parameters
@@ -26,16 +26,4 @@ class AbstractState():
         自分（ステートマシン）の入力キューから何かの文字を取り出します。
         ステートマシンが終了するとNoneを返すので、すぐにこの関数から抜けてください
         """
-        self.on_exit(req)
-
         return None
-
-    def on_exit(self, req):
-        """この状態から抜け出たときに呼び出されます。ただし初期化時、アボート時は呼び出されません
-
-        Parameters
-        ----------
-        req : Request
-            ステートマシンからステートへ与えられる引数のまとまり
-        """
-        pass

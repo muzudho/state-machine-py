@@ -11,7 +11,7 @@ class LobbyState(AbstractState):
     def name(self):
         return LOBBY
 
-    def exit(self, req):
+    def entry(self, req):
         """次の辺の名前を返します
 
         Parameters

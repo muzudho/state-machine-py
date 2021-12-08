@@ -12,7 +12,7 @@ class InitState(AbstractState):
     def name(self):
         return INIT
 
-    def exit(self, req):
+    def entry(self, req):
         """次の辺の名前を返します
 
         Parameters
@@ -30,6 +30,7 @@ class InitState(AbstractState):
             print("[B] ボールを持っていないので、キャッチの姿勢を取ります")
             req.context.number = int(req.intermachine.dequeue())
             req.intermachine.task_done()
+            self.on_entry(req)
 
         if req.context.number == None:
             print("[B] まだボールは飛んでこなかった")
@@ -50,3 +51,6 @@ class InitState(AbstractState):
             req.context.number = None
 
         return E_DECREASE
+
+    def on_entry(self, req):
+        pass

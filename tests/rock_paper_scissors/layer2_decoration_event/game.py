@@ -5,8 +5,8 @@ class DecoratedGameState(GameState):
     def __init__(self):
         super().__init__()
 
-    def on_exit(self, req):
-        """この on_exit メソッドは省略することもできます。
+    def on_entry(self, req):
+        """この on_entry メソッドは省略することもできます。
         この状態から出たときにする処理を書いてください。
         ステートマシンが中断されたときは省略されます
 
@@ -19,9 +19,9 @@ class DecoratedGameState(GameState):
         # 改行を出力しないとフラッシュされませんので、明示的にフラッシュします
         print("Rock-paper-scissors(R,P,S): ", end='', flush=True)
 
-        # on_exit の前に処理を書いていただけます
-        super().on_exit(req)
-        # on_exit の後に処理を書いていただけます
+        # on_entry の前に処理を書いていただけます
+        super().on_entry(req)
+        # on_entry の後に処理を書いていただけます
 
     def on_win(self, req):
         """この on_win メソッドは省略することもできます。
