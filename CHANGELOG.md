@@ -6,6 +6,11 @@
 * intermachine.get(...) を intermachine.dequeue(...) にリネーム
 * state_machine.dequeue_line() を state_machine.dequeue_item() にリネーム
 
+* request.line を廃止。 代わりに req.intermachine.dequeue_myself() としてください
+* state_machine._leave(...) の line 引数廃止。 代わりに同上
+* Request(...) の intermachine 引数を必須に変更
+* MultipleStateMachineクラスの使用が必須に変更
+
 # 12.0.0
 
 state_machine.entry() の戻り値廃止。 代わりに req.intermachine.put_myself(line) としてください

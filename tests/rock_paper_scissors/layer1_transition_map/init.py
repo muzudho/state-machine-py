@@ -1,5 +1,7 @@
 import re
 from state_machine_py.abstract_state import AbstractState
+from state_machine_py.intermachine import Intermachine
+from state_machine_py.multiple_state_machine import MultipleStateMachine
 from state_machine_py.request import Request
 from tests.rock_paper_scissors.context import Context
 from tests.rock_paper_scissors.keywords import E_LOGIN, E_LOOPBACK, INIT
@@ -44,7 +46,8 @@ class InitState(AbstractState):
             辺の名前
         """
 
-        matched = self._user_name_pattern.match(req.line)
+        matched = self._user_name_pattern.match(
+            req.intermachine.dequeue_myself())
         if matched:
             req.context.user_name = matched.group(1)
 
@@ -58,21 +61,20 @@ class InitState(AbstractState):
 # Test
 # python.exe -m layer1_transition_map.init
 if __name__ == "__main__":
+    intermachine = Intermachine(MultipleStateMachine(), "[[TestMachine]]")
     context = Context()
     state = InitState()
 
-    line = 'kifuwarabe'
-    req = Request(context=context,
-                  line=line)
+    req = Request(context=context, intermachine=intermachine)
+    req.intermachine.enqueue_myself('kifuwarabe')
     edge = state.exit(req)
     if edge == E_LOGIN:
         print('.', end='')
     else:
         print('f', end='')
 
-    line = 'ya !'
-    req = Request(context=context,
-                  line=line)
+    req = Request(context=context, intermachine=intermachine)
+    req.intermachine.enqueue_myself('ya !')
     edge = state.exit(req)
     if edge == E_LOOPBACK:
         print('.', end='')

@@ -1,10 +1,9 @@
 class Request():
     """ステートマシンからステートへ与えられる引数のまとまり"""
 
-    def __init__(self, context, edge_path=[], line=None, intermachine=None):
+    def __init__(self, context, intermachine, edge_path=[]):
         self._context = context
         self._edge_path = edge_path
-        self._line = line
         self._intermachine = intermachine
 
     @property
@@ -22,15 +21,6 @@ class Request():
             ["this","is","a","edge","path"]
         """
         return self._edge_path
-
-    @property
-    def line(self):
-        """外部から与えられる入力文字列
-
-        Examples
-        --------
-        コマンドライン文字列"""
-        return self._line
 
     @property
     def intermachine(self):

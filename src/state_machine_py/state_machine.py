@@ -127,9 +127,9 @@ class StateMachine():
     def start(self, next_state_name):
         """ステートマシンを開始します"""
 
-        # [Arrive] --> [Get] --> [Leave] を最小単位とするループです。
-        # しかしコードは [Get] --> [Leave] --> [Arrive] になってしまっているので
-        # スタート直後の１回だけ [Get] --> [Leave] をスキップしてください
+        # [Arrive] --> [Leave] を最小単位とするループです。
+        # しかしコードは [Leave] --> [Arrive] になってしまっているので
+        # スタート直後の１回だけ [Leave] をスキップしてください
         is_skip_leave = True
 
         # 無限ループ
@@ -178,17 +178,10 @@ class StateMachine():
 
                     # +-------+
                     # |       |
-                    # |  Get  |
-                    # |       |
-                    # +-------+
-                    item = self.dequeue_item()
-
-                    # +-------+
-                    # |       |
                     # | Leave |
                     # |       |
                     # +-------+
-                    next_state_name = self._leave(item)
+                    next_state_name = self._leave()
 
                     if self.verbose:
                         print(
@@ -252,7 +245,6 @@ class StateMachine():
 
             req = Request(context=self._context,
                           edge_path=self._edge_path,
-                          line=None,
                           intermachine=self._intermachine)
 
             self._state.entry(req)
@@ -261,15 +253,10 @@ class StateMachine():
             # Error
             raise ValueError(f"Next state [{next_state_name}] is not found")
 
-    def _leave(self, line):
+    def _leave(self):
         """次の状態の名前と、遷移に使ったキーを返します。
         exitコールバック関数を呼び出します。
         stateの遷移はまだ行いません
-
-        Parameters
-        ----------
-        str : line
-            入力文字列（末尾に改行なし）
 
         Returns
         -------
@@ -277,14 +264,9 @@ class StateMachine():
             次の状態の名前
         """
 
-        if self.verbose:
-            print(
-                f"{self._alternate_state_machine_name()} Leave line={line}")
-
         req = Request(
             context=self._context,
             edge_path=self.edge_path,
-            line=line,
             intermachine=self._intermachine)
         next_edge_name = self._state.exit(req)
 

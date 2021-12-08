@@ -1,15 +1,18 @@
 from threading import Thread
-from state_machine_py.state_machine import StateMachine
+from state_machine_py.multiple_state_machine import MultipleStateMachine
 from tests.rock_paper_scissors.context import Context
 from tests.rock_paper_scissors.state_creator_dict import state_creator_dict
-from tests.rock_paper_scissors.keywords import INIT
+from tests.rock_paper_scissors.keywords import INIT, MACHINE_A
 from tests.rock_paper_scissors.transition_dict import transition_dict
 
 
 class MainDiagram():
     def __init__(self):
         """初期化"""
-        self._state_machine = StateMachine(
+        self._multiple_state_machine = MultipleStateMachine()
+
+        self._state_machine = self._multiple_state_machine.create_machine(
+            machine_key=MACHINE_A,
             context=Context(),
             state_creator_dict=state_creator_dict,
             transition_dict=transition_dict)
