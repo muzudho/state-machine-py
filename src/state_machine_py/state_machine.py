@@ -270,6 +270,17 @@ class StateMachine():
             intermachine=self._intermachine)
         next_edge_name = self._state.exit(req)
 
+        if self.verbose:
+            print(
+                f"{self._alternate_state_machine_name()} After exit next_edge_name={next_edge_name}")
+
+        # exitがNoneを返すのは Terminate したからとします
+        if next_edge_name is None:
+            if self.verbose:
+                print(
+                    f"{self._alternate_state_machine_name()} Terminate the state machine (After exit)")
+            return  # 関数を終わります
+
         # 例えば [Apple]ステート に居るとき ----Banana----> エッジに去るということは、
         #
         # "[Apple]": {
