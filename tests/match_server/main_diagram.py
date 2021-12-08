@@ -21,7 +21,7 @@ class MainDiagram():
             context=ContextC(),
             state_creator_dict=state_dict_c,
             transition_dict=transition_dict_c)
-        # machine_a.verbose = True  # デバッグ情報を出力します
+        machine_a.verbose = True  # デバッグ情報を出力します
 
         # machine_b = self._multiple_state_machine.create_machine(
         #     MACHINE_B,

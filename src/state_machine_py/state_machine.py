@@ -102,11 +102,9 @@ class StateMachine():
     def start(self, next_state_name):
         """ステートマシンを開始します"""
 
-        # Arrive と Leave のペアを最小単位とするループです。
-        # Leave が終わったところで IsTerminate を判定します
-        # Arrive と Leave の間に LinesGetter という処理が入ります
-
-        # ステートマシンは Arrive から始まるので、スタート直後の１回だけ Leave をスキップします
+        # [Arrive] --> [Get] --> [Leave] を最小単位とするループです。
+        # しかしコードは [Get] --> [Leave] --> [Arrive] になってしまっているので
+        # スタート直後の１回だけ [Get] --> [Leave] をスキップしてください
         is_skip_leave = True
 
         # 無限ループ
@@ -164,6 +162,11 @@ class StateMachine():
                             return  # start関数を終わります
 
                         try:
+                            # +-------+
+                            # |       |
+                            # |  Get  |
+                            # |       |
+                            # +-------+
                             line = self._input_queue.get(
                                 block=False)
                             self._input_queue.task_done()
@@ -176,8 +179,11 @@ class StateMachine():
                         print(
                             f"{self._alternate_state_machine_name()} GetQueueline={line}")
 
-                    # Leave
-                    # -----
+                    # +-------+
+                    # |       |
+                    # | Leave |
+                    # |       |
+                    # +-------+
                     next_state_name = self._leave(line)
 
                     if self.verbose:
@@ -199,8 +205,11 @@ class StateMachine():
 
                 # ループの初回はここから始まります
                 #
-                # Arrive
-                # ------
+                # +--------+
+                # |        |
+                # | Arrive |
+                # |        |
+                # +--------+
                 interrupt_line = self._arrive(next_state_name)
 
                 if self.verbose:
@@ -248,7 +257,7 @@ class StateMachine():
         """
 
         if self.verbose:
-            edge_path = '.'.join(self._edge_path)
+            edge_path = '/'.join(self._edge_path)
             print(
                 f"{self._alternate_state_machine_name()} Arrive to {next_state_name} {edge_path}")
 
@@ -260,7 +269,9 @@ class StateMachine():
                           edge_path=self._edge_path,
                           line=None,
                           intermachine=self._intermachine)
+
             interrupt_line = self._state.entry(req)
+
             if interrupt_line and self.verbose:
                 print(
                     f"{self._alternate_state_machine_name()} Arrive interrupt_line={interrupt_line}")
