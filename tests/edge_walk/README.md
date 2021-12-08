@@ -19,7 +19,7 @@ python.exe -m pip install state_machine_py
 python.exe -m tests.edge_walk.main
 ```
 
-👇複数行を一気に貼り付けても動きます（ FIXME 入力が速すぎてエラーになる？）。  
+👇複数行を一気に貼り付けても動きます（ FIXME exit()を通らないエラーが出てる？）。  
 
 Input:  
 
