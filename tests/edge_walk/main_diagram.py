@@ -53,19 +53,21 @@ class MainDiagram():
 
             for line in lines:
 
+                # `#` で始まる行はコメントとして無視します
                 if line.startswith('#'):
-                    # `#` で始まる行はコメントとして無視します
                     pass
+
                 # a way to exit the program
+                # （ステートマシンが動いている最中でも割り込んで）ステートマシンを終了させます
                 elif line.lower() == 'q':
-                    # （ステートマシンが動いている最中でも割り込んで）ステートマシンを終了させます
                     self._state_machine.terminate()
                     is_quit = True
                     print("[Work] Break 1")
                     break
 
                 # ステートマシーンに渡します
-                self._state_machine.input_queue.put(line)
+                else:
+                    self._state_machine.input_queue.put(line)
 
             if is_quit:
                 print("[Work] Break 2")

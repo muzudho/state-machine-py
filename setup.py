@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="state_machine_py",
-    version="11.0.1",
+    version="11.0.5",
     author="muzudho",
     author_email="muzudho1@gmail.com",
     description="A state diagram machine package",

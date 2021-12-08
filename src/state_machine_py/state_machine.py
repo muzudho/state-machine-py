@@ -93,6 +93,12 @@ class StateMachine():
 
         self._is_terminate = True
 
+        req = Request(
+            context=self._context,
+            edge_path=self.edge_path,
+            intermachine=self._intermachine)
+        self.on_terminate(req)
+
     def start(self, next_state_name):
         """ステートマシンを開始します"""
 
@@ -106,6 +112,13 @@ class StateMachine():
         # 無限ループ
         while True:
 
+            # ステートマシンの終了のタイミングの１つ目です。 ループの先頭で終了させます
+            if self._is_terminate:
+                if self.verbose:
+                    print(
+                        f"{self._alternate_state_machine_name()} Terminate the state machine (Loop A begin)")
+                return  # start関数を終わります
+
             if self.verbose:
                 print(
                     f"{self._alternate_state_machine_name()} Loop(A) Begin next_state_name={next_state_name}")
@@ -115,6 +128,14 @@ class StateMachine():
 
             # キューに内容がある間、繰り返します
             while is_enter_loop or not self._input_queue.empty:
+
+                # ステートマシンの終了のタイミングの２つ目です。ループの先頭で終了させます
+                if self._is_terminate:
+                    if self.verbose:
+                        print(
+                            f"{self._alternate_state_machine_name()} Terminate the state machine (Loop B begin)")
+                    return  # start関数を終わります
+
                 is_enter_loop = False
 
                 if self.verbose:
@@ -128,8 +149,28 @@ class StateMachine():
                             f"{self._alternate_state_machine_name()} Passed first leave")
                     is_skip_leave = False
                 else:
-                    line = self._input_queue.get()
-                    self._input_queue.task_done()
+                    if self.verbose:
+                        print(
+                            f"{self._alternate_state_machine_name()} Wait GetQueueline")
+
+                    # queue の get() でブロックするとデッドロックしてしまう
+                    line = None
+                    while line is None:
+                        # ステートマシンの終了のタイミングの２つ目です。ループの先頭で終了させます
+                        if self._is_terminate:
+                            if self.verbose:
+                                print(
+                                    f"{self._alternate_state_machine_name()} Terminate the state machine (Loop C begin)")
+                            return  # start関数を終わります
+
+                        try:
+                            line = self._input_queue.get(
+                                block=False)
+                            self._input_queue.task_done()
+                        except queue.Empty:
+                            line = None
+
+                        time.sleep(0)
 
                     if self.verbose:
                         print(
@@ -142,13 +183,6 @@ class StateMachine():
                     if self.verbose:
                         print(
                             f"{self._alternate_state_machine_name()} After leave next_state_name={next_state_name}")
-
-                # ステートマシンの終了のタイミングの１つ目です。 Arrive が入力を続けている間はこのタイミングで終了させます
-                if self._is_terminate:
-                    if self.verbose:
-                        print(
-                            f"{self._alternate_state_machine_name()} Terminate the state machine (1)")
-                    return  # start関数を終わります
 
                 if self.verbose:
                     print(
@@ -178,15 +212,8 @@ class StateMachine():
                 print(
                     f"{self._alternate_state_machine_name()} Queue is empty")
 
-            # ステートマシンの終了のタイミングの２つ目です。キューが空っぽのときは このタイミングで終了させます
-            if self._is_terminate:
-                if self.verbose:
-                    print(
-                        f"{self._alternate_state_machine_name()} Terminate the state machine (2)")
-                return  # start関数を終わります
-
             # このままでは いつまでも ここを通るので 少し待ってみます
-            time.sleep(0.016)  # TODO スリープタイムを設定できたい。規定値およそ 60 fps
+            time.sleep(0.016)  # TODO スリープタイムを設定できたい
 
             # ここまでが１つの処理です
 
@@ -210,9 +237,6 @@ class StateMachine():
         object
             ただちに _leave に渡したい引数。無ければ None
         """
-
-        if self._is_terminate:
-            return
 
         if self.verbose:
             edge_path = '.'.join(self._edge_path)
@@ -253,8 +277,6 @@ class StateMachine():
         str
             次の状態の名前
         """
-        if self._is_terminate:
-            return
 
         if self.verbose:
             print(
@@ -291,8 +313,7 @@ class StateMachine():
         if self.state.name in self._transition_dict:
             curr_dict = self._transition_dict[self.state.name]
             if curr_dict is None:
-                self._is_terminate = True
-                self.on_terminate(req)
+                self.terminate()
                 return
         else:
             raise ValueError(
@@ -303,8 +324,7 @@ class StateMachine():
             if edge in curr_dict:
                 curr_dict = curr_dict[edge]
                 if curr_dict is None:
-                    self._is_terminate = True
-                    self.on_terminate(req)
+                    self.terminate()
                     return
             else:
                 raise ValueError(
