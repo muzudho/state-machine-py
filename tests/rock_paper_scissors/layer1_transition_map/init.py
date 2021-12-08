@@ -24,14 +24,6 @@ class InitState(AbstractState):
     def name(self):
         return INIT
 
-    def on_logged_in(self, req):
-        """ログイン成功時"""
-        pass
-
-    def on_failed(self, req):
-        """ログイン失敗時"""
-        pass
-
     def exit(self, req):
         """次の辺の名前を返します
 
@@ -46,6 +38,8 @@ class InitState(AbstractState):
             辺の名前
         """
 
+        self.on_your_name_prompt(req)
+
         matched = self._user_name_pattern.match(
             req.intermachine.dequeue_myself())
         if matched:
@@ -56,6 +50,18 @@ class InitState(AbstractState):
 
         self.on_failed(req)
         return E_LOOPBACK
+
+    def on_your_name_prompt(self, req):
+        """入力を取る前"""
+        pass
+
+    def on_logged_in(self, req):
+        """ログイン成功時"""
+        pass
+
+    def on_failed(self, req):
+        """ログイン失敗時"""
+        pass
 
 
 # Test

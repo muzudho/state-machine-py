@@ -5,16 +5,9 @@ class DecoratedInitState(InitState):
     def __init__(self):
         super().__init__()
 
-    def on_entry(self, req):
-        """この on_entry メソッドは省略することもできます。
-        初期状態に戻す処理を書いてください
-
-        Parameters
-        ----------
-        req : Request
-            ステートマシンからステートへ与えられる引数のまとまり
-        """
-        # 基底クラスの on_entry には何も書かれていない想定です
+    def on_your_name_prompt(self, req):
+        """入力を取る前"""
+        # 基底クラスの on_exit には何も書かれていない想定です
         print("Init: 初期状態に戻しました\nYour name: ", end='')
 
     def on_exit(self, req):
@@ -26,7 +19,7 @@ class DecoratedInitState(InitState):
         req : Request
             ステートマシンからステートへ与えられる引数のまとまり
         """
-        # 基底クラスの on_exit には何も書かれていない想定です
+
         print("---- ---- ---- ----")
 
     def on_logged_in(self, req):

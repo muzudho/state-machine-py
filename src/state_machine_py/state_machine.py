@@ -214,7 +214,7 @@ class StateMachine():
                     f"{self._alternate_state_machine_name()} Queue is empty")
 
             # このままでは いつまでも ここを通るので 少し待ってみます
-            time.sleep(0.016)  # TODO スリープタイムを設定できたい
+            time.sleep(0)  # TODO スリープタイムを設定できたい
 
             # ここまでが１つの処理です
 
@@ -226,7 +226,6 @@ class StateMachine():
 
     def _arrive(self, next_state_name):
         """指定の状態に遷移します
-        entryコールバック関数を呼び出します。
 
         Parameters
         ----------
@@ -242,12 +241,6 @@ class StateMachine():
         if next_state_name in self._state_creator_dict:
             # 次のステートへ引継ぎ
             self._state = self._state_creator_dict[next_state_name]()
-
-            req = Request(context=self._context,
-                          edge_path=self._edge_path,
-                          intermachine=self._intermachine)
-
-            self._state.entry(req)
 
         else:
             # Error

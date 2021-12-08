@@ -1,3 +1,7 @@
+# 14.0.0
+
+state.entry(), state.on_entry() 廃止。 代わりに state.exit(), state.on_exit() に統合してください
+
 # 13.0.0
 
 * intermachine.put_myself(line) を intermachine.enqueue_myself(line) にリネーム

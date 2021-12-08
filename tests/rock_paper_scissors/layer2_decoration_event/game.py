@@ -5,22 +5,6 @@ class DecoratedGameState(GameState):
     def __init__(self):
         super().__init__()
 
-    def on_entry(self, req):
-        """この on_entry メソッドは省略することもできます。
-        この状態に入ったときにする処理を書いてください
-
-        Parameters
-        ----------
-        req : Request
-            ステートマシンからステートへ与えられる引数のまとまり
-        """
-        # on_entry の前に処理を書いていただけます
-        super().on_entry(req)
-        # on_entry の後に処理を書いていただけます
-
-        # 改行を出力しないとフラッシュされませんので、明示的にフラッシュします
-        print("Rock-paper-scissors(R,P,S): ", end='', flush=True)
-
     def on_exit(self, req):
         """この on_exit メソッドは省略することもできます。
         この状態から出たときにする処理を書いてください。
@@ -31,7 +15,10 @@ class DecoratedGameState(GameState):
         req : Request
             ステートマシンからステートへ与えられる引数のまとまり
         """
-        # print("[RPS]L2 Begin on_exit")
+
+        # 改行を出力しないとフラッシュされませんので、明示的にフラッシュします
+        print("Rock-paper-scissors(R,P,S): ", end='', flush=True)
+
         # on_exit の前に処理を書いていただけます
         super().on_exit(req)
         # on_exit の後に処理を書いていただけます

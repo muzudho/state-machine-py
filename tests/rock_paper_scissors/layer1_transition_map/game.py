@@ -22,9 +22,6 @@ class GameState(AbstractState):
     def name(self):
         return GAME
 
-    def entry(self, req):
-        super().entry(req)
-
     def exit(self, req):
         """次の辺の名前を返します
 

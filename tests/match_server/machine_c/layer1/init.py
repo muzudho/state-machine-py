@@ -12,27 +12,6 @@ class InitState(AbstractState):
     def name(self):
         return INIT
 
-    def entry(self, req):
-        edge_path = "/".join(req.edge_path)
-        print(f"[Entry] edge_path={edge_path}")
-
-        if edge_path == "":
-            print("ログインします")
-            req.intermachine.enqueue_myself("Login my_name")
-            return
-
-        elif edge_path == f"{E_LOGIN}":
-            # TODO サーバーからの Ok か Incorrect かのメッセージを待っています
-            print("サーバーからの Ok か Incorrect かのメッセージを待っています")
-            while True:
-                # TODO ここでキューからメッセージを取得したい
-                time.sleep(3)
-
-        else:
-            raise ValueError(f"Invalid edge_path={edge_path}")
-
-        return None
-
     def exit(self, req):
         """次の辺の名前を返します
 
@@ -53,6 +32,7 @@ class InitState(AbstractState):
         if edge_path == "":
             # TODO サーバーへログインします
             print("サーバーへログインします")
+            # req.intermachine.enqueue_myself("Login my_name")
             self.on_login(req)
             return E_LOGIN
 

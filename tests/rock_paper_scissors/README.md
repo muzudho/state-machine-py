@@ -103,7 +103,7 @@ class InitState(AbstractState):
 
 * Edge には、任意の名前の `on_xxxx` といったものを いくつでも付けることができます。  
   これは本書では `xxxx` を イベント（Event）、 `on_xxxx` を イベントハンドラ（EventHandler）と呼ぶとします
-* `entry()` に紐づく `on_entry()` と、 `exit()` に紐づく `on_exit` だけ最初から用意されています
+* `exit()` に紐づく `on_exit` だけ最初から用意されています
 
 説明２  
 
@@ -125,23 +125,20 @@ State machine              State
     O  Start
     |
     |
- _arrive(next_state_name)
+ _arrive(next_state_name)               // 状態遷移を行います
     |
     |
-    +--------------------- entry()      // 初期化処理や、CleanUp が主な役割に
+    |
+    |
+  _leave()                              // 遷移先を算出します
+    |
+    |
+    +--------------------- exit()       // 実行したい処理はここに書くことに
                              |          // なるかと思います
                              |
                              |          // 例えば req.intermachine.enqueue_myself("This is a command")
                              |          // を実行すると 自分自身（ステートマシン）の入力キューに
                              |          // 文字列を入力できます
-    +------------------------+
-    |
-    |
-  _leave()
-    |
-    |
-    +--------------------- exit()       // 実行したい処理はここに書くことに
-                             |          // なるかと思います
                              |
                              |          // 例えば req.intermachine.dequeue_myself()
                              |          // を実行すると 自分自身（ステートマシン）の入力キューから
