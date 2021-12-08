@@ -1,3 +1,7 @@
+# 12.0.0
+
+state_machine.entry() の戻り値廃止。 代わりに req.intermachine.put_myself(line) としてください
+
 # 11.0.0
 
 lines_getter 廃止  

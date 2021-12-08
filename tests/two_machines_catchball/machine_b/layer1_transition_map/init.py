@@ -14,7 +14,7 @@ class InitState(AbstractState):
 
     def entry(self, req):
         # 入力を飛ばします
-        return "pass_on"
+        req.intermachine.put_myself("pass_on")  # 意味のないコマンド
 
     def exit(self, req):
         """次の辺の名前を返します

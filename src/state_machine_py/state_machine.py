@@ -210,21 +210,7 @@ class StateMachine():
                 # | Arrive |
                 # |        |
                 # +--------+
-                interrupt_line = self._arrive(next_state_name)
-
-                if self.verbose:
-                    print(
-                        f"{self._alternate_state_machine_name()} Afetr arrive interrupt_line={interrupt_line}")
-
-                # Arrive がNoneを返したら、キューに入力が残っていてもひとまず 外部からの入力を取得するフェーズへ抜けます
-                if interrupt_line is None:
-                    break
-                # Arrive の返り値をキューに格納することでループを続行します
-                else:
-                    if self.verbose:
-                        print(
-                            f"{self._alternate_state_machine_name()} Put interrupt_line to queue")
-                    self._input_queue.put(interrupt_line)
+                self._arrive(next_state_name)
 
             if self.verbose:
                 print(
@@ -249,11 +235,6 @@ class StateMachine():
         ----------
         str : next_state_name
             次の状態の名前
-
-        Returns
-        -------
-        object
-            ただちに _leave に渡したい引数。無ければ None
         """
 
         if self.verbose:
@@ -270,13 +251,7 @@ class StateMachine():
                           line=None,
                           intermachine=self._intermachine)
 
-            interrupt_line = self._state.entry(req)
-
-            if interrupt_line and self.verbose:
-                print(
-                    f"{self._alternate_state_machine_name()} Arrive interrupt_line={interrupt_line}")
-
-            return interrupt_line
+            self._state.entry(req)
 
         else:
             # Error

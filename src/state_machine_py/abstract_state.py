@@ -12,14 +12,13 @@ class AbstractState():
         req : Request
             ステートマシンからステートへ与えられる引数のまとまり
 
-        Returns
-        -------
-        str
-            ただちに state_machine._leave(...) に渡す引数です。
-            None を指定すると、たたちに次の状態に遷移することはしません
+        Examples
+        --------
+        req.intermachine.put_myself("Login")
+
+        自分（ステートマシン）の入力キューに "Login" の文字を送ります
         """
         self.on_entry(req)
-        return None
 
     def on_entry(self, req):
         """この状態に遷移したときに呼び出されます

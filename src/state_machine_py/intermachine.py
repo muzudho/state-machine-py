@@ -13,9 +13,14 @@ class Intermachine():
                                                                       block=block,
                                                                       timeout=timeout)
 
+    def put_myself(self, item, block=True, timeout=None):
+        self._owner.machines[self._machine_key].input_queue.put(item=item,
+                                                                block=block,
+                                                                timeout=timeout)
+
     def get(self, block=True, timeout=None):
         return self._owner.machines[self._machine_key].input_queue.get(block=block,
-                                                               timeout=timeout)
+                                                                       timeout=timeout)
 
     def join(self):
         return self._owner.machines[self._machine_key].input_queue.join()

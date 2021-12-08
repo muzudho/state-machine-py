@@ -17,9 +17,9 @@ class InitState(AbstractState):
         print(f"[Entry] edge_path={edge_path}")
 
         if edge_path == "":
-            # TODO exitへ進みます
-            print("pass_on")
-            return "pass_on"
+            print("ログインします")
+            req.intermachine.put_myself("Login my_name")
+            return
 
         elif edge_path == f"{E_LOGIN}":
             # TODO サーバーからの Ok か Incorrect かのメッセージを待っています
