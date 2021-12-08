@@ -1,4 +1,3 @@
-import queue
 import time
 from threading import Thread
 from state_machine_py.multiple_state_machine import MultipleStateMachine

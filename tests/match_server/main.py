@@ -1,7 +1,7 @@
 import sys
 import signal
 
-from tests.two_machines_catchball.main_diagram import MainDiagram
+from tests.match_server.main_diagram import MainDiagram
 
 
 def __main():
