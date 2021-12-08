@@ -12,10 +12,6 @@ class InitState(AbstractState):
     def name(self):
         return INIT
 
-    def entry(self, req):
-        # 入力を飛ばします
-        req.intermachine.enqueue_myself("pass_on")  # 意味のないコマンド
-
     def exit(self, req):
         """次の辺の名前を返します
 
@@ -32,7 +28,7 @@ class InitState(AbstractState):
 
         if req.context.number == None:
             print("[A] ボールを持っていないので、キャッチの姿勢を取ります")
-            req.context.number = req.intermachine.dequeue()
+            req.context.number = int(req.intermachine.dequeue())
             req.intermachine.task_done()
 
         if req.context.number == None:
