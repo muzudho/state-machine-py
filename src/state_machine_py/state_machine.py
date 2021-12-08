@@ -87,6 +87,10 @@ class StateMachine():
 
     def terminate(self):
         """ステートマシンを終了させます"""
+        if self.verbose:
+            print(
+                f"{self._alternate_state_machine_name()} Terminate")
+
         self._is_terminate = True
 
     def start(self, next_state_name):
