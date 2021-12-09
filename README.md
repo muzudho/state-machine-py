@@ -16,3 +16,7 @@ python.exe -m pip install state_machine_py
     * 📂[rock_paper_scissors](https://github.com/muzudho/state-machine-py/tree/main/tests/rock_paper_scissors)
     * 📂[edge_walk](https://github.com/muzudho/state-machine-py/tree/main/tests/edge_walk)
     * 📂[two_machines_catchball](https://github.com/muzudho/state-machine-py/tree/main/tests/two_machines_catchball)
+
+## Skill up
+
+* 📖 [State machine Practice](https://github.com/muzudho/py-state-machine-practice)
