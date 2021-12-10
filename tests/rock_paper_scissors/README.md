@@ -34,7 +34,7 @@ python.exe -m tests.rock_paper_scissors.main
 ```python
 state_machine = StateMachine(
     context=Context(),
-    state_creator_dict=state_creator_dict,
+    state_gen=state_gen,
     transition_dict=transition_dict)
 ```
 

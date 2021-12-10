@@ -7,7 +7,7 @@ from tests.match_server.machine_c.context import Context as ContextC
 from tests.match_server.machine_c.state_dict import state_dict as state_dict_c
 from tests.match_server.machine_c.transition_dict import transition_dict as transition_dict_c
 # from tests.match_server.machine_s.context import Context as ContextB
-# from tests.match_server.machine_s.state_creator_dict import state_creator_dict as state_creator_dict_b
+# from tests.match_server.machine_s.state_gen import state_gen as state_gen_b
 # from tests.match_server.machine_s.transition_dict import transition_dict as transition_dict_b
 
 
@@ -19,14 +19,14 @@ class MainDiagram():
         machine_a = self._multiple_state_machine.create_machine(
             MACHINE_C,
             context=ContextC(),
-            state_creator_dict=state_dict_c,
+            state_gen=state_dict_c,
             transition_dict=transition_dict_c)
         machine_a.verbose = True  # デバッグ情報を出力します
 
         # machine_b = self._multiple_state_machine.create_machine(
         #     MACHINE_B,
         #     context=ContextB(),
-        #     state_creator_dict=state_creator_dict_b,
+        #     state_gen=state_gen_b,
         #     transition_dict=transition_dict_b)
         # # machine_b.verbose = True  # デバッグ情報を出力します
 

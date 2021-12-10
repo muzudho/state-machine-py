@@ -8,15 +8,15 @@ class StateMachine():
 
     Example
     -------
-    # Contextクラス、state_creator_dictディクショナリー, transition_dictディクショナリー は別途作っておいてください
+    # Contextクラス、state_genディクショナリー, transition_dictディクショナリー は別途作っておいてください
 
     context = Context()
-    sm = StateMachine(context, state_creator_dict=state_creator_dict, transition_dict=transition_dict)
+    sm = StateMachine(context, state_gen=state_gen, transition_dict=transition_dict)
 
     sm._arrive("[Init]") # Init状態は作っておいてください
     """
 
-    def __init__(self, context=None, state_creator_dict={}, transition_dict={}, intermachine=None, name=None):
+    def __init__(self, context=None, state_gen={}, transition_dict={}, intermachine=None, name=None):
         """初期化
 
         Parameters
@@ -24,13 +24,13 @@ class StateMachine():
         context : Context
             このステートマシンは、このContextが何なのか知りません。
             外部から任意に与えることができる変数です。 Defaults to None.
-        state_creator_dict : dict
+        state_gen : dict
             状態を作成する関数のディクショナリーです。 Defaults to {}.
         transition_dict : dict
             遷移先の状態がまとめられたディクショナリーです。 Defaults to {}.
         """
         self._context = context
-        self._state_creator_dict = state_creator_dict
+        self._state_gen = state_gen
         self._transition_dict = transition_dict
         self._verbose = False
         self._edge_path = []
@@ -238,9 +238,9 @@ class StateMachine():
             print(
                 f"{self._alternate_state_machine_name()} Arrive to {next_state_name} {edge_path}")
 
-        if next_state_name in self._state_creator_dict:
+        if next_state_name in self._state_gen:
             # 次のステートへ引継ぎ
-            self._state = self._state_creator_dict[next_state_name]()
+            self._state = self._state_gen[next_state_name]()
 
         else:
             # Error

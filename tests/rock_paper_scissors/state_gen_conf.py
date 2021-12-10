@@ -2,7 +2,7 @@ from tests.rock_paper_scissors.layer2_decoration_event.init import DecoratedInit
 from tests.rock_paper_scissors.layer2_decoration_event.game import DecoratedGameState
 from tests.rock_paper_scissors.keywords import GAME, INIT
 
-state_creator_dict = {
+state_gen = {
     INIT: lambda: DecoratedInitState(),
     GAME: lambda: DecoratedGameState(),
 }

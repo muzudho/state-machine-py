@@ -1,3 +1,7 @@
+# 16.0.0
+
+* state_creator_dict は名前が長いので変数名を state_gen （State generator）、ファイル名を state_gen_conf にリネーム
+
 # 15.0.0
 
 * state.exit() を state.entry() にリネーム

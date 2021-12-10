@@ -2,7 +2,7 @@ from threading import Thread
 from state_machine_py.multiple_state_machine import MultipleStateMachine
 from tests.edge_walk.context import Context
 from tests.edge_walk.keywords import INIT, MACHINE_A
-from tests.edge_walk.state_creator_dict import state_creator_dict
+from tests.edge_walk.state_gen_conf import state_gen
 from tests.edge_walk.transition_dict import transition_dict
 
 
@@ -14,7 +14,7 @@ class MainDiagram():
         self._state_machine = self._multiple_state_machine.create_machine(
             machine_key=MACHINE_A,
             context=Context(),
-            state_creator_dict=state_creator_dict,
+            state_gen=state_gen,
             transition_dict=transition_dict)
 
         # デバッグ情報を出力します
