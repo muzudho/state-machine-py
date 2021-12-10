@@ -14,12 +14,12 @@ class MultipleStateMachine():
     def machines(self):
         return self._machines
 
-    def create_machine(self, machine_key, context, state_gen, transition_dict):
+    def create_machine(self, machine_key, context, state_gen, transition):
         """マルチプルステートマシンに紐づいているステートマシンを生成します"""
         machine = StateMachine(
             context=context,
             state_gen=state_gen,
-            transition_dict=transition_dict,
+            transition=transition,
             intermachine=Intermachine(self, machine_key),
             name=machine_key)
 

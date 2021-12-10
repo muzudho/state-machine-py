@@ -4,11 +4,11 @@ from state_machine_py.multiple_state_machine import MultipleStateMachine
 
 from tests.match_server.keywords import INIT, MACHINE_C, MACHINE_S
 from tests.match_server.machine_c.context import Context as ContextC
-from tests.match_server.machine_c.state_dict import state_dict as state_dict_c
-from tests.match_server.machine_c.transition_dict import transition_dict as transition_dict_c
+from tests.match_server.machine_c.state_gen_conf import state_gen as state_gen_c
+from tests.match_server.machine_c.transition_conf import transition as transition_c
 # from tests.match_server.machine_s.context import Context as ContextB
 # from tests.match_server.machine_s.state_gen import state_gen as state_gen_b
-# from tests.match_server.machine_s.transition_dict import transition_dict as transition_dict_b
+# from tests.match_server.machine_s.transition import transition as transition_b
 
 
 class MainDiagram():
@@ -19,15 +19,15 @@ class MainDiagram():
         machine_a = self._multiple_state_machine.create_machine(
             MACHINE_C,
             context=ContextC(),
-            state_gen=state_dict_c,
-            transition_dict=transition_dict_c)
+            state_gen=state_gen_c,
+            transition=transition_c)
         machine_a.verbose = True  # デバッグ情報を出力します
 
         # machine_b = self._multiple_state_machine.create_machine(
         #     MACHINE_B,
         #     context=ContextB(),
         #     state_gen=state_gen_b,
-        #     transition_dict=transition_dict_b)
+        #     transition=transition_b)
         # # machine_b.verbose = True  # デバッグ情報を出力します
 
     def set_up(self):

@@ -1,6 +1,6 @@
 from tests.edge_walk.keywords import E_A, E_AN, E_IS, E_OK, E_PEN, E_PIN, E_THAT, E_THIS, E_WAS, INIT, GOAL
 
-transition_dict = {
+transition = {
     INIT: {
         E_THAT: INIT,
         E_THIS: {

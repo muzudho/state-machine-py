@@ -3,7 +3,7 @@ from state_machine_py.multiple_state_machine import MultipleStateMachine
 from tests.edge_walk.context import Context
 from tests.edge_walk.keywords import INIT, MACHINE_A
 from tests.edge_walk.state_gen_conf import state_gen
-from tests.edge_walk.transition_dict import transition_dict
+from tests.edge_walk.transition_conf import transition
 
 
 class MainDiagram():
@@ -15,7 +15,7 @@ class MainDiagram():
             machine_key=MACHINE_A,
             context=Context(),
             state_gen=state_gen,
-            transition_dict=transition_dict)
+            transition=transition)
 
         # デバッグ情報を出力します
         # self._state_machine.verbose = True

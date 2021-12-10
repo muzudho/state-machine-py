@@ -8,15 +8,15 @@ class StateMachine():
 
     Example
     -------
-    # Contextクラス、state_genディクショナリー, transition_dictディクショナリー は別途作っておいてください
+    # Context クラス、 state_gen ディクショナリー、 transition ディクショナリー は別途作っておいてください
 
     context = Context()
-    sm = StateMachine(context, state_gen=state_gen, transition_dict=transition_dict)
+    sm = StateMachine(context, state_gen=state_gen, transition=transition)
 
     sm._arrive("[Init]") # Init状態は作っておいてください
     """
 
-    def __init__(self, context=None, state_gen={}, transition_dict={}, intermachine=None, name=None):
+    def __init__(self, context=None, state_gen={}, transition={}, intermachine=None, name=None):
         """初期化
 
         Parameters
@@ -26,12 +26,12 @@ class StateMachine():
             外部から任意に与えることができる変数です。 Defaults to None.
         state_gen : dict
             状態を作成する関数のディクショナリーです。 Defaults to {}.
-        transition_dict : dict
+        transition : dict
             遷移先の状態がまとめられたディクショナリーです。 Defaults to {}.
         """
         self._context = context
         self._state_gen = state_gen
-        self._transition_dict = transition_dict
+        self._transition = transition
         self._verbose = False
         self._edge_path = []
         self._lines_getter = None  # 標準入力とか１個しかないけど
@@ -296,8 +296,8 @@ class StateMachine():
         # None かもしれません。
 
         # まずはカレントステートを指定してディクショナリーを取ってきましょう
-        if self.state.name in self._transition_dict:
-            curr_dict = self._transition_dict[self.state.name]
+        if self.state.name in self._transition:
+            curr_dict = self._transition[self.state.name]
             if curr_dict is None:
                 self.terminate()
                 return

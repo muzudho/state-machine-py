@@ -1,3 +1,7 @@
+# 17.0.0
+
+* transition_dict は変数名を transition、ファイル名を transition_conf にリネーム
+
 # 16.0.0
 
 * state_creator_dict は名前が長いので変数名を state_gen （State generator）、ファイル名を state_gen_conf にリネーム

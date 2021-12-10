@@ -4,10 +4,10 @@ from state_machine_py.multiple_state_machine import MultipleStateMachine
 from tests.two_machines_catchball.keywords import INIT, MACHINE_A, MACHINE_B
 from tests.two_machines_catchball.machine_a.context import Context as ContextA
 from tests.two_machines_catchball.machine_a.state_gen_conf import state_gen as state_gen_a
-from tests.two_machines_catchball.machine_a.transition_dict import transition_dict as transition_dict_a
+from tests.two_machines_catchball.machine_a.transition_conf import transition as transition_a
 from tests.two_machines_catchball.machine_b.context import Context as ContextB
 from tests.two_machines_catchball.machine_b.state_gen_conf import state_gen as state_gen_b
-from tests.two_machines_catchball.machine_b.transition_dict import transition_dict as transition_dict_b
+from tests.two_machines_catchball.machine_b.transition_conf import transition as transition_b
 
 
 class MainDiagram():
@@ -19,14 +19,14 @@ class MainDiagram():
             MACHINE_A,
             context=ContextA(),
             state_gen=state_gen_a,
-            transition_dict=transition_dict_a)
+            transition=transition_a)
         # machine_a.verbose = True  # デバッグ情報を出力します
 
         machine_b = self._multiple_state_machine.create_machine(
             MACHINE_B,
             context=ContextB(),
             state_gen=state_gen_b,
-            transition_dict=transition_dict_b)
+            transition=transition_b)
         # machine_b.verbose = True  # デバッグ情報を出力します
 
     def set_up(self):

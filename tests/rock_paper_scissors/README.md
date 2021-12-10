@@ -35,7 +35,7 @@ python.exe -m tests.rock_paper_scissors.main
 state_machine = StateMachine(
     context=Context(),
     state_gen=state_gen,
-    transition_dict=transition_dict)
+    transition=transition)
 ```
 
 👆 ステートマシンの生成の説明は長くなるので `main.py` ソースコードを読んでください  
@@ -88,7 +88,7 @@ class InitState(AbstractState):
 ![20211205blog2.png](./docs/img/20211205blog2.png)  
 👆
 
-* State と State のつながりは、 `transition_dict` という Dictionary に  
+* State と State のつながりは、 `transition` という Dictionary に  
   格納しておきます。  
   ツリー構造になっていて、トップレベルとリーフには State が並びます。  
   その途中は エッジ です。  

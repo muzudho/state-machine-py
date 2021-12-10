@@ -3,7 +3,7 @@ from tests.match_server.keywords import E_AGREE, E_COMPLETED, E_END_GAME_SUMMARY
     E_OK, E_REJECT, E_START, GAME, INIT, LOBBY, REPLY
 
 # Client side
-transition_dict = {
+transition = {
     INIT: {
         E_LOGIN: {
             E_INCORRECT: INIT,
