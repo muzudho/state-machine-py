@@ -1,3 +1,7 @@
+# 18.0.0
+
+* `entry()` を `update()` にリネーム
+
 # 17.0.0
 
 * transition_dict は変数名を transition、ファイル名を transition_conf にリネーム

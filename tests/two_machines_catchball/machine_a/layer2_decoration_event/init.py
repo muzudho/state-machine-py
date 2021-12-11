@@ -5,5 +5,5 @@ class DecoratedInitState(InitState):
     def __init__(self):
         super().__init__()
 
-    def on_entry(self, req):
+    def on_update(self, req):
         print(f"[A] number={req.context.number}")

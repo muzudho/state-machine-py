@@ -12,7 +12,7 @@ class InitState(AbstractState):
     def name(self):
         return INIT
 
-    def entry(self, req):
+    def update(self, req):
         """次の辺の名前を返します
 
         Parameters

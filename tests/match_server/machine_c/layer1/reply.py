@@ -11,7 +11,7 @@ class ReplyState(AbstractState):
     def name(self):
         return REPLY
 
-    def entry(self, req):
+    def update(self, req):
         """次の辺の名前を返します
 
         Parameters

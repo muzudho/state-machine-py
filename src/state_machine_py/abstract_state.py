@@ -4,7 +4,7 @@ class AbstractState():
     def __init__(self):
         pass
 
-    def entry(self, req):
+    def update(self, req):
         """この状態から抜け出たときに呼び出されます。ただし初期化時、アボート時は呼び出されません
 
         Parameters

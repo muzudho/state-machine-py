@@ -22,3 +22,7 @@ python.exe -m pip install --index-url https://test.pypi.org/simple/ --no-deps st
 # Product
 python.exe -m pip install state_machine_py
 ```
+
+## Documents
+
+📖 [state-machine-py](https://pypi.org/project/state-machine-py/)  

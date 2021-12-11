@@ -248,7 +248,7 @@ class StateMachine():
 
     def _leave(self):
         """次の状態の名前と、遷移に使ったキーを返します。
-        entry コールバック関数を呼び出します。
+        update 関数を呼び出します。
         stateの遷移はまだ行いません
 
         Returns
@@ -262,17 +262,17 @@ class StateMachine():
             edge_path=self.edge_path,
             intermachine=self._intermachine)
 
-        next_edge_name = self._state.entry(req)
+        next_edge_name = self._state.update(req)
 
         if self.verbose:
             print(
-                f"{self._alternate_state_machine_name()} After entry next_edge_name={next_edge_name}")
+                f"{self._alternate_state_machine_name()} After update next_edge_name={next_edge_name}")
 
-        # entry がNoneを返すのは Terminate したからとします
+        # update がNoneを返すのは Terminate したからとします
         if next_edge_name is None:
             if self.verbose:
                 print(
-                    f"{self._alternate_state_machine_name()} Terminate the state machine (After entry)")
+                    f"{self._alternate_state_machine_name()} Terminate the state machine (After update)")
             return  # 関数を終わります
 
         # 例えば [Apple]ステート に居るとき ----Banana----> エッジに去るということは、

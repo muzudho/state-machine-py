@@ -12,7 +12,7 @@ class InitState(AbstractState):
     def name(self):
         return INIT
 
-    def entry(self, req):
+    def update(self, req):
         """次の辺の名前を返します
 
         Parameters
@@ -35,7 +35,7 @@ class InitState(AbstractState):
                 return None
 
             req.context.number = int(item)
-            self.on_entry(req)
+            self.on_update(req)
 
         if req.context.number == None:
             print("[B] まだボールは飛んでこなかった")
@@ -57,5 +57,5 @@ class InitState(AbstractState):
 
         return E_DECREASE
 
-    def on_entry(self, req):
+    def on_update(self, req):
         pass

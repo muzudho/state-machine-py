@@ -22,7 +22,7 @@ class GameState(AbstractState):
     def name(self):
         return GAME
 
-    def entry(self, req):
+    def update(self, req):
         """次の辺の名前を返します
 
         Parameters
@@ -35,7 +35,7 @@ class GameState(AbstractState):
         str
             辺の名前
         """
-        self.on_entry(req)
+        self.on_update(req)
 
         matched = self._janken_pattern.match(req.intermachine.dequeue_myself())
         if matched:
@@ -55,7 +55,7 @@ class GameState(AbstractState):
         self.on_loopback(req)
         return E_LOOPBACK
 
-    def on_entry(self, req):
+    def on_update(self, req):
         pass
 
     def on_win(self, req):
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
     req = Request(context, intermachine)
     req.intermachine.enqueue_myself('R')
-    edge = state.entry(req)
+    edge = state.update(req)
     if edge == E_LOSE:
         print('.', end='')
     else:
@@ -88,7 +88,7 @@ if __name__ == "__main__":
 
     req = Request(context, intermachine)
     req.intermachine.enqueue_myself('S')
-    edge = state.entry(req)
+    edge = state.update(req)
     if edge == E_WIN:
         print('.', end='')
     else:
@@ -96,7 +96,7 @@ if __name__ == "__main__":
 
     req = Request(context, intermachine)
     req.intermachine.enqueue_myself('P')
-    edge = state.entry(req)
+    edge = state.update(req)
     if edge == E_DRAW:
         print('.', end='')
     else:
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
     req = Request(context, intermachine)
     req.intermachine.enqueue_myself('W')
-    edge = state.entry(req)
+    edge = state.update(req)
     if edge == E_LOOPBACK:
         print('.', end='')
     else:

@@ -12,7 +12,7 @@ class GoalState(AbstractState):
     def name(self):
         return GOAL
 
-    def entry(self, req):
+    def update(self, req):
         """次の辺の名前を返します
 
         Parameters
