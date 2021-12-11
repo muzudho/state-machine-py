@@ -25,5 +25,5 @@ class GameState(AbstractState):
             辺の名前
         """
 
-        edge_path = "/".join(req.edge_path)
-        raise ValueError(f"Invalid edge_path={edge_path}")
+        state_path = "/".join(req.state_path)
+        raise ValueError(f"Invalid state_path={state_path}")

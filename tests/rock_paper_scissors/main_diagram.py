@@ -62,4 +62,4 @@ class MainDiagram():
         """メインループ"""
 
         # （強制的に）ステートマシンを初期状態から始めます
-        self.state_machine.start(INIT)
+        self.state_machine.start([INIT])

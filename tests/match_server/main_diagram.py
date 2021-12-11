@@ -63,8 +63,8 @@ class MainDiagram():
 
     def work_of_machine_c(self):
         # （強制的に）ステートマシンを初期状態から始めます
-        self._multiple_state_machine.machines[MACHINE_C].start(INIT)
+        self._multiple_state_machine.machines[MACHINE_C].start([INIT])
 
     # def work_of_machine_b(self):
     #     # （強制的に）ステートマシンを初期状態から始めます
-    #     self._multiple_state_machine.machines[MACHINE_B].start(INIT)
+    #     self._multiple_state_machine.machines[MACHINE_B].start([INIT])

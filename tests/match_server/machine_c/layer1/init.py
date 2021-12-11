@@ -26,17 +26,17 @@ class InitState(AbstractState):
             辺の名前
         """
 
-        edge_path = "/".join(req.edge_path)
-        print(f"[Entry] edge_path={edge_path}")
+        state_path = "/".join(req.state_path)
+        print(f"[Entry] state_path={state_path}")
 
-        if edge_path == "":
+        if state_path == "":
             # TODO サーバーへログインします
             print("サーバーへログインします")
             # req.intermachine.enqueue_myself("Login my_name")
             self.on_login(req)
             return E_LOGIN
 
-        elif edge_path == f"{E_LOGIN}":
+        elif state_path == f"{E_LOGIN}":
             # TODO サーバーからの Ok か Incorrect かのメッセージを待っています
             print("サーバーからの Ok か Incorrect かのメッセージを待っています")
             while True:
@@ -44,7 +44,7 @@ class InitState(AbstractState):
                 time.sleep(3)
 
         else:
-            raise ValueError(f"Invalid edge_path={edge_path}")
+            raise ValueError(f"Invalid state_path={state_path}")
 
     def on_login(self, req):
         """ログイン時"""

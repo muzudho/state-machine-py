@@ -1,3 +1,10 @@
+# 18.0.1 -
+
+* edgeのツリー構造化を廃止して、 stateのツリー構造化に変更開始
+
+old: state_machine.start(self, next_state_name)  
+new: state_machine.start(self, next_state_path)  
+
 # 18.0.0
 
 * `entry()` を `update()` にリネーム

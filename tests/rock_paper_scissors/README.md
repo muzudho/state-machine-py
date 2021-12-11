@@ -41,7 +41,7 @@ state_machine = StateMachine(
 👆 ステートマシンの生成の説明は長くなるので `main.py` ソースコードを読んでください  
 
 ```python
-state_machine.start("[Init]")
+state_machine.start([INIT])
 ```
 
 👆 ステートマシンの起動の説明は長くなるので `main.py` ソースコードを読んでください  
@@ -125,7 +125,7 @@ State machine              State
     O  Start
     |
     |
- _arrive(next_state_name)               // 状態遷移を行います
+ self._state = StateMachineHelper.create_state(state_gen, [INIT]) // 状態遷移を行います
     |
     |
     |

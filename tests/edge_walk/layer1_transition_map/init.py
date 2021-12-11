@@ -27,8 +27,8 @@ class InitState(AbstractState):
         """
 
         # 現在位置の表示
-        edge_path_str = '.'.join(req.edge_path)
-        print(f"[Walk] Current state={self.name} edge_path={edge_path_str}")
+        state_path_str = '/'.join(req.state_path)
+        print(f"[Walk] Current state={self.name} state_path={state_path_str}")
 
         self.on_prompt(req)
 

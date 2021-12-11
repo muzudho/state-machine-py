@@ -1,6 +1,7 @@
 import time
 import queue
 from state_machine_py.request import Request
+from state_machine_py.state_machine_helper import StateMachineHelper
 
 
 class StateMachine():
@@ -13,7 +14,8 @@ class StateMachine():
     context = Context()
     sm = StateMachine(context, state_gen=state_gen, transition=transition)
 
-    sm._arrive("[Init]") # Init状態は作っておいてください
+    # Init状態は作っておいてください
+    self._state = StateMachineHelper.create_state(state_gen, [INIT])
     """
 
     def __init__(self, context=None, state_gen={}, transition={}, intermachine=None, name=None):
@@ -33,7 +35,7 @@ class StateMachine():
         self._state_gen = state_gen
         self._transition = transition
         self._verbose = False
-        self._edge_path = []
+        self._state_path = None
         self._lines_getter = None  # 標準入力とか１個しかないけど
         self._state = None
         self._is_terminate = False  # 永遠に停止
@@ -57,9 +59,9 @@ class StateMachine():
         return self._state
 
     @property
-    def edge_path(self):
-        """現在の辺"""
-        return self._edge_path
+    def state_path(self):
+        """状態パス"""
+        return self._state_path
 
     @property
     def verbose(self):
@@ -95,7 +97,7 @@ class StateMachine():
 
         req = Request(
             context=self._context,
-            edge_path=self.edge_path,
+            state_path=self.state_path,
             intermachine=self._intermachine)
         self.on_terminate(req)
 
@@ -124,8 +126,9 @@ class StateMachine():
 
             time.sleep(0)
 
-    def start(self, next_state_name):
+    def start(self, start_state_path):
         """ステートマシンを開始します"""
+        self._state_path = start_state_path
 
         # [Arrive] --> [Leave] を最小単位とするループです。
         # しかしコードは [Leave] --> [Arrive] になってしまっているので
@@ -144,7 +147,7 @@ class StateMachine():
 
             if self.verbose:
                 print(
-                    f"{self._alternate_state_machine_name()} Loop(A) Begin next_state_name={next_state_name}")
+                    f"{self._alternate_state_machine_name()} Loop(A) Begin _state_path={self._state_path}")
 
             # 次のループの初回だけ、無条件に通ります
             is_enter_loop = True
@@ -181,24 +184,77 @@ class StateMachine():
                     # | Leave |
                     # |       |
                     # +-------+
-                    next_state_name = self._leave()
+                    """次の状態の名前と、遷移に使ったキーを返します。
+                    update 関数を呼び出します。
+                    stateの遷移はまだ行いません
+
+                    Returns
+                    -------
+                    str
+                        次の状態の名前
+                    """
+
+                    req = Request(
+                        context=self._context,
+                        state_path=self.state_path,
+                        intermachine=self._intermachine)
+
+                    next_edge_name = self._state.update(req)
 
                     if self.verbose:
                         print(
-                            f"{self._alternate_state_machine_name()} After leave next_state_name={next_state_name}")
+                            f"{self._alternate_state_machine_name()} After update next_edge_name={next_edge_name}")
 
-                    # ステートマシンの終了のタイミングの４つ目です。ループの先頭で終了させます
-                    if next_state_name is None:
-                        self.terminate()
-
+                    # update がNoneを返すのは Terminate したからとします
+                    if next_edge_name is None:
                         if self.verbose:
                             print(
-                                f"{self._alternate_state_machine_name()} Terminate the state machine (After leave)")
-                        return  # start関数を終わります
+                                f"{self._alternate_state_machine_name()} Terminate the state machine (212)")
+                        return None  # 関数を終わります
+
+                    # 例えば [Apple]ステート に居るとき ----Banana----> エッジに去るということは、
+                    #
+                    # "[Apple]": {
+                    #     "----Banana---->" : "[Zebra]"
+                    # }
+                    #
+                    # "[Apple]": {
+                    #     "----Banana---->" : {
+                    #         "----Cherry---->" : "[Zebra]"
+                    #     }
+                    # }
+                    #
+                    # "[Apple]": {
+                    #     "----Banana---->" : None
+                    # }
+                    #
+                    # といった方法で値を取ってきます。
+                    # 値は "[Zebra]"文字列かも知れませんし、 "----Cherry---->"ディクショナリーかもしれませんし、
+                    # None かもしれません。
+
+                    # まずはカレントステートを指定してディクショナリーを取ってきましょう
+                    if self.state.name in self._transition:
+                        curr_dict = self._transition[self.state.name]
+                        if curr_dict is None:
+                            self.terminate()
+                            if self.verbose:
+                                print(
+                                    f"{self._alternate_state_machine_name()} Terminate the state machine (242)")
+                            return  # start関数を終わります
+                    else:
+                        raise ValueError(
+                            f"Current state is not found. name=[{self.state.name}]")
+
+                    self._state_path = StateMachineHelper.lookup_next_state_path(
+                        self._transition, self._state_path, next_edge_name)
+
+                    if self.verbose:
+                        print(
+                            f"{self._alternate_state_machine_name()} After leave _state_path={self._state_path}")
 
                 if self.verbose:
                     print(
-                        f"{self._alternate_state_machine_name()} Before arrive next_state_name={next_state_name}")
+                        f"{self._alternate_state_machine_name()} Before arrive _state_path={self._state_path}")
 
                 # ループの初回はここから始まります
                 #
@@ -207,7 +263,14 @@ class StateMachine():
                 # | Arrive |
                 # |        |
                 # +--------+
-                self._arrive(next_state_name)
+                if self.verbose:
+                    state_path_str = '/'.join(self._state_path)
+                    print(
+                        f"{self._alternate_state_machine_name()} Arrive to {state_path_str}")
+
+                # 次のステートへ引継ぎ
+                self._state = StateMachineHelper.create_state(
+                    self._state_gen, self._state_path)
 
             if self.verbose:
                 print(
@@ -223,121 +286,6 @@ class StateMachine():
             return "[[state_machine]]"
         else:
             return self.name
-
-    def _arrive(self, next_state_name):
-        """指定の状態に遷移します
-
-        Parameters
-        ----------
-        str : next_state_name
-            次の状態の名前
-        """
-
-        if self.verbose:
-            edge_path = '/'.join(self._edge_path)
-            print(
-                f"{self._alternate_state_machine_name()} Arrive to {next_state_name} {edge_path}")
-
-        if next_state_name in self._state_gen:
-            # 次のステートへ引継ぎ
-            self._state = self._state_gen[next_state_name]()
-
-        else:
-            # Error
-            raise ValueError(f"Next state [{next_state_name}] is not found")
-
-    def _leave(self):
-        """次の状態の名前と、遷移に使ったキーを返します。
-        update 関数を呼び出します。
-        stateの遷移はまだ行いません
-
-        Returns
-        -------
-        str
-            次の状態の名前
-        """
-
-        req = Request(
-            context=self._context,
-            edge_path=self.edge_path,
-            intermachine=self._intermachine)
-
-        next_edge_name = self._state.update(req)
-
-        if self.verbose:
-            print(
-                f"{self._alternate_state_machine_name()} After update next_edge_name={next_edge_name}")
-
-        # update がNoneを返すのは Terminate したからとします
-        if next_edge_name is None:
-            if self.verbose:
-                print(
-                    f"{self._alternate_state_machine_name()} Terminate the state machine (After update)")
-            return  # 関数を終わります
-
-        # 例えば [Apple]ステート に居るとき ----Banana----> エッジに去るということは、
-        #
-        # "[Apple]": {
-        #     "----Banana---->" : "[Zebra]"
-        # }
-        #
-        # "[Apple]": {
-        #     "----Banana---->" : {
-        #         "----Cherry---->" : "[Zebra]"
-        #     }
-        # }
-        #
-        # "[Apple]": {
-        #     "----Banana---->" : None
-        # }
-        #
-        # といった方法で値を取ってきます。
-        # 値は "[Zebra]"文字列かも知れませんし、 "----Cherry---->"ディクショナリーかもしれませんし、
-        # None かもしれません。
-
-        # まずはカレントステートを指定してディクショナリーを取ってきましょう
-        if self.state.name in self._transition:
-            curr_dict = self._transition[self.state.name]
-            if curr_dict is None:
-                self.terminate()
-                return
-        else:
-            raise ValueError(
-                f"Current state is not found. name=[{self.state.name}]")
-
-        # カレントエッジを下りていきましょう
-        for i, edge in enumerate(self._edge_path):
-            if edge in curr_dict:
-                curr_dict = curr_dict[edge]
-                if curr_dict is None:
-                    self.terminate()
-                    return
-            else:
-                raise ValueError(
-                    f"Edge[{i}] is not found. name=[{edge}] path=[{self._edge_path}]")
-
-        # 最後に、次のエッジへ下りていきましょう
-        if next_edge_name == '':
-            # （Noneではなく）空文字を指定したら、踏みとどまります
-            next_state_name = self.state.name  # まだ現在のステートです
-
-        elif next_edge_name in curr_dict:
-            # ディクショナリーか、文字列のどちらかです
-            obj = curr_dict[next_edge_name]
-
-            if type(obj) is str:
-                # State
-                next_state_name = obj
-                self._edge_path = []  # 辺パスをクリアーします
-            else:
-                # Edge
-                next_state_name = self.state.name  # まだ現在のステートです
-                self._edge_path.append(next_edge_name)  # 辺パスを伸ばします
-        else:
-            raise ValueError(
-                f"Next edge is not found. name=[{next_edge_name}] current state=[{self.state.name}] path=[{self._edge_path}]")
-
-        return next_state_name
 
     def on_line(self, line):
         pass
