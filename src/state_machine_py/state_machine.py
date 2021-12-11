@@ -127,7 +127,13 @@ class StateMachine():
             time.sleep(0)
 
     def start(self, start_state_path):
-        """ステートマシンを開始します"""
+        """ステートマシンを開始します
+
+        Parameters
+        ----------
+        start_state_path : list
+            開始時の状態パス
+        """
         self._state_path = start_state_path
 
         # [Arrive] --> [Leave] を最小単位とするループです。
@@ -179,21 +185,11 @@ class StateMachine():
                         print(
                             f"{self._alternate_state_machine_name()} Wait GetQueueline")
 
-                    # +-------+
-                    # |       |
-                    # | Leave |
-                    # |       |
-                    # +-------+
-                    """次の状態の名前と、遷移に使ったキーを返します。
-                    update 関数を呼び出します。
-                    stateの遷移はまだ行いません
-
-                    Returns
-                    -------
-                    str
-                        次の状態の名前
-                    """
-
+                    # +--------+
+                    # |        |
+                    # | Update |
+                    # |        |
+                    # +--------+
                     req = Request(
                         context=self._context,
                         state_path=self.state_path,
@@ -209,48 +205,29 @@ class StateMachine():
                     if next_edge_name is None:
                         if self.verbose:
                             print(
-                                f"{self._alternate_state_machine_name()} Terminate the state machine (212)")
-                        return None  # 関数を終わります
+                                f"{self._alternate_state_machine_name()} next_edge_name is None (212)")
+                        self.terminate()
+                        return  # 関数を終わります
 
-                    # 例えば [Apple]ステート に居るとき ----Banana----> エッジに去るということは、
-                    #
-                    # "[Apple]": {
-                    #     "----Banana---->" : "[Zebra]"
-                    # }
-                    #
-                    # "[Apple]": {
-                    #     "----Banana---->" : {
-                    #         "----Cherry---->" : "[Zebra]"
-                    #     }
-                    # }
-                    #
-                    # "[Apple]": {
-                    #     "----Banana---->" : None
-                    # }
-                    #
-                    # といった方法で値を取ってきます。
-                    # 値は "[Zebra]"文字列かも知れませんし、 "----Cherry---->"ディクショナリーかもしれませんし、
-                    # None かもしれません。
-
-                    # まずはカレントステートを指定してディクショナリーを取ってきましょう
-                    if self.state.name in self._transition:
-                        curr_dict = self._transition[self.state.name]
-                        if curr_dict is None:
-                            self.terminate()
-                            if self.verbose:
-                                print(
-                                    f"{self._alternate_state_machine_name()} Terminate the state machine (242)")
-                            return  # start関数を終わります
-                    else:
-                        raise ValueError(
-                            f"Current state is not found. name=[{self.state.name}]")
-
+                    # +-----------------+
+                    # |                 |
+                    # | Next state path |
+                    # |                 |
+                    # +-----------------+
                     self._state_path = StateMachineHelper.lookup_next_state_path(
                         self._transition, self._state_path, next_edge_name)
 
                     if self.verbose:
                         print(
-                            f"{self._alternate_state_machine_name()} After leave _state_path={self._state_path}")
+                            f"{self._alternate_state_machine_name()} After lookup_next_state_path _state_path={self._state_path}")
+
+                    # update がNoneを返すのは Terminate したからとします
+                    if self._state_path is None:
+                        if self.verbose:
+                            print(
+                                f"{self._alternate_state_machine_name()} self._state_path is None (212)")
+                        self.terminate()
+                        return  # 関数を終わります
 
                 if self.verbose:
                     print(
@@ -268,6 +245,11 @@ class StateMachine():
                     print(
                         f"{self._alternate_state_machine_name()} Arrive to {state_path_str}")
 
+                # +--------------+
+                # |              |
+                # | Create state |
+                # |              |
+                # +--------------+
                 # 次のステートへ引継ぎ
                 self._state = StateMachineHelper.create_state(
                     self._state_gen, self._state_path)
@@ -276,8 +258,8 @@ class StateMachine():
                 print(
                     f"{self._alternate_state_machine_name()} Queue is empty")
 
-            # このままでは いつまでも ここを通るので 少し待ってみます
-            time.sleep(0)  # TODO スリープタイムを設定できたい
+            # このままでは いつまでも ここを通るので 一瞬だけ他の処理に譲ります
+            time.sleep(0)
 
             # ここまでが１つの処理です
 

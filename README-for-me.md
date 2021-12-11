@@ -19,6 +19,9 @@ python.exe -m twine upload dist/*
 python.exe -m pip install --index-url https://test.pypi.org/simple/ --no-deps state_machine_py
                                                                               ----------------
                                                                               YOUR-API-NAME-HERE
+                                                                                              ==1.0.0
+                                                                                              -------
+                                                                                              Version
 # Product
 python.exe -m pip install state_machine_py
 ```
