@@ -7,13 +7,13 @@ from tests.edge_walk.keywords import A, GOAL, INIT, IS, THIS
 
 state_gen = {
     INIT: {
-        "": lambda: DecoratedInitState(),
+        '': lambda: DecoratedInitState(),
         THIS: {
-            "": lambda: InitThisState(),
+            '': lambda: InitThisState(),
             IS: {
-                "": lambda: InitThisIsState(),
+                '': lambda: InitThisIsState(),
                 A: {
-                    "": lambda: InitThisIsAState(),
+                    '': lambda: InitThisIsAState(),
                 }
             }
         }
