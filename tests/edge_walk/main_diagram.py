@@ -18,7 +18,7 @@ class MainDiagram():
             transition=transition)
 
         # デバッグ情報を出力します
-        self._state_machine.verbose = True
+        # self._state_machine.verbose = True
 
         # スレッド
         self._thread1 = None
