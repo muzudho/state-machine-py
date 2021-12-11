@@ -24,11 +24,11 @@ python.exe -m tests.edge_walk.main
 Input:  
 
 ```
--this->
--is->
--a->
--pen->
--ok->
+this
+is
+a
+pen
+retry
 
 # 'q' と打鍵することで、ステートマシンが実行中でも、ステートマシンを終了させます
 q

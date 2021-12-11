@@ -18,7 +18,7 @@ class StateMachineHelper():
         # ステートは階層化しますが、Edge名は階層化しませんので１階層だけです。
         # Edge名から、次の state名のパス に変えます
         # print(
-        #    f"[lookup_next_state 24] state_path={edge_name}")
+        #    f"[lookup_next_state 24] edge_name={edge_name}")
         state_path = curr_dict[edge_name]
         # print(
         #    f"[lookup_next_state 27] new state_path={state_path}")

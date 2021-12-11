@@ -214,6 +214,10 @@ class StateMachine():
                     # | Next state path |
                     # |                 |
                     # +-----------------+
+                    if self.verbose:
+                        print(
+                            f"{self._alternate_state_machine_name()} Next self._state_path={self._state_path} next_edge_name={next_edge_name}")
+
                     self._state_path = StateMachineHelper.lookup_next_state_path(
                         self._transition, self._state_path, next_edge_name)
 

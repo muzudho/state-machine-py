@@ -41,7 +41,7 @@ class InitState(AbstractState):
             print("サーバーからの Ok か Incorrect かのメッセージを待っています")
             while True:
                 # TODO ここでキューからメッセージを取得したい
-                time.sleep(3)
+                time.sleep(0)
 
         else:
             raise ValueError(f"Invalid state_path={state_path}")

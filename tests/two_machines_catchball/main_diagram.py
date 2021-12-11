@@ -51,7 +51,7 @@ class MainDiagram():
 
         """待機だけしています"""
         while not(self._multiple_state_machine.machines[MACHINE_A].is_terminate and self._multiple_state_machine.machines[MACHINE_B].is_terminate):
-            time.sleep(1)
+            time.sleep(0)
 
     def init(self):
         """ダイアグラムを初期状態に戻します"""

@@ -1,13 +1,16 @@
-from tests.edge_walk.keywords import E_A, E_AN, E_IS, E_OK, E_PEN, E_PIN, E_THAT, E_THIS, E_WAS, INIT, GOAL
+from tests.edge_walk.keywords import A, E_A, E_AN, E_IS, E_RETRY, E_PEN, E_PIN, E_THAT, E_THIS, E_WAS, INIT, GOAL, IS, THIS
 
 transition = {
     INIT: {
         E_THAT: [INIT],
-        E_THIS: {
+        E_THIS: [INIT, THIS],
+        THIS: {
             E_WAS: [INIT],
-            E_IS: {
+            E_IS: [INIT, THIS, IS],
+            IS: {
                 E_AN: [INIT],
-                E_A: {
+                E_A: [INIT, THIS, IS, A],
+                A: {
                     E_PIN: [INIT],
                     E_PEN: [GOAL],
                 },
@@ -15,6 +18,6 @@ transition = {
         }
     },
     GOAL: {
-        E_OK: [INIT],
+        E_RETRY: [INIT],
     }
 }
