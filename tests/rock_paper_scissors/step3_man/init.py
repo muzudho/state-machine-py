@@ -1,4 +1,4 @@
-from tests.rock_paper_scissors.layer1_transition_map.init import InitState
+from tests.rock_paper_scissors.step2n2_man.init import InitState
 
 
 class DecoratedInitState(InitState):
@@ -8,7 +8,7 @@ class DecoratedInitState(InitState):
     def on_your_name_prompt(self, req):
         """入力を取る前"""
         # 基底クラスの on_your_name_prompt には何も書かれていない想定です
-        print("Init: 初期状態に戻しました\nYour name: ", end='')
+        print("Init: 初期状態に戻しました\nYour name: ", end="")
 
     def on_update(self, req):
         """この on_update メソッドは省略することもできます。

@@ -1,4 +1,4 @@
-from tests.rock_paper_scissors.layer1_transition_map.game import GameState
+from tests.rock_paper_scissors.step2n2_man.game import GameState
 
 
 class DecoratedGameState(GameState):
@@ -17,7 +17,7 @@ class DecoratedGameState(GameState):
         """
 
         # 改行を出力しないとフラッシュされませんので、明示的にフラッシュします
-        print("Rock-paper-scissors(R,P,S): ", end='', flush=True)
+        print("Rock-paper-scissors(R,P,S): ", end="", flush=True)
 
         # on_update の前に処理を書いていただけます
         super().on_update(req)
@@ -35,9 +35,11 @@ class DecoratedGameState(GameState):
         # on_win の前に処理を書いていただけます
         super().on_win(req)
         # on_win の後に処理を書いていただけます
-        print("""+-----------------+
+        print(
+            """+-----------------+
 | Win: 勝ちました |
-+-----------------+""")
++-----------------+"""
+        )
 
     def on_draw(self, req):
         """この on_draw メソッドは省略することもできます。
@@ -51,9 +53,11 @@ class DecoratedGameState(GameState):
         # on_draw の前に処理を書いていただけます
         super().on_draw(req)
         # on_draw の後に処理を書いていただけます
-        print("""+----------------------+
+        print(
+            """+----------------------+
 | Draw: 引き分けました |
-+----------------------+""")
++----------------------+"""
+        )
 
     def on_lose(self, req):
         """この on_lose メソッドは省略することもできます。
@@ -67,9 +71,11 @@ class DecoratedGameState(GameState):
         # on_lose の前に処理を書いていただけます
         super().on_lose(req)
         # on_lose の後に処理を書いていただけます
-        print("""+------------------+
+        print(
+            """+------------------+
 | Lose: 負けました |
-+------------------+""")
++------------------+"""
+        )
 
     def on_loopback(self, req):
         """この on_loopback メソッドは省略することもできます。
@@ -83,6 +89,8 @@ class DecoratedGameState(GameState):
         # on_loopback の前に処理を書いていただけます
         super().on_loopback(req)
         # on_loopback の後に処理を書いていただけます
-        print("""+--------------------+
+        print(
+            """+--------------------+
 | NoGame: やりなおし |
-+--------------------+""")
++--------------------+"""
+        )

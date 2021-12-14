@@ -4,7 +4,13 @@ from state_machine_py.intermachine import Intermachine
 from state_machine_py.multiple_state_machine import MultipleStateMachine
 from state_machine_py.request import Request
 from tests.rock_paper_scissors.context import Context
-from tests.rock_paper_scissors.keywords import E_DRAW, E_LOOPBACK, E_LOSE, E_WIN, GAME
+from tests.rock_paper_scissors.step1_const_conf import (
+    E_DRAW,
+    E_LOOPBACK,
+    E_LOSE,
+    E_WIN,
+    GAME,
+)
 
 
 class GameState(AbstractState):
@@ -16,7 +22,7 @@ class GameState(AbstractState):
         -
         R or P or S
         """
-        self._janken_pattern = re.compile(r'^([RPS])$')
+        self._janken_pattern = re.compile(r"^([RPS])$")
 
     @property
     def name(self):
@@ -42,10 +48,10 @@ class GameState(AbstractState):
             janken = matched.group(1)
 
             # 相手は P（パー） を出しているとします
-            if janken == 'R':
+            if janken == "R":
                 self.on_lose(req)
                 return E_LOSE
-            elif janken == 'S':
+            elif janken == "S":
                 self.on_win(req)
                 return E_WIN
             else:
@@ -79,33 +85,33 @@ if __name__ == "__main__":
     state = GameState()
 
     req = Request(context, intermachine)
-    req.intermachine.enqueue_myself('R')
+    req.intermachine.enqueue_myself("R")
     edge = state.update(req)
     if edge == E_LOSE:
-        print('.', end='')
+        print(".", end="")
     else:
-        print('f', end='')
+        print("f", end="")
 
     req = Request(context, intermachine)
-    req.intermachine.enqueue_myself('S')
+    req.intermachine.enqueue_myself("S")
     edge = state.update(req)
     if edge == E_WIN:
-        print('.', end='')
+        print(".", end="")
     else:
-        print('f', end='')
+        print("f", end="")
 
     req = Request(context, intermachine)
-    req.intermachine.enqueue_myself('P')
+    req.intermachine.enqueue_myself("P")
     edge = state.update(req)
     if edge == E_DRAW:
-        print('.', end='')
+        print(".", end="")
     else:
-        print('f', end='')
+        print("f", end="")
 
     req = Request(context, intermachine)
-    req.intermachine.enqueue_myself('W')
+    req.intermachine.enqueue_myself("W")
     edge = state.update(req)
     if edge == E_LOOPBACK:
-        print('.', end='')
+        print(".", end="")
     else:
-        print('f', end='')
+        print("f", end="")

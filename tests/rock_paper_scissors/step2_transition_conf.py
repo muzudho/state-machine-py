@@ -1,4 +1,12 @@
-from tests.rock_paper_scissors.keywords import E_DRAW, E_LOGIN, E_LOOPBACK, E_LOSE, E_WIN, GAME, INIT
+from tests.rock_paper_scissors.step1_const_conf import (
+    E_DRAW,
+    E_LOGIN,
+    E_LOOPBACK,
+    E_LOSE,
+    E_WIN,
+    GAME,
+    INIT,
+)
 
 
 transition = {

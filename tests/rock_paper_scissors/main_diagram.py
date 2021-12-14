@@ -1,12 +1,12 @@
 from threading import Thread
 from state_machine_py.multiple_state_machine import MultipleStateMachine
 from tests.rock_paper_scissors.context import Context
-from tests.rock_paper_scissors.state_gen_conf import state_gen
-from tests.rock_paper_scissors.keywords import INIT, MACHINE_A
-from tests.rock_paper_scissors.transition_conf import transition
+from tests.rock_paper_scissors.step4_state_gen_conf import state_gen
+from tests.rock_paper_scissors.step1_const_conf import INIT, MACHINE_A
+from tests.rock_paper_scissors.step2_transition_conf import transition
 
 
-class MainDiagram():
+class MainDiagram:
     def __init__(self):
         """初期化"""
         self._multiple_state_machine = MultipleStateMachine()
@@ -15,7 +15,8 @@ class MainDiagram():
             machine_key=MACHINE_A,
             context=Context(),
             state_gen=state_gen,
-            transition=transition)
+            transition=transition,
+        )
 
         # デバッグ情報を出力します
         # self._state_machine.verbose = True
@@ -43,7 +44,7 @@ class MainDiagram():
             line = input()  # ブロックします
 
             # 'q' と打鍵することで、ステートマシンが実行中でも、ステートマシンを終了させます
-            if line.lower() == 'q':
+            if line.lower() == "q":
                 self._quit = True
                 self.state_machine.terminate()
                 break

@@ -4,7 +4,7 @@ from state_machine_py.intermachine import Intermachine
 from state_machine_py.multiple_state_machine import MultipleStateMachine
 from state_machine_py.request import Request
 from tests.rock_paper_scissors.context import Context
-from tests.rock_paper_scissors.keywords import E_LOGIN, E_LOOPBACK, INIT
+from tests.rock_paper_scissors.step1_const_conf import E_LOGIN, E_LOOPBACK, INIT
 
 
 class InitState(AbstractState):
@@ -18,7 +18,7 @@ class InitState(AbstractState):
         ----------
         1. username (1-32 characters)
         """
-        self._user_name_pattern = re.compile(r'^([0-9A-Za-z_-]{1,32})$')
+        self._user_name_pattern = re.compile(r"^([0-9A-Za-z_-]{1,32})$")
 
     @property
     def name(self):
@@ -40,8 +40,7 @@ class InitState(AbstractState):
 
         self.on_your_name_prompt(req)
 
-        matched = self._user_name_pattern.match(
-            req.intermachine.dequeue_myself())
+        matched = self._user_name_pattern.match(req.intermachine.dequeue_myself())
 
         self.on_update(req)
 
@@ -78,17 +77,17 @@ if __name__ == "__main__":
     state = InitState()
 
     req = Request(context=context, intermachine=intermachine)
-    req.intermachine.enqueue_myself('kifuwarabe')
+    req.intermachine.enqueue_myself("kifuwarabe")
     edge = state.update(req)
     if edge == E_LOGIN:
-        print('.', end='')
+        print(".", end="")
     else:
-        print('f', end='')
+        print("f", end="")
 
     req = Request(context=context, intermachine=intermachine)
-    req.intermachine.enqueue_myself('ya !')
+    req.intermachine.enqueue_myself("ya !")
     edge = state.update(req)
     if edge == E_LOOPBACK:
-        print('.', end='')
+        print(".", end="")
     else:
-        print('f', end='')
+        print("f", end="")
