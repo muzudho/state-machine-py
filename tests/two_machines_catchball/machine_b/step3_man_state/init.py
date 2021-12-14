@@ -1,4 +1,4 @@
-from tests.two_machines_catchball.machine_b.layer1_transition_map.init import InitState
+from tests.two_machines_catchball.machine_b.step2n2_man_state.init import InitState
 
 
 class DecoratedInitState(InitState):

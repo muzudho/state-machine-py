@@ -1,5 +1,10 @@
 from state_machine_py.abstract_state import AbstractState
-from tests.two_machines_catchball.keywords import E_INCREASE, E_STOP, INIT, MACHINE_B
+from tests.two_machines_catchball.step1_const_conf import (
+    E_INCREASE,
+    E_STOP,
+    INIT,
+    MACHINE_B,
+)
 
 
 class InitState(AbstractState):

@@ -1,16 +1,24 @@
 import time
 from threading import Thread
 from state_machine_py.multiple_state_machine import MultipleStateMachine
-from tests.two_machines_catchball.keywords import INIT, MACHINE_A, MACHINE_B
+from tests.two_machines_catchball.step1_const_conf import INIT, MACHINE_A, MACHINE_B
 from tests.two_machines_catchball.machine_a.context import Context as ContextA
-from tests.two_machines_catchball.machine_a.state_gen_conf import state_gen as state_gen_a
-from tests.two_machines_catchball.machine_a.transition_conf import transition as transition_a
+from tests.two_machines_catchball.machine_a.step4_state_gen_conf import (
+    state_gen as state_gen_a,
+)
+from tests.two_machines_catchball.machine_a.step2_transition_conf import (
+    transition as transition_a,
+)
 from tests.two_machines_catchball.machine_b.context import Context as ContextB
-from tests.two_machines_catchball.machine_b.state_gen_conf import state_gen as state_gen_b
-from tests.two_machines_catchball.machine_b.transition_conf import transition as transition_b
+from tests.two_machines_catchball.machine_b.step4_state_gen_conf import (
+    state_gen as state_gen_b,
+)
+from tests.two_machines_catchball.machine_b.step2_transition_conf import (
+    transition as transition_b,
+)
 
 
-class MainDiagram():
+class MainDiagram:
     def __init__(self):
         """初期化"""
         self._multiple_state_machine = MultipleStateMachine()
@@ -19,14 +27,16 @@ class MainDiagram():
             MACHINE_A,
             context=ContextA(),
             state_gen=state_gen_a,
-            transition=transition_a)
+            transition=transition_a,
+        )
         # machine_a.verbose = True  # デバッグ情報を出力します
 
         machine_b = self._multiple_state_machine.create_machine(
             MACHINE_B,
             context=ContextB(),
             state_gen=state_gen_b,
-            transition=transition_b)
+            transition=transition_b,
+        )
         # machine_b.verbose = True  # デバッグ情報を出力します
 
     def set_up(self):
@@ -40,7 +50,7 @@ class MainDiagram():
     def run(self):
 
         # 改行を付けなかったなら、フラッシュを明示します
-        print("最初に数字を入力してください:", end='', flush=True)
+        print("最初に数字を入力してください:", end="", flush=True)
         line = input()  # ブロックします
 
         number = int(line)
@@ -50,7 +60,10 @@ class MainDiagram():
         self.init()
 
         """待機だけしています"""
-        while not(self._multiple_state_machine.machines[MACHINE_A].is_terminate and self._multiple_state_machine.machines[MACHINE_B].is_terminate):
+        while not (
+            self._multiple_state_machine.machines[MACHINE_A].is_terminate
+            and self._multiple_state_machine.machines[MACHINE_B].is_terminate
+        ):
             time.sleep(0)
 
     def init(self):
