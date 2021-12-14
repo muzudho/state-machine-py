@@ -1,26 +1,26 @@
 # State machines
+# --------------
 
 MACHINE_A = "MachineA"
 
 # States
 # ------
 #
-# ディクショナリーのキーとして Edge と被らないように PascalCase にします
+# "ステート定数": "ステートマシン図のノード名"
+# 本レッスンではノード名を PascalCase にします（エッジと被らないように）
 
 INIT = "Init"
-if INIT:  # インデントを付けてるだけ
-    THIS = "This"
-    if THIS:
-        IS = "Is"
-        if IS:
-            A = "A"
-
+THIS = "This"
+IS = "Is"
+A = "A"
 GOAL = "Goal"
 
 # Edges
 # -----
 #
-# ディクショナリーのキーとして State と被らないように頭に snake_case にします
+# "エッジ定数": "ステートマシン図のエッジ名"
+# 本レッスンではエッジ名を snake_case にします（ノード名と被らないように）
+# ディクショナリーのキーとして State と被らないように頭に E_ を付けます
 
 E_LOOPBACK = ""  # ループバックは空文字列
 E_THAT = "that"

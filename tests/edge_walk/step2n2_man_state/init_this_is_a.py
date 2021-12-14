@@ -1,15 +1,15 @@
 from state_machine_py.abstract_state import AbstractState
-from tests.edge_walk.keywords import THIS
+from tests.edge_walk.step1_const_conf import A
 
 
-class InitThisState(AbstractState):
+class InitThisIsAState(AbstractState):
 
     def __init__(self):
         super().__init__()
 
     @property
     def name(self):
-        return THIS
+        return A
 
     def update(self, req):
         # 現在位置の表示

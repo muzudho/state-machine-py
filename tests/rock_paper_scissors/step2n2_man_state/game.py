@@ -78,7 +78,7 @@ class GameState(AbstractState):
 
 
 # Test
-# python.exe -m layer1_transition_map.game
+# python.exe -m rock_paper_scissors.step2n2_man_state.game
 if __name__ == "__main__":
     intermachine = Intermachine(MultipleStateMachine(), "[[TestMachine]]")
     context = Context()

@@ -1,4 +1,4 @@
-from tests.edge_walk.keywords import A, E_A, E_AN, E_IS, E_RETRY, E_PEN, E_PIN, E_THAT, E_THIS, E_WAS, INIT, GOAL, IS, THIS
+from tests.edge_walk.step1_const_conf import A, E_A, E_AN, E_IS, E_RETRY, E_PEN, E_PIN, E_THAT, E_THIS, E_WAS, INIT, GOAL, IS, THIS
 
 transition = {
     INIT: {

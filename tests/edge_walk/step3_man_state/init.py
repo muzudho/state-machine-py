@@ -1,4 +1,4 @@
-from tests.edge_walk.layer1_transition_map.init import InitState
+from tests.edge_walk.step2n2_man_state.init import InitState
 
 
 class DecoratedInitState(InitState):

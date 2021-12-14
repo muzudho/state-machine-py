@@ -1,4 +1,4 @@
-from tests.edge_walk.layer1_transition_map.goal import GoalState
+from tests.edge_walk.step2n2_man_state.goal import GoalState
 
 
 class DecoratedGoalState(GoalState):

@@ -1,5 +1,5 @@
 from state_machine_py.abstract_state import AbstractState
-from tests.edge_walk.keywords import INIT
+from tests.edge_walk.step1_const_conf import INIT
 
 
 class InitState(AbstractState):
