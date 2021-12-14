@@ -1,4 +1,4 @@
-from tests.rock_paper_scissors.step2n2_man.game import GameState
+from tests.rock_paper_scissors.step2n2_man_state.game import GameState
 
 
 class DecoratedGameState(GameState):

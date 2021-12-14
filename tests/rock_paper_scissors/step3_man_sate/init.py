@@ -1,4 +1,4 @@
-from tests.rock_paper_scissors.step2n2_man.init import InitState
+from tests.rock_paper_scissors.step2n2_man_state.init import InitState
 
 
 class DecoratedInitState(InitState):
