@@ -1,4 +1,4 @@
-def create_decorated_game(state):
+def create_game(state):
     def __on_update(req):
         """この on_update メソッドは省略することもできます。
         この状態から出たときにする処理を書いてください。

@@ -26,9 +26,10 @@ class GoalState(AbstractState):
             辺の名前
         """
 
-        # 現在位置の表示
-        state_path_str = '/'.join(req.state_path)
-        print(f"[Walk] Current state={self.name} state_path={state_path_str}")
+        self.on_entry(req)
 
         next_edge_name = req.intermachine.dequeue_myself()
         return next_edge_name
+
+    def on_entry(self, req):
+        pass

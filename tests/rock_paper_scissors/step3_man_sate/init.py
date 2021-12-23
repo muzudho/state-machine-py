@@ -1,7 +1,4 @@
-from tests.rock_paper_scissors.step2n2_man_state.init import InitState
-
-
-def create_decorated_init(state):
+def create_init(state):
     def __on_your_name_prompt(req):
         """入力を取る前"""
         # 基底クラスの on_your_name_prompt には何も書かれていない想定です

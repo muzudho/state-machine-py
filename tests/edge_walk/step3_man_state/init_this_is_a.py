@@ -1,4 +1,4 @@
-def create_goal(state):
+def create_init_this_is_a(state):
     def __on_entry(req):
         # 現在位置の表示
         state_path_str = "/".join(req.state_path)

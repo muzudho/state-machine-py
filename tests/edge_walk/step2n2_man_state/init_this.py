@@ -3,7 +3,6 @@ from tests.edge_walk.step1_const_conf import THIS
 
 
 class InitThisState(AbstractState):
-
     def __init__(self):
         super().__init__()
 
@@ -12,15 +11,12 @@ class InitThisState(AbstractState):
         return THIS
 
     def update(self, req):
-        # 現在位置の表示
-        state_path_str = '/'.join(req.state_path)
-        print(f"[Walk] Current state={self.name} state_path={state_path_str}")
 
-        self.on_prompt(req)
+        self.on_entry(req)
 
         next_edge_name = req.intermachine.dequeue_myself()
         return next_edge_name
 
-    def on_prompt(self, req):
+    def on_entry(self, req):
         """入力を取る前"""
         pass
