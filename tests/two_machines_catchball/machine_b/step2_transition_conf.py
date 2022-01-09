@@ -1,4 +1,4 @@
-from tests.two_machines_catchball.step1_const_conf import INIT, E_DECREASE, E_STOP
+from tests.two_machines_catchball.data.auto_gen.const import INIT, E_DECREASE, E_STOP
 
 transition = {
     INIT: {

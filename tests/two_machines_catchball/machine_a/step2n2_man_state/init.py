@@ -1,5 +1,5 @@
 from state_machine_py.abstract_state import AbstractState
-from tests.two_machines_catchball.step1_const_conf import (
+from tests.two_machines_catchball.data.auto_gen.const import (
     E_INCREASE,
     E_STOP,
     INIT,

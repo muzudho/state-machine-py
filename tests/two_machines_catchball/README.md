@@ -22,6 +22,17 @@ Bさん: 渡されたボールに偶数が書かれていたら 2で割った数
 python.exe -m pip install state_machine_py
 ```
 
+## Auto generation
+
+定義ファイルの自動生成
+
+```shell
+# Windows
+python.exe -m state_machine_py.const_py_maker "tests/two_machines_catchball/data/const.json" "tests/two_machines_catchball/data/auto_gen/const.py"
+#                                             ---------------------------------------------- -----------------------------------------------------
+#                                             Input (.json)                                   Output (.py)
+```
+
 # Run
 
 ```shell

@@ -1,0 +1,10 @@
+{
+    "MACHINE_A": "MachineA",
+    "MACHINE_B": "MachineB",
+
+    "INIT": "Init",
+
+    "E_STOP": "stop",
+    "E_INCREASE": "increase",
+    "E_DECREASE": "decrease"
+}
