@@ -1,3 +1,11 @@
+# 18.0.9
+
+const_py_maker.py 追加
+
+# 18.0.8
+
+main_finally.py 追加
+
 # 18.0.1 -
 
 * edgeのツリー構造化を廃止して、 stateのツリー構造化に変更開始

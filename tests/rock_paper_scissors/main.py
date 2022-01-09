@@ -1,38 +1,29 @@
 import sys
-import signal
 from tests.rock_paper_scissors.main_diagram import MainDiagram
+from state_machine_py.main_finally import MainFinally
 
 
-def __main():
-    """定型処理
-    この関数はこの形にし、MainDiagramクラスの方に処理を書いてください"""
+class Main():
+    def __init__(self):
+        self.__diagram = None
 
-    def sigterm_handler(_signum, _frame) -> None:
-        sys.exit(1)
+    def on_main(self):
+        """ここで通常の処理"""
 
-    # 強制終了のシグナルを受け取ったら、強制終了するようにします
-    signal.signal(signal.SIGTERM, sigterm_handler)
+        # ダイアグラムの初期化
+        self.__diagram = MainDiagram()
+        self.__diagram.set_up()
 
-    # ダイアグラムの初期化
-    example_diagram = MainDiagram()
-    example_diagram.set_up()
-
-    try:
         # ダイアグラムの実行
-        example_diagram.run()
+        self.__diagram.run()
+        return 0
 
-    finally:
-        # 強制終了のシグナルを無視するようにしてから、クリーンアップ処理へ進みます
-        signal.signal(signal.SIGTERM, signal.SIG_IGN)
-        signal.signal(signal.SIGINT, signal.SIG_IGN)
-        example_diagram.clean_up()
-        # 強制終了のシグナルを有効に戻します
-        signal.signal(signal.SIGTERM, signal.SIG_DFL)
-        signal.signal(signal.SIGINT, signal.SIG_DFL)
+    def on_finally(self):
+        # ここで終了処理
+        self.__diagram.clean_up()
+        return 1
 
 
-# Test
-# python.exe -m main
 if __name__ == "__main__":
     """サンプルを実行します"""
-    sys.exit(__main())
+    sys.exit(MainFinally.run(Main()))

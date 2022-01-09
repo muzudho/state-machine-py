@@ -5,6 +5,8 @@
 📖 [Pythonスクリプトってどうやってパブリッシュするんだぜ（＾～＾）？](https://crieit.net/drafts/61a3496b73b42)  
 
 ```shell
+# setup.cfg, setup.py の version を更新してください。
+
 # Build
 python.exe -m build
 
