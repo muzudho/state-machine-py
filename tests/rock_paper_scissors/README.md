@@ -1,4 +1,4 @@
-# state-machine-py-example
+# Example - Rock Paper Scissors
 
 状態遷移マシン（[state-machine-pyパッケージ](https://pypi.org/project/state-machine-py/)）の使用例（＾～＾）
 
@@ -13,6 +13,19 @@ python.exe -m pip install state_machine_py
 ```shell
 python.exe -m tests.rock_paper_scissors.main
 ```
+
+```plain
+Your name:
+```
+
+👆 Entry your name  
+
+```plain
+Rock-paper-scissors(R,P,S):
+```
+
+👆 Rock is R, Paper is P, Scissors is S.  
+q is quit.  
 
 # Concept (Layer 1. Transition map)
 
@@ -151,3 +164,28 @@ State machine              State
     |
     O  Start (繰り返し)
 ```
+
+# data/const.json
+
+```py
+MACHINE_A = "MachineA"
+```
+
+👆 State machine name. Pascal Case
+
+```py
+INIT = "Init"
+GAME = "Game"
+```
+
+👆 State name. Pascal Case. 図で使われます
+
+```py
+E_LOOPBACK = "loopback"  # 汎用
+E_LOGIN = "login"
+E_LOSE = "lose"
+E_WIN = "win"
+E_DRAW = "draw"
+```
+
+👆 Edge name. snake_case. 図で使われます

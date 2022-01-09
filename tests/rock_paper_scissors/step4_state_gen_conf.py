@@ -1,4 +1,4 @@
-from tests.rock_paper_scissors.step1_const_conf import GAME, INIT
+from tests.rock_paper_scissors.data.auto_gen.const import GAME, INIT
 
 # State
 from tests.rock_paper_scissors.step2n2_man_state.game import GameState
