@@ -13,6 +13,17 @@
 python.exe -m pip install state_machine_py
 ```
 
+## Auto generation
+
+定義ファイルの自動生成
+
+```shell
+# Windows
+python.exe -m state_machine_py.const_py_maker "tests/edge_walk/data/const.json" "tests/edge_walk/data/auto_gen/const.py"
+#                                             --------------------------------- ----------------------------------------
+#                                             Input (.json)                      Output (.py)
+```
+
 # Run
 
 ```shell

@@ -8,6 +8,17 @@
 python.exe -m pip install state_machine_py
 ```
 
+## Auto generation
+
+定義ファイルの自動生成
+
+```shell
+# Windows
+python.exe -m state_machine_py.const_py_maker "tests/rock_paper_scissors/data/const.json" "tests/rock_paper_scissors/data/auto_gen/const.py"
+#                                             ------------------------------------------- --------------------------------------------------
+#                                             Input (.json)                                Output (.py)
+```
+
 # Run
 
 ```shell

@@ -1,5 +1,5 @@
 from state_machine_py.abstract_state import AbstractState
-from tests.edge_walk.step1_const_conf import IS
+from tests.edge_walk.data.auto_gen.const import IS
 
 
 class InitThisIsState(AbstractState):

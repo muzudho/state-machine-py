@@ -1,4 +1,4 @@
-from tests.edge_walk.step1_const_conf import A, GOAL, INIT, IS, THIS
+from tests.edge_walk.data.auto_gen.const import A, GOAL, INIT, IS, THIS
 
 # State
 from tests.edge_walk.step2n2_man_state.goal import GoalState
