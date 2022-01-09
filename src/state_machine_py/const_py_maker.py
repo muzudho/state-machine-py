@@ -2,7 +2,7 @@ import sys
 import argparse
 
 from state_machine_py.main_finally import MainFinally
-from code_gen.const_py_gen_v22 import gen_const_py
+from state_machine_py.code_gen.const_py_gen_v22 import gen_const_py
 
 class Main:
     """定数を定義した .pyファイルを作成します

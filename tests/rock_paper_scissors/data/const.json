@@ -1,0 +1,12 @@
+{
+    "MACHINE_A": "MachineA",
+
+    "INIT": "Init",
+    "GAME": "Game",
+
+    "E_LOOPBACK": "loopback",
+    "E_LOGIN": "login",
+    "E_LOSE": "lose",
+    "E_WIN": "win",
+    "E_DRAW": "draw"
+}

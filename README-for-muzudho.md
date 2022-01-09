@@ -26,6 +26,9 @@ python.exe -m pip install --index-url https://test.pypi.org/simple/ --no-deps st
                                                                                               Version
 # Product
 python.exe -m pip install state_machine_py
+
+# Uninstall
+python.exe -m pip uninstall state_machine_py
 ```
 
 ## Documents
