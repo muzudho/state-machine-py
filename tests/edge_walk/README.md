@@ -19,7 +19,7 @@ python.exe -m pip install state_machine_py
 
 ```shell
 # Windows
-python.exe -m state_machine_py.const_py_maker "tests/edge_walk/data/const.json" "tests/edge_walk/data/auto_gen/const.py"
+python.exe -m state_machine_py.const_py_maker "tests/edge_walk/data/const.json" "tests/edge_walk/auto_gen/data/const.py"
 #                                             --------------------------------- ----------------------------------------
 #                                             Input (.json)                      Output (.py)
 ```
