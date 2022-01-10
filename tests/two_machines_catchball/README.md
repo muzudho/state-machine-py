@@ -28,7 +28,7 @@ python.exe -m pip install state_machine_py
 
 ```shell
 # Windows
-python.exe -m state_machine_py.const_py_maker "tests/two_machines_catchball/data/const.json" "tests/two_machines_catchball/data/auto_gen/const.py"
+python.exe -m state_machine_py.const_py_maker "tests/two_machines_catchball/data/const.json" "tests/two_machines_catchball/auto_gen/data/const.py"
 #                                             ---------------------------------------------- -----------------------------------------------------
 #                                             Input (.json)                                   Output (.py)
 ```
