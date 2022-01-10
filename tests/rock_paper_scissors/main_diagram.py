@@ -1,9 +1,9 @@
 from threading import Thread
 from state_machine_py.multiple_state_machine import MultipleStateMachine
 from tests.rock_paper_scissors.context import Context
-from tests.rock_paper_scissors.step4_state_gen_conf import state_gen
+from tests.rock_paper_scissors.data.state_gen_conf import state_gen
 from tests.rock_paper_scissors.auto_gen.data.const import INIT, MACHINE_A
-from tests.rock_paper_scissors.step2_transition_conf import transition
+from tests.rock_paper_scissors.data.transition_conf import transition
 
 
 class MainDiagram:

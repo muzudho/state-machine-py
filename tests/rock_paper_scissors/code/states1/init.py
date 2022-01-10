@@ -73,7 +73,7 @@ class InitState(AbstractState):
 
 
 # Test
-# python.exe -m rock_paper_scissors.step2n2_man_state.init
+# python.exe -m rock_paper_scissors.code.states.init
 if __name__ == "__main__":
     intermachine = Intermachine(MultipleStateMachine(), "[[TestMachine]]")
     context = Context()
