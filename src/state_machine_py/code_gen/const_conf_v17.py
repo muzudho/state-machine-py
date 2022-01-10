@@ -1,4 +1,4 @@
-class ConstConf:
+class ConstConfV17:
     def __init__(self, data):
         self._data = data
 
