@@ -4,7 +4,7 @@ from state_machine_py.intermachine import Intermachine
 from state_machine_py.multiple_state_machine import MultipleStateMachine
 from state_machine_py.request import Request
 from tests.rock_paper_scissors.context import Context
-from tests.rock_paper_scissors.data.auto_gen.const import E_LOGIN, E_LOOPBACK, INIT
+from tests.rock_paper_scissors.auto_gen.data.const import E_LOGIN, E_LOOPBACK, INIT
 
 
 class InitState(AbstractState):

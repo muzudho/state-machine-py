@@ -1,4 +1,4 @@
-from tests.two_machines_catchball.data.auto_gen.const import INIT
+from tests.two_machines_catchball.auto_gen.data.const import INIT
 
 # State
 from tests.two_machines_catchball.machine_a.step2n2_man_state.init import InitState

@@ -1,7 +1,7 @@
 import time
 from threading import Thread
 from state_machine_py.multiple_state_machine import MultipleStateMachine
-from tests.two_machines_catchball.data.auto_gen.const import INIT, MACHINE_A, MACHINE_B
+from tests.two_machines_catchball.auto_gen.data.const import INIT, MACHINE_A, MACHINE_B
 from tests.two_machines_catchball.machine_a.context import Context as ContextA
 from tests.two_machines_catchball.machine_a.step4_state_gen_conf import (
     state_gen as state_gen_a,

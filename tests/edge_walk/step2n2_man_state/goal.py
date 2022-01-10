@@ -1,5 +1,5 @@
 from state_machine_py.abstract_state import AbstractState
-from tests.edge_walk.data.auto_gen.const import GOAL
+from tests.edge_walk.auto_gen.data.const import GOAL
 
 
 class GoalState(AbstractState):

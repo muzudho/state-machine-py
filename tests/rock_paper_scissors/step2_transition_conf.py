@@ -1,4 +1,4 @@
-from tests.rock_paper_scissors.data.auto_gen.const import (
+from tests.rock_paper_scissors.auto_gen.data.const import (
     E_DRAW,
     E_LOGIN,
     E_LOOPBACK,
