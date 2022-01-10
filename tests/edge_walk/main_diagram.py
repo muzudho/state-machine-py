@@ -2,8 +2,8 @@ from threading import Thread
 from state_machine_py.multiple_state_machine import MultipleStateMachine
 from tests.edge_walk.context import Context
 from tests.edge_walk.auto_gen.data.const import INIT, MACHINE_A
-from tests.edge_walk.step4_state_gen_conf import state_gen
-from tests.edge_walk.step2_transition_conf import transition
+from tests.edge_walk.data.state_gen_conf import state_gen
+from tests.edge_walk.data.transition_conf import transition
 
 
 class MainDiagram():
