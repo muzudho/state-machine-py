@@ -33,7 +33,7 @@ class GameState(AbstractState):
         str
             辺の名前
         """
-        self.on_update(req)
+        self.on_entry(req)
 
         msg = self.on_trigger(req)
 
@@ -54,7 +54,7 @@ class GameState(AbstractState):
     def on_trigger(self, req):
         return req.intermachine.dequeue_myself()
 
-    def on_update(self, req):
+    def on_entry(self, req):
         pass
 
     def on_win(self, req):

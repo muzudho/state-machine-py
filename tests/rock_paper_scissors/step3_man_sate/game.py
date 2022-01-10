@@ -1,5 +1,5 @@
 def create_game(state):
-    def __on_update(req):
+    def __on_entry(req):
         """この on_update メソッドは省略することもできます。
         この状態から出たときにする処理を書いてください。
         ステートマシンが中断されたときは省略されます
@@ -73,7 +73,7 @@ def create_game(state):
 +--------------------+"""
         )
 
-    state.on_update = __on_update
+    state.on_entry = __on_entry
     state.on_win = __on_win
     state.on_draw = __on_draw
     state.on_lose = __on_lose

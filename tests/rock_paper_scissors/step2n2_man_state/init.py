@@ -38,27 +38,30 @@ class InitState(AbstractState):
             辺の名前
         """
 
-        self.on_your_name_prompt(req)
+        self.on_entry(req)
 
-        matched = self._user_name_pattern.match(req.intermachine.dequeue_myself())
+        msg = self.on_trigger(req)
 
-        self.on_update(req)
-
-        if matched:
-            req.context.user_name = matched.group(1)
-
+        if msg == E_LOGIN:
             self.on_logged_in(req)
             return E_LOGIN
+        else:
+            self.on_failed(req)
+            return E_LOOPBACK
 
-        self.on_failed(req)
-        return E_LOOPBACK
-
-    def on_your_name_prompt(self, req):
+    def on_entry(self, req):
         """入力を取る前"""
         pass
 
-    def on_update(self, req):
-        pass
+    def on_trigger(self, req):
+        msg = req.intermachine.dequeue_myself()
+
+        matched = self._user_name_pattern.match(msg)
+        if matched:
+            req.context.user_name = matched.group(1)
+            return E_LOGIN
+
+        return E_LOOPBACK
 
     def on_logged_in(self, req):
         """ログイン成功時"""

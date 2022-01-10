@@ -127,7 +127,6 @@ class InitState(AbstractState):
 
 * Edge には、任意の名前の `on_xxxx` といったものを いくつでも付けることができます。  
   これは本書では `xxxx` を イベント（Event）、 `on_xxxx` を イベントハンドラ（EventHandler）と呼ぶとします
-* `update()` に紐づく `on_update` だけ最初から用意されています
 
 説明２  
 
