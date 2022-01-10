@@ -2,7 +2,7 @@ import json
 from collections import OrderedDict
 
 
-class JsonReaderV20:
+class JsonReaderV17n2:
     @classmethod
     def read_file(clazz, file_path):
 

@@ -3,7 +3,7 @@ import argparse
 
 from state_machine_py.main_finally import MainFinally
 from state_machine_py.code_gen.state_files_gen_v18 import gen_state_files_v18
-from state_machine_py.code_gen.json_reader_v20 import JsonReaderV20
+from state_machine_py.code_gen.json_reader_v17n2 import JsonReaderV17n2
 
 class Main:
     """状態を定義した .pyファイルを作成します
@@ -25,8 +25,8 @@ class Main:
         args = parser.parse_args()
 
         # JSONファイルから、定数と遷移の設定を読込みます
-        const_json_obj = JsonReaderV20.read_file(args.input_const)
-        transition_json_obj = JsonReaderV20.read_file(args.input_transition)
+        const_json_obj = JsonReaderV17n2.read_file(args.input_const)
+        transition_json_obj = JsonReaderV17n2.read_file(args.input_transition)
 
         # 状態の .py スクリプトを出力します
         gen_state_files_v18(
