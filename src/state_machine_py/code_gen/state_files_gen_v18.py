@@ -1,7 +1,7 @@
-from code_gen.file_io_v16 import FileIo
-from code_gen.state_file_gen_v18 import StateFileGen
-from code_gen.const_conf_v18 import ConstConfV18
-from code_gen.transition_conf_v16n3 import TransitionConfV1n3
+from state_machine_py.code_gen.file_io_v16 import FileIo
+from state_machine_py.code_gen.state_file_gen_v18 import StateFileGen
+from state_machine_py.code_gen.const_conf_v18 import ConstConfV18
+from state_machine_py.code_gen.transition_conf_v16n3 import TransitionConfV1n3
 
 
 def gen_state_files_v18(dir_path, const_py_dict, transition_py_dict, import_from_path):

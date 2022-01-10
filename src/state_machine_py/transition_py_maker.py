@@ -2,14 +2,16 @@ import sys
 import os
 import argparse
 
-from main_finally import MainFinally
-from code_gen.file_io_v16 import FileIo
-from code_gen.json_reader_v17n2 import JsonReaderV17n2
-from code_gen.transition_conf_py_stringification_v21 import (
+from state_machine_py.main_finally import MainFinally
+from state_machine_py.code_gen.file_io_v16 import FileIo
+from state_machine_py.code_gen.json_reader_v17n2 import JsonReaderV17n2
+from state_machine_py.code_gen.transition_conf_py_stringification_v21 import (
     TransitionConfPyStringification,
 )
 
 class Main:
+    """v21"""
+    
     def on_main(self):
         parser = argparse.ArgumentParser(description='状態遷移を定義した .jsonファイルを元に、状態遷移を定義した .pyファイルを作成します')
         parser.add_argument('input_const', help='定数を定義した入力ファイル(.json)')

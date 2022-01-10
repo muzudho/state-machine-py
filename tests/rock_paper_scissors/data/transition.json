@@ -1,0 +1,16 @@
+{
+    "title": "Rock Paper Scissors",
+    "entry_state": "Init",
+    "data":{
+        "Init": {
+            "": ["Init"],
+            "login": ["Game"]
+        },
+        "Game": {
+            "": ["Game"],
+            "win": ["Init"],
+            "draw": ["Init"],
+            "lose": ["Init"]
+        }
+    }
+}

@@ -1,5 +1,5 @@
-from code_gen.transition_conf_v16n2 import TransitionConfV16n2
-from code_gen.directive_edge_v15n2 import DirectiveEdge
+from state_machine_py.code_gen.transition_conf_v16n2 import TransitionConfV16n2
+from state_machine_py.code_gen.directive_edge_v15n2 import DirectiveEdge
 
 
 class TransitionConfV16n3(TransitionConfV16n2):

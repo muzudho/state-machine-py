@@ -6,14 +6,14 @@ from state_machine_py.code_gen.state_files_gen_v18 import gen_state_files_v18
 from state_machine_py.code_gen.json_reader_v17n2 import JsonReaderV17n2
 
 class Main:
-    """状態を定義した .pyファイルを作成します
+    """(v23) 状態を定義した .pyファイルを作成します
 
     Examples
     --------
     # Windows
-    python.exe -m state_py_maker "example-const.json" "example-transition.json" "lesson23_data.auto_gen.house3n2_const" "lesson23/house3n2/auto_gen/states"
-    #                            -------------------- ------------------------- --------------------------------------- -----------------------------------
-    #                            定数定義ファイル       状態遷移定義ファイル        import文に書く文字列                      出力ディレクトリ
+    python.exe -m lesson23.state_py_maker "example-const.json" "example-transition.json" "lesson23_projects.house3n2.auto_gen.data.const" "lesson23/house3n2/auto_gen/states"
+    #                                     -------------------- ------------------------- ------------------------------------------------ -----------------------------------
+    #                                     定数定義ファイル       状態遷移定義ファイル        import文に書く文字列                              出力ディレクトリ
     """
 
     def on_main(self):

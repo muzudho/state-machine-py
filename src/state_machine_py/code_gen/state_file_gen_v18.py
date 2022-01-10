@@ -1,11 +1,11 @@
 import os
 
-from code_gen.file_io_v16 import FileIo
-from code_gen.transition_conf_v16n3 import TransitionConfV1n3
-from code_gen.py_syntax.class_gen_v18 import ClassGen
-from code_gen.py_syntax.import_gen_v18 import ImportGen
-from code_gen.py_syntax.method_gen_v18 import MethodGen
-from code_gen.py_syntax.switch_gen_v16n3 import SwitchGen
+from state_machine_py.code_gen.file_io_v16 import FileIo
+from state_machine_py.code_gen.transition_conf_v16n3 import TransitionConfV1n3
+from state_machine_py.code_gen.py_syntax.class_gen_v18 import ClassGen
+from state_machine_py.code_gen.py_syntax.import_gen_v18 import ImportGen
+from state_machine_py.code_gen.py_syntax.method_gen_v18 import MethodGen
+from state_machine_py.code_gen.py_syntax.switch_gen_v16n3 import SwitchGen
 
 
 class StateFileGen:
