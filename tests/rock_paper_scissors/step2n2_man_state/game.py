@@ -1,4 +1,3 @@
-import re
 from state_machine_py.abstract_state import AbstractState
 from state_machine_py.intermachine import Intermachine
 from state_machine_py.multiple_state_machine import MultipleStateMachine
@@ -16,13 +15,6 @@ from tests.rock_paper_scissors.data.auto_gen.const import (
 class GameState(AbstractState):
     def __init__(self):
         super().__init__()
-
-        """Rock-paper-scissors（じゃんけん）
-        R
-        -
-        R or P or S
-        """
-        self._janken_pattern = re.compile(r"^([RPS])$")
 
     @property
     def name(self):
@@ -43,23 +35,24 @@ class GameState(AbstractState):
         """
         self.on_update(req)
 
-        matched = self._janken_pattern.match(req.intermachine.dequeue_myself())
-        if matched:
-            janken = matched.group(1)
+        msg = self.on_trigger(req)
 
-            # 相手は P（パー） を出しているとします
-            if janken == "R":
-                self.on_lose(req)
-                return E_LOSE
-            elif janken == "S":
-                self.on_win(req)
-                return E_WIN
-            else:
-                self.on_draw(req)
-                return E_DRAW
+        # 相手は P（パー） を出しているとします
+        if msg == "R":
+            self.on_lose(req)
+            return E_LOSE
+        elif msg == "S":
+            self.on_win(req)
+            return E_WIN
+        elif msg == "P":
+            self.on_draw(req)
+            return E_DRAW
+        else:
+            self.on_loopback(req)
+            return E_LOOPBACK
 
-        self.on_loopback(req)
-        return E_LOOPBACK
+    def on_trigger(self, req):
+        return req.intermachine.dequeue_myself()
 
     def on_update(self, req):
         pass
