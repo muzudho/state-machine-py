@@ -3,11 +3,11 @@
     "entry_state": "Init",
     "data":{
         "Init": {
-            "": ["Init"],
+            "loopback": ["Init"],
             "login": ["Game"]
         },
         "Game": {
-            "": ["Game"],
+            "loopback": ["Game"],
             "win": ["Init"],
             "draw": ["Init"],
             "lose": ["Init"]
