@@ -1,10 +1,10 @@
 from tests.two_machines_catchball.auto_gen.data.const import INIT
 
 # State
-from tests.two_machines_catchball.machine_a.step2n2_man_state.init import InitState
+from tests.two_machines_catchball.machine_a.code.states1.init import InitState
 
 # State wapper
-from tests.two_machines_catchball.machine_a.step3_man_state.init import (
+from tests.two_machines_catchball.machine_a.code.states2.init import (
     create_init,
 )
 

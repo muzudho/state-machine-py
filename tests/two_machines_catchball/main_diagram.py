@@ -3,17 +3,17 @@ from threading import Thread
 from state_machine_py.multiple_state_machine import MultipleStateMachine
 from tests.two_machines_catchball.auto_gen.data.const import INIT, MACHINE_A, MACHINE_B
 from tests.two_machines_catchball.machine_a.context import Context as ContextA
-from tests.two_machines_catchball.machine_a.step4_state_gen_conf import (
+from tests.two_machines_catchball.machine_a.data.state_gen_conf import (
     state_gen as state_gen_a,
 )
-from tests.two_machines_catchball.machine_a.step2_transition_conf import (
+from tests.two_machines_catchball.machine_a.data.transition_conf import (
     transition as transition_a,
 )
 from tests.two_machines_catchball.machine_b.context import Context as ContextB
-from tests.two_machines_catchball.machine_b.step4_state_gen_conf import (
+from tests.two_machines_catchball.machine_b.data.state_gen_conf import (
     state_gen as state_gen_b,
 )
-from tests.two_machines_catchball.machine_b.step2_transition_conf import (
+from tests.two_machines_catchball.machine_b.data.transition_conf import (
     transition as transition_b,
 )
 
