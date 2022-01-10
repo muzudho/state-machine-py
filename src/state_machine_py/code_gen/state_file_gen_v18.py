@@ -34,7 +34,7 @@ class StateFileGen:
 
         # `init.py` ファイルを作成します
         # 'x' - ファイルが存在しない場合のみの上書き
-        file_path = os.path.join(dir_path, "{file_stem}.py")
+        file_path = os.path.join(dir_path, f"{file_stem}.py")
 
         # エッジの分岐部分
         directed_edge_list = TransitionConfV1n3.create_edge_list_by_node_path(
