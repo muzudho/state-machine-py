@@ -1,4 +1,4 @@
-# Readme for developer
+# Readme for Muzudho
 
 # Set up
 

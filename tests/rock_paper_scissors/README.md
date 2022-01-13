@@ -29,7 +29,6 @@ python.exe -m state_machine_py.transition_py_maker "tests/rock_paper_scissors/da
 # import文に書くもの, ディクショナリー変数名
 ```
 
-
 # Run
 
 ```shell

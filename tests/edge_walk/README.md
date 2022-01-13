@@ -24,6 +24,16 @@ python.exe -m state_machine_py.const_py_maker "tests/edge_walk/data/const.json" 
 #                                             Input (.json)                      Output (.py)
 ```
 
+状態遷移定義ファイルの自動生成:  
+
+```shell
+# Windows
+python.exe -m state_machine_py.transition_py_maker "tests/edge_walk/data/const.json" "tests/edge_walk/data/transition.json" "tests/edge_walk/auto_gen/data/transition.py" "tests.edge_walk.auto_gen.data.const" "ew_transition_obj"
+#                                                  --------------------------------- -------------------------------------- ---------------------------
+#                                                  定数定義入力ファイル (.json)         状態遷移定義入力ファイル(.json)           出力ファイル(.py)
+# import文に書くもの, ディクショナリー変数名
+```
+
 # Run
 
 ```shell

@@ -1,0 +1,25 @@
+{
+    "title": "Rock Paper Scissors",
+    "entry_state": "Init",
+    "data":{
+        "Init": {
+            "that": ["Init"],
+            "this": ["Init", "This"],
+            "This": {
+                "was": ["Init"],
+                "is": ["Init", "This", "Is"],
+                "Is": {
+                    "an": ["Init"],
+                    "a": ["Init", "This", "Is", "A"],
+                    "A": {
+                        "pin": ["Init"],
+                        "pen": ["Goal"]
+                    }
+                }
+            }
+        },
+        "Goal": {
+            "retry": ["Init"]
+        }
+    }
+}
