@@ -6,15 +6,15 @@ from tests.two_machines_catchball.machine_a.context import Context as ContextA
 from tests.two_machines_catchball.machine_a.data.state_gen_conf import (
     state_gen as state_gen_a,
 )
-from tests.two_machines_catchball.machine_a.data.transition_conf import (
-    transition as transition_a,
+from tests.two_machines_catchball.auto_gen.machine_a.data.transition import (
+    machinea_transition_obj as transition_a,
 )
 from tests.two_machines_catchball.machine_b.context import Context as ContextB
 from tests.two_machines_catchball.machine_b.data.state_gen_conf import (
     state_gen as state_gen_b,
 )
-from tests.two_machines_catchball.machine_b.data.transition_conf import (
-    transition as transition_b,
+from tests.two_machines_catchball.auto_gen.machine_b.data.transition import (
+    machineb_transition_obj as transition_b,
 )
 
 
@@ -27,7 +27,7 @@ class MainDiagram:
             MACHINE_A,
             context=ContextA(),
             state_gen=state_gen_a,
-            transition=transition_a,
+            transition=transition_a["data"],
         )
         # machine_a.verbose = True  # デバッグ情報を出力します
 
@@ -35,7 +35,7 @@ class MainDiagram:
             MACHINE_B,
             context=ContextB(),
             state_gen=state_gen_b,
-            transition=transition_b,
+            transition=transition_b["data"],
         )
         # machine_b.verbose = True  # デバッグ情報を出力します
 

@@ -1,0 +1,10 @@
+{
+    "title": "Two Machines Catchball - Machine B",
+    "entry_state": "Init",
+    "data":{
+        "Init": {
+            "decrease": ["Init"],
+            "stop": null
+        }
+    }
+}
