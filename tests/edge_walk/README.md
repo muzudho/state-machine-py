@@ -37,7 +37,9 @@ python.exe -m state_machine_py.transition_py_maker "tests/edge_walk/data/const.j
 # Run
 
 ```shell
-python.exe -m tests.edge_walk.main
+python.exe -m tests.edge_walk.main "tests/edge_walk/conf.toml"
+#                                  ---------------------------
+#                                  設定ファイル（.toml）
 ```
 
 👇複数行を一気に貼り付けても動きます。  

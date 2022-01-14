@@ -1,5 +1,5 @@
 from state_machine_py.code_gen.const_file_gen_v17 import gen_const_file_v17
-from state_machine_py.code_gen.json_reader_v17n2 import JsonReaderV11n100
+from state_machine_py.code_gen.json_reader_v11n100 import JsonReaderV11n100
 
 
 def gen_const_py(input_path, output_path):
