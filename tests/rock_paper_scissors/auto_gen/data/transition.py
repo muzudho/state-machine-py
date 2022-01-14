@@ -1,6 +1,6 @@
 from tests.rock_paper_scissors.auto_gen.data.const import E_DRAW, E_LOGIN, E_LOOPBACK, E_LOSE, E_WIN, GAME, INIT
 
-rps_transition_obj = {
+rps_transition_doc = {
     "title": "Rock Paper Scissors",
     "entry_state": INIT,
     "data": {

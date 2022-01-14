@@ -7,14 +7,14 @@ from tests.two_machines_catchball.machine_a.data.state_gen_conf import (
     state_gen as state_gen_a,
 )
 from tests.two_machines_catchball.auto_gen.machine_a.data.transition import (
-    machinea_transition_obj as transition_a,
+    machinea_transition_doc as transition_a,
 )
 from tests.two_machines_catchball.machine_b.context import Context as ContextB
 from tests.two_machines_catchball.machine_b.data.state_gen_conf import (
     state_gen as state_gen_b,
 )
 from tests.two_machines_catchball.auto_gen.machine_b.data.transition import (
-    machineb_transition_obj as transition_b,
+    machineb_transition_doc as transition_b,
 )
 
 

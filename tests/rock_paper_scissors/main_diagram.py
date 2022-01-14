@@ -3,11 +3,10 @@ from state_machine_py.multiple_state_machine import MultipleStateMachine
 from tests.rock_paper_scissors.context import Context
 from tests.rock_paper_scissors.data.state_gen_conf import state_gen
 from tests.rock_paper_scissors.auto_gen.data.const import INIT, MACHINE_A
-from tests.rock_paper_scissors.auto_gen.data.transition import rps_transition_obj
 
 
 class MainDiagram:
-    def __init__(self):
+    def __init__(self, transition_doc):
         """初期化"""
         self._multiple_state_machine = MultipleStateMachine()
 
@@ -15,7 +14,7 @@ class MainDiagram:
             machine_key=MACHINE_A,
             context=Context(),
             state_gen=state_gen,
-            transition=rps_transition_obj['data'],
+            transition=transition_doc['data'],
         )
 
         # デバッグ情報を出力します

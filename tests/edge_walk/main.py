@@ -1,6 +1,5 @@
 import sys
 import signal
-
 from tests.edge_walk.main_diagram import MainDiagram
 
 

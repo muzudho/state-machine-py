@@ -1,6 +1,6 @@
 from tests.edge_walk.auto_gen.data.const import A, E_A, E_AN, E_IS, E_PEN, E_PIN, E_RETRY, E_THAT, E_THIS, E_WAS, GOAL, INIT, IS, THIS
 
-ew_transition_obj = {
+ew_transition_doc = {
     "title": "Edge walk",
     "entry_state": INIT,
     "data": {
