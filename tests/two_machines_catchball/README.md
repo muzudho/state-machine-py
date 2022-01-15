@@ -33,14 +33,6 @@ python.exe -m state_machine_py.const_py_maker "tests/two_machines_catchball/data
 #                                             Input (.json)                                   Output (.py)
 ```
 
-状態遷移定義ファイルの自動生成:  
-
-```shell
-# Windows
-python.exe -m state_machine_py.transition_py_maker "tests/two_machines_catchball/data/const.json" "tests/two_machines_catchball/machine_a/data/transition.json" "tests/two_machines_catchball/auto_gen/machine_a/data/transition.py" "tests.two_machines_catchball.auto_gen.data.const" "machinea_transition_doc"
-python.exe -m state_machine_py.transition_py_maker "tests/two_machines_catchball/data/const.json" "tests/two_machines_catchball/machine_b/data/transition.json" "tests/two_machines_catchball/auto_gen/machine_b/data/transition.py" "tests.two_machines_catchball.auto_gen.data.const" "machineb_transition_doc"
-```
-
 # Run
 
 ```shell
