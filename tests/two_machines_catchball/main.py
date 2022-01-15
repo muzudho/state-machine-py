@@ -1,5 +1,4 @@
 import sys
-import signal
 import argparse
 
 from state_machine_py.main_finally import MainFinally
@@ -38,6 +37,10 @@ class Main():
         self.__diagram.set_up()
         # ダイアグラムの実行
         self.__diagram.run()
+
+    def on_except(self, e):
+        """ここで例外キャッチ"""
+        print(e)
 
     def on_finally(self):
         # ここで終了処理

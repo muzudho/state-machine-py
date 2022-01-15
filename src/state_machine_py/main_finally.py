@@ -16,6 +16,10 @@ class MainFinally:
             # ここで通常の処理
             return 0
 
+        def on_except(self, e):
+            # ここで例外キャッチ
+            print(e)
+
         def on_finally(self):
             # ここで終了処理
             return 1
@@ -45,6 +49,11 @@ class MainFinally:
         try:
             # ここで何か処理
             return_code = target.on_main()
+
+        except Exception as e:
+            # ここで例外キャッチ
+            target.on_except(e)
+
         finally:
             # 強制終了のシグナルを無視するようにしてから、クリーンアップ処理へ進みます
             signal.signal(signal.SIGTERM, signal.SIG_IGN)

@@ -34,6 +34,10 @@ class Main():
         # ダイアグラムの実行
         self.__diagram.run()
 
+    def on_except(self, e):
+        """ここで例外キャッチ"""
+        print(e)
+
     def on_finally(self):
         # ここで終了処理
         self.__diagram.clean_up()
