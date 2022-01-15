@@ -6,20 +6,14 @@ from tests.two_machines_catchball.machine_a.context import Context as ContextA
 from tests.two_machines_catchball.machine_a.data.state_gen_conf import (
     state_gen as state_gen_a,
 )
-from tests.two_machines_catchball.auto_gen.machine_a.data.transition import (
-    machinea_transition_doc as transition_a,
-)
 from tests.two_machines_catchball.machine_b.context import Context as ContextB
 from tests.two_machines_catchball.machine_b.data.state_gen_conf import (
     state_gen as state_gen_b,
 )
-from tests.two_machines_catchball.auto_gen.machine_b.data.transition import (
-    machineb_transition_doc as transition_b,
-)
 
 
 class MainDiagram:
-    def __init__(self):
+    def __init__(self, machinea_transition_doc, machineb_transition_doc):
         """初期化"""
         self._multiple_state_machine = MultipleStateMachine()
 
@@ -27,7 +21,7 @@ class MainDiagram:
             MACHINE_A,
             context=ContextA(),
             state_gen=state_gen_a,
-            transition=transition_a["data"],
+            transition=machinea_transition_doc["data"],
         )
         # machine_a.verbose = True  # デバッグ情報を出力します
 
@@ -35,7 +29,7 @@ class MainDiagram:
             MACHINE_B,
             context=ContextB(),
             state_gen=state_gen_b,
-            transition=transition_b["data"],
+            transition=machineb_transition_doc["data"],
         )
         # machine_b.verbose = True  # デバッグ情報を出力します
 

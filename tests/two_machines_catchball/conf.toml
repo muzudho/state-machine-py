@@ -1,0 +1,2 @@
+machinea_transition_file = "tests/two_machines_catchball/machine_a/data/transition.json"
+machineb_transition_file = "tests/two_machines_catchball/machine_b/data/transition.json"

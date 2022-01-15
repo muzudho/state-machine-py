@@ -44,7 +44,9 @@ python.exe -m state_machine_py.transition_py_maker "tests/two_machines_catchball
 # Run
 
 ```shell
-python.exe -m tests.two_machines_catchball.main
+python.exe -m tests.two_machines_catchball.main "tests/two_machines_catchball/conf.toml"
+#                                               ----------------------------------------
+#                                               設定ファイル（.toml）
 ```
 
 Input 1:
