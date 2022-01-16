@@ -22,9 +22,12 @@ python.exe -m state_machine_py.const_py_maker "tests/rock_paper_scissors/data/co
 状態遷移図の自動生成:  
 
 ```shell
-python.exe -m state_machine_py.graph_generator "tests/rock_paper_scissors/conf.toml"
-#                                              -------------------------------------
-#                                              設定ファイル（.toml）
+python.exe -m state_machine_py.graph_generator "tests/rock_paper_scissors/conf.toml" "transition_file" "output_graph_text_file"
+#                                              ------------------------------------- ----------------- ------------------------
+#                                              1.                                    2.                3.
+# 1. 設定ファイル（TOML形式）
+# 2. 入力ファイル（JSON形式）を指すプロパティの名前
+# 3. 出力ファイル（テキストファイル形式）を指すプロパティの名前
 ```
 
 # Run

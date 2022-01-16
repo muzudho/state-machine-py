@@ -13,9 +13,9 @@ class Main:
     """設定ファイル（.toml）を指定することで、状態遷移図を出力します。
 
     # コマンド
-    python.exe -m this.is.a.module.graph_generator "this/is/a/path/conf.toml"
+    python.exe -m this.is.a.module.graph_generator "this/is/a/path/conf.toml" "transition_file" "output_graph_text_file"
 
-    設定ファイルに必要な内容は以下の通りです。
+    上記のコマンドのケースでは、設定ファイルに必要な内容は以下の通りです。
 
     # 状態遷移図
     transition_file = "This/is/a/path/transition.json"
@@ -29,15 +29,19 @@ class Main:
 
     def on_main(self):
         parser = argparse.ArgumentParser(description='設定ファイルを読み込みます')
-        parser.add_argument('conf', help='設定ファイルへのパス')
+        parser.add_argument('conf', help='設定ファイル（TOML形式）へのパス')
+        parser.add_argument(
+            'input_property', help='読込ファイル（JSON形式）へのパスが書いてあるプロパティのキー')
+        parser.add_argument(
+            'output_property', help='書込ファイル（テキストファイル形式）へのパスが書いてあるプロパティのキー')
         args = parser.parse_args()
 
         # 設定ファイル（.toml）読取
         toml_doc = TomlReaderV11n90.read_file(args.conf)
 
         # TOMLの内容を読み取ります
-        transition_file_path = toml_doc['transition_file']
-        output_graph_text_file = toml_doc['output_graph_text_file']
+        transition_file_path = toml_doc[args.input_property]
+        output_graph_text_file = toml_doc[args.output_property]
 
         # JSONファイルを読込みます
         transition_doc = JsonReaderV11n100.read_file(
@@ -62,7 +66,7 @@ class Main:
         if self._graph_render:
             self._graph_render.clean_up()
 
-        print("★しっかり終わった")
+        print("★これで終わり")
         return 1
 
 
