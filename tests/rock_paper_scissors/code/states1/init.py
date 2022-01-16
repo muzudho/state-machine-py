@@ -1,4 +1,3 @@
-import re
 from state_machine_py.abstract_state import AbstractState
 from state_machine_py.intermachine import Intermachine
 from state_machine_py.multiple_state_machine import MultipleStateMachine
@@ -12,13 +11,6 @@ class InitState(AbstractState):
 
     def __init__(self):
         super().__init__()
-
-        """ログイン
-        kifuwarabe
-        ----------
-        1. username (1-32 characters)
-        """
-        self._user_name_pattern = re.compile(r"^([0-9A-Za-z_-]{1,32})$")
 
     @property
     def name(self):
@@ -42,33 +34,30 @@ class InitState(AbstractState):
 
         msg = self.on_trigger(req)
 
-        if msg == E_LOGIN:
+        if msg == E_LOOPBACK:
+            self.on_loopback(req)
+            return E_LOOPBACK
+
+        elif msg == E_LOGIN:
             self.on_logged_in(req)
             return E_LOGIN
+
         else:
-            self.on_failed(req)
-            return E_LOOPBACK
+            raise ValueError(f"Unexpected msg:{msg}")
 
     def on_entry(self, req):
         """入力を取る前"""
         pass
 
     def on_trigger(self, req):
-        msg = req.intermachine.dequeue_myself()
+        return req.context.pull_trigger()
 
-        matched = self._user_name_pattern.match(msg)
-        if matched:
-            req.context.user_name = matched.group(1)
-            return E_LOGIN
-
-        return E_LOOPBACK
+    def on_loopback(self, req):
+        """ログイン失敗時"""
+        pass
 
     def on_logged_in(self, req):
         """ログイン成功時"""
-        pass
-
-    def on_failed(self, req):
-        """ログイン失敗時"""
         pass
 
 
