@@ -10,24 +10,33 @@ python.exe -m pip install state_machine_py
 
 ## Auto generation
 
-定数定義ファイルの自動生成:  
+ファイルの自動生成:  
 
 ```shell
 # Windows
+
+# 定数ファイルの自動生成
 python.exe -m state_machine_py.const_py_maker "tests/rock_paper_scissors/data/const.json" "tests/rock_paper_scissors/auto_gen/data/const.py"
 #                                             ------------------------------------------- --------------------------------------------------
-#                                             Input (.json)                                Output (.py)
-```
+#                                             Input (.json)                               Output (.py)
 
-状態遷移図の自動生成:  
-
-```shell
+# 状態遷移図の自動生成
 python.exe -m state_machine_py.graph_generator "tests/rock_paper_scissors/conf.toml" "transition_file" "output_graph_text_file"
 #                                              ------------------------------------- ----------------- ------------------------
 #                                              1.                                    2.                3.
 # 1. 設定ファイル（TOML形式）
 # 2. 入力ファイル（JSON形式）を指すプロパティの名前
 # 3. 出力ファイル（テキストファイル形式）を指すプロパティの名前
+
+# 状態遷移ファイルの自動生成
+python.exe -m state_machine_py.state_py_generator_v18 "tests/rock_paper_scissors/conf.toml" "const_file" "transition_file" "const" "output_states_dir"
+#                                                     ------------------------------------- ------------ ----------------- ------- -------------------
+#                                                     1.                                    2.           3.                4.      5.
+# 1. 設定ファイル（TOML形式）へのパス
+# 2. 定数を定義した入力ファイル（JSON形式）へのパスが入ったプロパティの名前
+# 3. 状態遷移を定義した入力ファイル（JSON形式）へのパスが入ったプロパティの名前
+# 4. [import_module]テーブル下の、import文のモジュールへのパスが入ったプロパティの名前
+# 5. 状態ファイル出力ディレクトリーパスのプロパティ名
 ```
 
 # Run

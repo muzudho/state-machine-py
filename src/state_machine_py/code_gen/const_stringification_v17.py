@@ -1,14 +1,26 @@
-from state_machine_py.code_gen.const_conf_v17 import ConstConfV17
+import os
 
 
-class ConstStringification:
+class FileIoV11n80:
     @classmethod
-    def stringify(clazz, const_conf_py_dict):
-        const_conf = ConstConfV17(const_conf_py_dict)
-
-        text = ""
-
-        for key, value in const_conf.data.items():
-            text += f"{key} = '{value}'\n"
+    def read(clazz, file_path):
+        """テキストファイルを読込みます"""
+        with open(file_path, encoding="utf-8") as f:
+            text = f.read()
 
         return text
+
+    @classmethod
+    def write(clazz, file_path, text):
+        with open(file_path, "w", encoding="UTF-8") as f:
+            f.write(text)
+
+    @classmethod
+    def makedirs(clazz, dir_path):
+        """フォルダーが無ければ作ります。既存なら無視します"""
+        try:
+            # フォルダーが無ければ作る
+            os.makedirs(dir_path)
+        except FileExistsError:
+            # 既存なら無視
+            pass

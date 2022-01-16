@@ -1,5 +1,6 @@
 import sys
 import argparse
+import traceback
 
 from state_machine_py.main_finally import MainFinally
 from state_machine_py.code_gen.toml_reader_v11n90 import TomlReaderV11n90
@@ -37,7 +38,7 @@ class Main():
 
     def on_except(self, e):
         """ここで例外キャッチ"""
-        print(e)
+        traceback.print_exc()
 
     def on_finally(self):
         # ここで終了処理

@@ -1,7 +1,8 @@
-class MethodGen:
+class MethodGenV18:
     @classmethod
     def generate_method(clazz, name, parameters_s, body_sequence=None):
-        signature = MethodGen.signature(name=name, parameters_s=parameters_s)
+        signature = MethodGenV18.signature(
+            name=name, parameters_s=parameters_s)
 
         if body_sequence is None:
             body = "        pass\n\n"

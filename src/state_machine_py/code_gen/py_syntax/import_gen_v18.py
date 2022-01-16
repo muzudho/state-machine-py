@@ -1,4 +1,4 @@
-class ImportGen:
+class ImportGenV18:
     @classmethod
     def generate_import(self, from_s, import_set):
         if len(import_set) < 1:
