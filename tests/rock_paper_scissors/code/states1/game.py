@@ -38,24 +38,30 @@ class GameState(AbstractState):
         msg = self.on_trigger(req)
 
         # 相手は P（パー） を出しているとします
-        if msg == "R":
-            self.on_lose(req)
-            return E_LOSE
-        elif msg == "S":
-            self.on_win(req)
-            return E_WIN
-        elif msg == "P":
-            self.on_draw(req)
-            return E_DRAW
-        else:
+        if msg == E_LOOPBACK:
             self.on_loopback(req)
             return E_LOOPBACK
 
-    def on_trigger(self, req):
-        return req.intermachine.dequeue_myself()
+        elif msg == E_WIN:
+            self.on_win(req)
+            return E_WIN
+
+        elif msg == E_DRAW:
+            self.on_draw(req)
+            return E_DRAW
+
+        elif msg == E_LOSE:
+            self.on_lose(req)
+            return E_LOSE
+
+        else:
+            raise ValueError(f"Unexpected msg:{msg}")
 
     def on_entry(self, req):
         pass
+
+    def on_trigger(self, req):
+        return req.context.pull_trigger()
 
     def on_win(self, req):
         pass

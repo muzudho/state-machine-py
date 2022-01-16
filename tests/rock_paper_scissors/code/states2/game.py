@@ -1,3 +1,11 @@
+from tests.rock_paper_scissors.auto_gen.data.const import (
+    E_DRAW,
+    E_LOOPBACK,
+    E_LOSE,
+    E_WIN,
+)
+
+
 def create_game(state):
     def __on_entry(req):
         """この on_update メソッドは省略することもできます。
@@ -12,6 +20,19 @@ def create_game(state):
 
         # 改行を出力しないとフラッシュされませんので、明示的にフラッシュします
         print("Rock-paper-scissors(R,P,S): ", end="", flush=True)
+
+    def __on_trigger(req):
+        msg = req.intermachine.dequeue_myself()
+
+        # 相手は P（パー） を出しているとします
+        if msg == "S":
+            return E_WIN
+        elif msg == "P":
+            return E_DRAW
+        elif msg == "R":
+            return E_LOSE
+        else:
+            return E_LOOPBACK
 
     def __on_win(req):
         """この on_win メソッドは省略することもできます。
@@ -74,6 +95,7 @@ def create_game(state):
         )
 
     state.on_entry = __on_entry
+    state.on_trigger = __on_trigger
     state.on_win = __on_win
     state.on_draw = __on_draw
     state.on_lose = __on_lose
