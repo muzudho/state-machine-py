@@ -1,5 +1,6 @@
 import sys
 import argparse
+import traceback
 
 from state_machine_py.main_finally import MainFinally
 from tests.two_machines_catchball.main_diagram import MainDiagram
@@ -40,7 +41,7 @@ class Main():
 
     def on_except(self, e):
         """ここで例外キャッチ"""
-        print(e)
+        traceback.print_exc()
 
     def on_finally(self):
         # ここで終了処理

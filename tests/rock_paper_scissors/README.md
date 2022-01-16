@@ -19,6 +19,14 @@ python.exe -m state_machine_py.const_py_maker "tests/rock_paper_scissors/data/co
 #                                             Input (.json)                                Output (.py)
 ```
 
+状態遷移図の自動生成:  
+
+```shell
+python.exe -m tests.rock_paper_scissors.graph_generator "tests/rock_paper_scissors/conf.toml"
+#                                                       -------------------------------------
+#                                                       設定ファイル（.toml）
+```
+
 # Run
 
 ```shell

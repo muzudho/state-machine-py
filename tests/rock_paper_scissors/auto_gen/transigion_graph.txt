@@ -1,0 +1,30 @@
+digraph {
+	node [shape=square style=filled]
+	subgraph cluster_Init {
+		color=pink label=Init
+		Init [color=pink shape=circle]
+		Init -> Init [label=loopback]
+	}
+	subgraph cluster_Game {
+		color=pink label=Game
+		Game [color=pink shape=circle]
+		Game -> Game [label=loopback]
+	}
+	subgraph cluster_root {
+		color=pink label=root
+		Init [color=pink shape=circle]
+		Init -> Game [label=login]
+		Game [color=pink shape=circle]
+		Game -> Init [label=win]
+		Game [color=pink shape=circle]
+		Game -> Init [label=draw]
+		Game [color=pink shape=circle]
+		Game -> Init [label=lose]
+	}
+	subgraph cluster_root {
+		color=white label="Rock Paper Scissors"
+		"(Start)" [color=gray shape=circle]
+		"(Start)" -> Init [label=start]
+		"(Terminal)" [color=gray shape=circle]
+	}
+}

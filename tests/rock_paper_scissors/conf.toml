@@ -1,1 +1,2 @@
 transition_file = "tests/rock_paper_scissors/data/transition.json"
+output_graph_text_file = "tests/rock_paper_scissors/auto_gen/transigion_graph.txt"
