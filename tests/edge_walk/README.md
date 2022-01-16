@@ -24,6 +24,14 @@ python.exe -m state_machine_py.const_py_maker "tests/edge_walk/data/const.json" 
 #                                             Input (.json)                      Output (.py)
 ```
 
+状態遷移図の自動生成:  
+
+```shell
+python.exe -m state_machine_py.graph_generator "tests/edge_walk/conf.toml"
+#                                              ---------------------------
+#                                              設定ファイル（.toml）
+```
+
 # Run
 
 ```shell

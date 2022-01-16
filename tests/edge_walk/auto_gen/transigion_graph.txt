@@ -1,0 +1,39 @@
+digraph {
+	node [shape=square style=filled]
+	subgraph cluster_Is {
+		color=pink label=Is
+		"Init/This/Is" [color=pink shape=circle]
+		"Init/This/Is" -> "Init/This/Is/A" [label=a]
+	}
+	subgraph cluster_This {
+		color=pink label=This
+		"Init/This" [color=pink shape=circle]
+		"Init/This" -> "Init/This/Is" [label=is]
+	}
+	subgraph cluster_Init {
+		color=pink label=Init
+		Init [color=pink shape=circle]
+		Init -> Init [label=that]
+		Init [color=pink shape=circle]
+		Init -> "Init/This" [label=this]
+		"Init/This" [color=pink shape=circle]
+		"Init/This" -> Init [label=was]
+		"Init/This/Is" [color=pink shape=circle]
+		"Init/This/Is" -> Init [label=an]
+		"Init/This/Is/A" [color=pink shape=circle]
+		"Init/This/Is/A" -> Init [label=pin]
+	}
+	subgraph cluster_root {
+		color=pink label=root
+		"Init/This/Is/A" [color=pink shape=circle]
+		"Init/This/Is/A" -> Goal [label=pen]
+		Goal [color=pink shape=circle]
+		Goal -> Init [label=retry]
+	}
+	subgraph cluster_root {
+		color=white label="Edge walk"
+		"(Start)" [color=gray shape=circle]
+		"(Start)" -> Init [label=start]
+		"(Terminal)" [color=gray shape=circle]
+	}
+}

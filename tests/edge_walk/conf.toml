@@ -1,1 +1,5 @@
+# 状態遷移図
 transition_file = "tests/edge_walk/data/transition.json"
+
+# 状態遷移図の出力先
+output_graph_text_file = "tests/edge_walk/auto_gen/transigion_graph.txt"

@@ -1,2 +1,5 @@
+# 状態遷移図
 transition_file = "tests/rock_paper_scissors/data/transition.json"
+
+# 状態遷移図の出力先
 output_graph_text_file = "tests/rock_paper_scissors/auto_gen/transigion_graph.txt"
