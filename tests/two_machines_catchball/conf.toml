@@ -1,2 +1,7 @@
+# 状態遷移図
 machinea_transition_file = "tests/two_machines_catchball/machine_a/data/transition.json"
 machineb_transition_file = "tests/two_machines_catchball/machine_b/data/transition.json"
+
+# 状態遷移図の出力先
+machinea_output_graph_text_file = "tests/two_machines_catchball/machine_a/auto_gen/transigion_graph.txt"
+machineb_output_graph_text_file = "tests/two_machines_catchball/machine_b/auto_gen/transigion_graph.txt"

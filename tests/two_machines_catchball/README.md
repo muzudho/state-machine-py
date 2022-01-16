@@ -33,6 +33,18 @@ python.exe -m state_machine_py.const_py_maker "tests/two_machines_catchball/data
 #                                             Input (.json)                                   Output (.py)
 ```
 
+状態遷移図の自動生成:  
+
+```shell
+python.exe -m state_machine_py.graph_generator "tests/two_machines_catchball/conf.toml" "machinea_transition_file" "machinea_output_graph_text_file"
+python.exe -m state_machine_py.graph_generator "tests/two_machines_catchball/conf.toml" "machineb_transition_file" "machineb_output_graph_text_file"
+#                                              ---------------------------------------- -------------------------- ---------------------------------
+#                                              1.                                       2.                         3.
+# 1. 設定ファイル（TOML形式）
+# 2. 入力ファイル（JSON形式）を指すプロパティの名前
+# 3. 出力ファイル（テキストファイル形式）を指すプロパティの名前
+```
+
 # Run
 
 ```shell

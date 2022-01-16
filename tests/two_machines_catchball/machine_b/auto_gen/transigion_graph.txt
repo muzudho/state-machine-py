@@ -1,0 +1,19 @@
+digraph {
+	node [shape=square style=filled]
+	subgraph cluster_Init {
+		color=pink label=Init
+		Init [color=pink shape=circle]
+		Init -> Init [label=decrease]
+	}
+	subgraph cluster_root {
+		color=pink label=root
+		Init [color=pink shape=circle]
+		Init -> "(Terminal)" [label=stop]
+	}
+	subgraph cluster_root {
+		color=white label="Two Machines Catchball - Machine B"
+		"(Start)" [color=gray shape=circle]
+		"(Start)" -> Init [label=start]
+		"(Terminal)" [color=gray shape=circle]
+	}
+}
