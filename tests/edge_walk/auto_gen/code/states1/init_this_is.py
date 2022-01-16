@@ -1,15 +1,6 @@
-from state_machine_py.abstract_state import AbstractState
-from tests.edge_walk.auto_gen.data.const import IS, E_A, E_AN
+from tests.edge_walk.auto_gen.data.const import E_A, E_AN
 
-
-class InitThisIsState(AbstractState):
-    def __init__(self):
-        super().__init__()
-
-    # @property
-    # def name(self):
-    #    return IS
-
+class InitThisIsState():
     def update(self, req):
 
         self.on_entry(req)
@@ -30,16 +21,14 @@ class InitThisIsState(AbstractState):
             raise ValueError(f"Unexpected msg:{msg}")
 
     def on_entry(self, req):
-        """入力を取る前"""
         pass
 
     def on_trigger(self, req):
-        next_edge_name = req.intermachine.dequeue_myself()
-        return next_edge_name
-        # return req.context.pull_trigger()
+        return req.context.pull_trigger()
 
     def on_an(self, req):
         pass
 
     def on_a(self, req):
         pass
+

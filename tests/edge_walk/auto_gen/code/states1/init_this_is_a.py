@@ -1,15 +1,6 @@
-from state_machine_py.abstract_state import AbstractState
-from tests.edge_walk.auto_gen.data.const import A, E_PEN, E_PIN
+from tests.edge_walk.auto_gen.data.const import E_PEN, E_PIN
 
-
-class InitThisIsAState(AbstractState):
-    def __init__(self):
-        super().__init__()
-
-    # @property
-    # def name(self):
-    #    return A
-
+class InitThisIsAState():
     def update(self, req):
 
         self.on_entry(req)
@@ -30,16 +21,14 @@ class InitThisIsAState(AbstractState):
             raise ValueError(f"Unexpected msg:{msg}")
 
     def on_entry(self, req):
-        """入力を取る前"""
         pass
 
     def on_trigger(self, req):
-        next_edge_name = req.intermachine.dequeue_myself()
-        return next_edge_name
-        # return req.context.pull_trigger()
+        return req.context.pull_trigger()
 
     def on_pin(self, req):
         pass
 
     def on_pen(self, req):
         pass
+

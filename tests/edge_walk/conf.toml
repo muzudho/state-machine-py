@@ -1,5 +1,14 @@
+# 定数
+const_file = "tests/edge_walk/data/const.json"
+
 # 状態遷移図
 transition_file = "tests/edge_walk/data/transition.json"
 
 # 状態遷移図の出力先
 output_graph_text_file = "tests/edge_walk/auto_gen/transigion_graph.txt"
+
+# 状態ファイル出力ディレクトリー
+output_states_dir = "tests/edge_walk/auto_gen/code/states1"
+
+[import_module]
+const = "tests.edge_walk.auto_gen.data.const"
