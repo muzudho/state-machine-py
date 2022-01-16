@@ -13,6 +13,9 @@ class GoalState():
             self.on_retry(req)
             return E_RETRY
 
+        elif msg == None:
+            return None
+
         else:
             raise ValueError(f"Unexpected msg:{msg}")
 

@@ -26,35 +26,28 @@ class StateFileGen:
             "ThisIs/A/ColorPen" のような書式の文字列です
         """
 
-        # "ThisIs/A/ColorPen" であれば、 "thisis_a_colorpen" に変換します
-        file_stem = node_path.replace("/", "_").lower()
-
-        # "ThisIs/A/ColorPen" であれば、 "ThisisAColorpen" に変換します
-        class_name = ""
-        for node in node_path.split("/"):
-            node = node.capitalize()
-            class_name += node
-
-        # print(f"[generate_state_file_v18] node_path={node_path} ----> {file_stem}")
-
-        # `init.py` ファイルを作成します
-        # 'x' - ファイルが存在しない場合のみの上書き
+        # 1. Rename 'ThisIs/A/ColorPen' to 'thisis_a_colorpen'
+        # 2. Rename 'ThisIs/A/ColorPen' to 'ThisisAColorpen'
+        file_stem = StateFileGen.__create_file_stem(node_path)    # 1.
+        class_name = StateFileGen.__create_class_name(node_path)  # 2.
         file_path = os.path.join(output_dir_path, f"{file_stem}.py")
 
-        # エッジの分岐部分
+        # エッジの分岐部分を生成
         directed_edge_list = TransitionV16n3.create_edge_list_by_node_path(
             transition.doc['data'], node_path.split("/")
         )
 
-        # 使った定数を調査
+        # 使った定数を set に集めます
         used_const_set = set()
         for edge in directed_edge_list:
             const.pickup_from_item_to_set(edge.name, used_const_set)
 
-        text = ""
-        text += ClassGenV18.generate_class(name=f"{class_name}State")
-        text += MethodGenV18.signature(name="update", parameters_s="self, req")
-        text += """
+        class_name_line = ClassGenV18.generate_class(
+            name=f"{class_name}State")
+        method_signature_line = MethodGenV18.signature(
+            name="update",
+            parameters_s="self, req")
+        method_body = """
         self.on_entry(req)
 
         # 入力
@@ -70,40 +63,58 @@ class StateFileGen:
             directed_edge_list=directed_edge_list,
             used_const_set=used_const_set,
         )
-        text += SwitchGenV16n3.generate_switch("        ",
-                                               switch_model=switch_model)
-        text += "\n"
-
+        switch_block = SwitchGenV16n3.generate_switch(indent="        ",
+                                                      switch_model=switch_model)
         # ハンドラ生成
-        text += MethodGenV18.generate_method(name="on_entry",
-                                             parameters_s="self, req")
-        text += MethodGenV18.generate_method(
+        on_entry_block = MethodGenV18.generate_method(name="on_entry",
+                                                      parameters_s="self, req")
+        on_trigger_block = MethodGenV18.generate_method(
             name="on_trigger",
             parameters_s="self, req",
-            body_sequence=["return req.context.pull_trigger()"],
-        )
+            body_sequence=["return req.context.pull_trigger()"])
+
+        on_some_handler_block = ""
         # ハンドラ自動生成
         for edge in directed_edge_list:
             if edge.name != "":
-                text += MethodGenV18.generate_method(
+                on_some_handler_block += MethodGenV18.generate_method(
                     name=f"on_{edge.name}", parameters_s="self, req"
                 )
 
-        # 定数のインポートをファイルの冒頭に付けます
+        # 定数のインポート文
         if 0 < len(used_const_set):
             import_statement = ImportGenV18.generate_import(
                 from_s=import_module_path,
                 import_set=used_const_set,
             )
-            text = f"{import_statement}\n{text}"
+            import_statement += "\n"
+        else:
+            import_statement = ""
+
+        text = ""
+        text += import_statement
+        text += class_name_line
+        text += method_signature_line
+        text += method_body
+        text += switch_block
+        text += "\n"
+        text += on_entry_block
+        text += on_trigger_block
+        text += on_some_handler_block
 
         FileIoV11n80.write(file_path, text)
 
     @classmethod
     def __edge_switch_model(clazz, const, directed_edge_list, used_const_set):
+        """エッジ分岐部"""
 
         if_elif_list = []
-        # if～elif文
+        # if～elif文のコード部分
+        # +------------------------+
+        # | if msg == xx1xx:       | 1. edge_operand
+        # |     self.on_xx2xx(req) | 2. edge.name
+        # |     return xx1xx       |
+        # +------------------------+
         for edge in directed_edge_list:
 
             # エッジ名を定数に置きかえれるか試します
@@ -127,8 +138,29 @@ class StateFileGen:
 
             if_elif_list.append([cond, body_sequence])
 
-        # else文
+        # None のケースを追加（ステートマシンの終了）
+        if_elif_list.append(["msg == None", ["return None"]])
+
+        # else文のコード部分
+        # +-----------------------------------------------+
+        # | else:                                         |
+        # |     raise ValueError(f"Unexpected msg:{msg}") |
+        # +-----------------------------------------------+
         else_sequence = ['raise ValueError(f"Unexpected msg:{msg}")']
 
         switch_model = [if_elif_list, else_sequence]
         return switch_model
+
+    @classmethod
+    def __create_file_stem(clazz, node_path):
+        """ 'ThisIs/A/ColorPen' であれば、 'thisis_a_colorpen' に変換します"""
+        return node_path.replace("/", "_").lower()
+
+    @classmethod
+    def __create_class_name(clazz, node_path):
+        """ 'ThisIs/A/ColorPen' であれば、 'ThisisAColorpen' に変換します """
+        class_name = ""
+        for node in node_path.split("/"):
+            node = node.capitalize()
+            class_name += node
+        return class_name

@@ -25,6 +25,9 @@ class GameState():
             self.on_lose(req)
             return E_LOSE
 
+        elif msg == None:
+            return None
+
         else:
             raise ValueError(f"Unexpected msg:{msg}")
 

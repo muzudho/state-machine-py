@@ -17,6 +17,9 @@ class InitThisIsAState():
             self.on_pen(req)
             return E_PEN
 
+        elif msg == None:
+            return None
+
         else:
             raise ValueError(f"Unexpected msg:{msg}")
 

@@ -29,6 +29,7 @@ python.exe -m pip install --index-url https://test.pypi.org/simple/ --no-deps st
 python.exe -m pip install state_machine_py==18.0.22
 #                                           -------
 #                                           Please, Latest version
+# 1回失敗しても、２回やると成功することがあります
 
 # Uninstall
 python.exe -m pip uninstall state_machine_py

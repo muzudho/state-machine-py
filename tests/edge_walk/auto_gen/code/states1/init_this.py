@@ -17,6 +17,9 @@ class InitThisState():
             self.on_is(req)
             return E_IS
 
+        elif msg == None:
+            return None
+
         else:
             raise ValueError(f"Unexpected msg:{msg}")
 
